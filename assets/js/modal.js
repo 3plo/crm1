@@ -1,0 +1,65 @@
+import axios from 'axios';
+
+document.addEventListener('DOMContentLoaded', function () {
+    const openModalButtons = document.querySelectorAll('.create-price-button');
+    const modal = document.getElementById('modal-product-price-create');
+    const closeModalButton = document.getElementById('close-modal-product-price-create');
+    const productIdInput = document.getElementById('product-id');
+    const priceForm = document.getElementById('price-form');
+
+    openModalButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            modal.style.display = 'block';
+            productIdInput.value = button.getAttribute('data-product-id');
+        });
+    });
+
+    closeModalButton.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    priceForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(priceForm);
+        let productId = formData.get('product_id');
+
+        axios.post(
+            '/product/price/create',
+            {
+                enabled: formData.get('enabled') === 'on',
+                amountInUAH: formData.get('amount'),
+                productId: productId,
+                title: formData.get('title'),
+            })
+            .then(function (response) {
+                console.log('Price created successfully:', response.data);
+                modal.style.display = 'none';
+                let responseData = JSON.parse(response.data);
+
+                document
+                    .querySelector('.product-item[data-product-id="' + productId + '"]')
+                    .querySelector('.price-list')
+                    .innerHTML += '' +
+                        '<tr>' +
+                        '<td>' + responseData.price.title + '</td>' +
+                        '<td>' + responseData.price.amount_in_uah + ' ГРН </td>' +
+                        '<td>' +
+                            '<button class="create-button toggle-price ' + (true === responseData.price.enabled ? 'disabled' : 'enabled') + '"' +
+                                ' data-product="' + productId + '"' +
+                                ' data-price="' + responseData.price.id + '"' +
+                                ' data-enabled="' + (true === responseData.price.enabled ? 'true' : 'false') + '">' +
+                                (true === responseData.price.enabled ? 'Disabled' : 'Enabled') +
+                            '</button></td>' +
+                        '</tr>';
+            })
+            .catch(function (error) {
+                console.error('Error creating price:', error);
+            });
+    });
+});

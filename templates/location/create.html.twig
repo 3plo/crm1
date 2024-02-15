@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Location{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/location.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    <div class="full-container">
+        <h2>Create Location</h2>
+        <form method="post" action="{{ path('location_create') }}">
+            <div class="form-group">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title, {'attr': {'class': 'input-field'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description, {'attr': {'class': 'input-field'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.enabled) }}
+                {{ form_widget(form.enabled, {'attr': {'class': 'checkbox-field'}}) }}
+            </div>
+            <button type="button" class="btn" id="add-regular-scheduler">Add Regular Scheduler</button>
+            <div class="form-group">
+                {{ form_label(form.regularSchedulerList) }}
+                <div id="regular-schedulers-container">
+                    <h3>Regular scheduler list</h3><br>
+                    <div class="regular-scheduler-item regular-scheduler-item-head">
+                        <div>
+                            <label>Day number</label>
+                        </div>
+                        <div>
+                            <label>Time from</label>
+                        </div>
+                        <div>
+                            <label>Time till</label>
+                        </div>
+                        <div>
+                            <label>Date from</label>
+                        </div>
+                        <div>
+                            <label>Date till</label>
+                        </div>
+                    </div>
+                    {{ form_widget(form.regularSchedulerList, {'attr': {'class': 'regular-scheduler-item'}}) }}
+                </div>
+            </div>
+            <button type="submit" class="btn">Create</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/location') }}
+{% endblock %}

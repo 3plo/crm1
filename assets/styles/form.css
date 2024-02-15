@@ -1,0 +1,42 @@
+.form-group {
+    margin-bottom: 15px;
+}
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    margin-right: 10px;
+    width: 100px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="checkbox"] {
+    flex: 1;
+    padding: 8px 10px;
+    margin-right: 10px;
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 0;
+}
+
+.input-field, textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}

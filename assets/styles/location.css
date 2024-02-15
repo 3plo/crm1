@@ -1,0 +1,24 @@
+#regular-schedulers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+.regular-scheduler-item {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+div:has(> .regular-scheduler-item-input) {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.regular-scheduler-item-head div {
+    display: inline-block;
+    margin-right: 10px;
+}
