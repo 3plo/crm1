@@ -22,7 +22,7 @@ class RegularSchedulerType extends AbstractType
         $builder
             ->add('dayNumber', ChoiceType::class, [
                 'label' => false,
-                'attr' => ['class' => 'regular-scheduler-item-input'],
+                'attr' => ['class' => 'regular-scheduler-item-input input-field'],
                 'choices' => [
                     'Monday' => 'monday',
                     'Tuesday' => 'tuesday',
@@ -35,22 +35,22 @@ class RegularSchedulerType extends AbstractType
             ])
             ->add('timeFrom', TimeType::class, [
                 'label' => false,
-                'attr' => ['class' => 'regular-scheduler-item-input'],
+                'attr' => ['class' => 'regular-scheduler-item-input input-field'],
                 'widget' => 'single_text',
             ])
             ->add('timeTill', TimeType::class, [
                 'label' => false,
-                'attr' => ['class' => 'regular-scheduler-item-input'],
+                'attr' => ['class' => 'regular-scheduler-item-input input-field'],
                 'widget' => 'single_text',
             ])
             ->add('dateFrom', DateType::class, [
                 'label' => false,
-                'attr' => ['class' => 'regular-scheduler-item-input'],
+                'attr' => ['class' => 'regular-scheduler-item-input input-field'],
                 'widget' => 'single_text',
             ])
             ->add('dateTill', DateType::class, [
                 'label' => false,
-                'attr' => ['class' => 'regular-scheduler-item-input'],
+                'attr' => ['class' => 'regular-scheduler-item-input input-field'],
                 'widget' => 'single_text',
                 'required' => false,
             ]);

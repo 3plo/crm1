@@ -23,15 +23,16 @@
 .form-group input[type="number"],
 .form-group input[type="checkbox"] {
     flex: 1;
-    padding: 8px 10px;
+    padding: 8px 0;
     margin-right: 10px;
 }
 
-.form-group input[type="checkbox"] {
+.form-group input[type="checkbox"],
+.form-group select{
     margin-right: 0;
 }
 
-.input-field, textarea {
+.input-field, textarea, select {
     width: 100%;
     padding: 8px 10px;
     margin-top: 5px;
