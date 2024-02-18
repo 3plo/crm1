@@ -10,6 +10,8 @@ namespace App\View\Controller\Location;
 use App\Domain\Location\Location;
 use App\Domain\Location\RegularScheduler;
 use App\Domain\Location\Repository\LocationRepository;
+use App\Domain\Location\SpecialScheduler;
+use App\Domain\Location\VacationScheduler;
 use App\View\Form\Location\LocationFormType;
 use App\View\Request\Location\LocationCreateRequest;
 use App\View\RequestResolver\FormRequestResolver;
@@ -44,11 +46,46 @@ class LocationController extends AbstractController
         try {
             /** @var LocationCreateRequest $locationRequest */
             $locationRequest = $this->formRequestResolver->resolve($request, LocationFormType::class);
+            $response = new Response(null, 200);
             if (null !== $locationRequest) {
                 $location = (new Location())
                     ->setTitle($locationRequest->getTitle())
                     ->setDescription($locationRequest->getDescription())
                     ->setEnabled($locationRequest->isEnabled());
+
+                foreach ($locationRequest->getRegularSchedulerList() as $regularSchedulerDTO) {
+                    $regularScheduler = (new RegularScheduler())//TODO move to factory
+                        ->setEnabled(true)
+                        ->setDayNumber($regularSchedulerDTO->getDayNumber())
+                        ->setTimeFrom($regularSchedulerDTO->getTimeFrom())
+                        ->setTimeTill($regularSchedulerDTO->getTimeTill())
+                        ->setDateFrom($regularSchedulerDTO->getDateFrom())
+                        ->setDateTill($regularSchedulerDTO->getDateTill());
+
+                    $location->addRegularScheduler($regularScheduler);
+                }
+
+                foreach ($locationRequest->getVacationSchedulerList() as $vacationSchedulerDTO) {
+                    $vacationScheduler = (new VacationScheduler())//TODO move to factory
+//                        ->setEnabled(true)//TODO add to entity
+                        ->setDayNumber($vacationSchedulerDTO->getDayNumber())
+                        ->setTitle($vacationSchedulerDTO->getTitle())
+                        ->setDateFrom($vacationSchedulerDTO->getDateFrom())
+                        ->setDateTill($vacationSchedulerDTO->getDateTill());
+
+                    $location->addVacationScheduler($vacationScheduler);
+                }
+
+                foreach ($locationRequest->getSpecialSchedulerList() as $specialSchedulerDTO) {
+                    $specialScheduler = (new SpecialScheduler())//TODO move to factory
+//                        ->setEnabled(true)//TODO add to entity
+                        ->setTimeFrom($specialSchedulerDTO->getTimeFrom())
+                        ->setTimeTill($specialSchedulerDTO->getTimeTill())
+                        ->setDateFrom($specialSchedulerDTO->getDateFrom())
+                        ->setDateTill($specialSchedulerDTO->getDateTill());
+
+                    $location->addSpecialScheduler($specialScheduler);
+                }
 
                 $this->entityManager->persist($location);
                 $this->entityManager->flush();
@@ -56,16 +93,16 @@ class LocationController extends AbstractController
                 $this->addFlash('success', 'Location created successfully!');
                 return $this->redirectToRoute('location_list');
             }
+
         } catch (\Throwable $throwable) {//TODO change exception to form validation exception
             //TODO handle exception ??
+            $response = new Response(null, 422);
         }
 
-        $location = new Location();
-        $location->addRegularSchedulerList(new RegularScheduler());
-        $form = $this->createForm(LocationFormType::class, $location);
+        $form = $this->createForm(LocationFormType::class);
 
         return $this->render('location/create.html.twig', [
             'form' => $form->createView(),
-        ]);
+        ], $response);
     }
 }

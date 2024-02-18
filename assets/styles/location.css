@@ -1,11 +1,23 @@
-div:has(> .regular-scheduler-item-input) {
+div:has(> .regular-scheduler-item-input),
+div:has(> .vacation-scheduler-item-input),
+div:has(> .special-scheduler-item-input) {
     display: inline-block;
     margin: 0 10px;
     padding: 0 10px;
     width: 200px;
 }
+div:has(> .regular-scheduler-item-button),
+div:has(> .vacation-scheduler-item-button),
+div:has(> .special-scheduler-item-button) {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 0 10px;
+    width: 50px;
+}
 
-.regular-scheduler-item-head div {
+.regular-scheduler-item-head div,
+.vacation-scheduler-item-head div,
+.special-scheduler-item-head div {
     display: inline-block;
     margin: 0 10px;
     padding: 0 8px;

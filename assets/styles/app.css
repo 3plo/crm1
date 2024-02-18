@@ -71,6 +71,17 @@ label {
     border: 0;
 }
 
+.remove-button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #e80202;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 0;
+}
+
 .create-button:hover {
     background-color: #45a049;
 }

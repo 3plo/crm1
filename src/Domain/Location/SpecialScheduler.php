@@ -32,10 +32,10 @@ class SpecialScheduler
     private null|\DateTimeImmutable $dateTill = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private string $timeFrom;
+    private \DateTimeImmutable $timeFrom;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private string $timeTill;
+    private \DateTimeImmutable $timeTill;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
@@ -83,23 +83,23 @@ class SpecialScheduler
         return $this;
     }
 
-    public function getTimeFrom(): string
+    public function getTimeFrom(): \DateTimeImmutable
     {
         return $this->timeFrom;
     }
 
-    public function setTimeFrom(string $timeFrom): self
+    public function setTimeFrom(\DateTimeImmutable $timeFrom): self
     {
         $this->timeFrom = $timeFrom;
         return $this;
     }
 
-    public function getTimeTill(): string
+    public function getTimeTill(): \DateTimeImmutable
     {
         return $this->timeTill;
     }
 
-    public function setTimeTill(string $timeTill): self
+    public function setTimeTill(\DateTimeImmutable $timeTill): self
     {
         $this->timeTill = $timeTill;
         return $this;

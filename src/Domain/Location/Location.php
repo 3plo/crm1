@@ -68,7 +68,7 @@ class Location
         return $this->regularSchedulerList;
     }
 
-    public function addRegularSchedulerList(RegularScheduler $regularScheduler): self
+    public function addRegularScheduler(RegularScheduler $regularScheduler): self
     {
         $regularScheduler->setLocation($this);
         $this->regularSchedulerList->add($regularScheduler);
@@ -81,7 +81,7 @@ class Location
         return $this->specialSchedulerList;
     }
 
-    public function addSpecialSchedulerList(SpecialScheduler $specialScheduler): self
+    public function addSpecialScheduler(SpecialScheduler $specialScheduler): self
     {
         $specialScheduler->setLocation($this);
         $this->specialSchedulerList->add($specialScheduler);
@@ -94,7 +94,7 @@ class Location
         return $this->vacationSchedulerList;
     }
 
-    public function addVacationSchedulerList(VacationScheduler $vacationScheduler): self
+    public function addVacationScheduler(VacationScheduler $vacationScheduler): self
     {
         $vacationScheduler->setLocation($this);
         $this->vacationSchedulerList->add($vacationScheduler);

@@ -11,7 +11,6 @@ use App\Infrastructure\Exception\ValidationException;
 use App\View\Form\AbstractRequestType;
 use App\View\Request\FormRequestInterface;
 use JMS\Serializer\ArrayTransformerInterface;
-use JMS\Serializer\SerializerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -41,6 +40,21 @@ class FormRequestResolver
             throw new ValidationException($form->getErrors(true));//TODO use other exception
         }
 
-        return $this->arrayTransformer->fromArray($form->getData(), $formType::getRequestClass());
+        return $this->arrayTransformer->fromArray($this->prepareData($form->getData()), $formType::getRequestClass());
+    }
+
+    private function prepareData(array $data): array//TODO make extension for serializer
+    {
+        foreach ($data as $index => $value) {
+            if (true === is_array($value)) {
+                $data[$index] = $this->prepareData($value);
+            }
+
+            if (true === $value instanceof \DateTimeInterface) {
+                $data[$index] = $value->format(\DateTimeInterface::ATOM);
+            }
+        }
+
+        return $data;
     }
 }

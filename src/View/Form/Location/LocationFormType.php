@@ -7,16 +7,16 @@
 
 namespace App\View\Form\Location;
 
-use App\Domain\Location\Location;
 use App\View\Form\AbstractRequestType;
 use App\View\Form\Location\Detail\RegularSchedulerType;
+use App\View\Form\Location\Detail\SpecialSchedulerType;
+use App\View\Form\Location\Detail\VacationSchedulerType;
 use App\View\Request\Location\LocationCreateRequest;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class LocationFormType extends AbstractRequestType
@@ -49,6 +49,7 @@ class LocationFormType extends AbstractRequestType
                 CheckboxType::class,
                 [
                     'label' => 'Enabled',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -58,28 +59,39 @@ class LocationFormType extends AbstractRequestType
                     'entry_type' => RegularSchedulerType::class,
                     'label' => false,
                     'entry_options' => ['label' => false],
-                    'allow_add' => true, // Дозволяємо додавання нових айтемів
+                    'allow_add' => true,
                     'by_reference' => false,
-                    'prototype' => true, // Включаємо можливість додавання прототипу
+                    'prototype' => true,
                     'prototype_name' => '__name__',
                 ]
             )
-//            ->add(
-//                'save',
-//                SubmitType::class,
-//                [
-//                    'label' => 'Create Location',
-//                    'attr' => ['class' => 'btn'],
-//                ]
-//            )
+            ->add(
+                'vacationSchedulerList',
+                CollectionType::class,
+                [
+                    'entry_type' => VacationSchedulerType::class,
+                    'label' => false,
+                    'entry_options' => ['label' => false],
+                    'allow_add' => true,
+                    'by_reference' => false,
+                    'prototype' => true,
+                    'prototype_name' => '__name__',
+                ]
+            )
+            ->add(
+                'specialSchedulerList',
+                CollectionType::class,
+                [
+                    'entry_type' => SpecialSchedulerType::class,
+                    'label' => false,
+                    'entry_options' => ['label' => false],
+                    'allow_add' => true,
+                    'by_reference' => false,
+                    'prototype' => true,
+                    'prototype_name' => '__name__',
+                ]
+            )
         ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => Location::class,
-        ]);
     }
 
     #[\Override] public static function getRequestClass(): string

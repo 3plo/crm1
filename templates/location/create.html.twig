@@ -13,6 +13,7 @@
     <div class="full-container">
         <h2>Create Location</h2>
         <form method="post" action="{{ path('location_create') }}">
+            {{ form_row(form._token) }}
             <div class="form-group">
                 {{ form_label(form.title) }}
                 {{ form_widget(form.title, {'attr': {'class': 'input-field'}}) }}
@@ -25,6 +26,7 @@
                 {{ form_label(form.enabled) }}
                 {{ form_widget(form.enabled, {'attr': {'class': 'checkbox-field'}}) }}
             </div>
+
             <button type="button" class="btn" id="add-regular-scheduler">Add Regular Scheduler</button>
             <div class="form-group">
                 {{ form_label(form.regularSchedulerList) }}
@@ -50,6 +52,53 @@
                     {{ form_widget(form.regularSchedulerList, {'attr': {'class': 'regular-scheduler-item'}}) }}
                 </div>
             </div>
+
+            <button type="button" class="btn" id="add-vacation-scheduler">Add Vacation Scheduler</button>
+            <div class="form-group">
+                {{ form_label(form.vacationSchedulerList) }}
+                <div id="vacation-schedulers-container">
+                    <h3>Vacation scheduler list</h3><br>
+                    <div class="vacation-scheduler-item vacation-scheduler-item-head">
+                        <div>
+                            <label>Day number</label>
+                        </div>
+                        <div>
+                            <label>Title</label>
+                        </div>
+                        <div>
+                            <label>Date from</label>
+                        </div>
+                        <div>
+                            <label>Date till</label>
+                        </div>
+                    </div>
+                    {{ form_widget(form.vacationSchedulerList, {'attr': {'class': 'vacation-scheduler-item'}}) }}
+                </div>
+            </div>
+
+            <button type="button" class="btn" id="add-special-scheduler">Add Special Scheduler</button>
+            <div class="form-group">
+                {{ form_label(form.specialSchedulerList) }}
+                <div id="special-schedulers-container">
+                    <h3>Special scheduler list</h3><br>
+                    <div class="special-scheduler-item special-scheduler-item-head">
+                        <div>
+                            <label>Time from</label>
+                        </div>
+                        <div>
+                            <label>Time till</label>
+                        </div>
+                        <div>
+                            <label>Date from</label>
+                        </div>
+                        <div>
+                            <label>Date till</label>
+                        </div>
+                    </div>
+                    {{ form_widget(form.specialSchedulerList, {'attr': {'class': 'special-scheduler-item'}}) }}
+                </div>
+            </div>
+
             <button type="submit" class="btn">Create</button>
         </form>
     </div>

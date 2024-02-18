@@ -10,11 +10,12 @@ namespace App\View\Form\Location\Detail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegularSchedulerType extends AbstractType
+class VacationSchedulerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,7 +25,7 @@ class RegularSchedulerType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => false,
-                    'attr' => ['class' => 'regular-scheduler-item-input input-field'],
+                    'attr' => ['class' => 'vacation-scheduler-item-input input-field'],
                     'choices' => [
                         'Monday' => 1,
                         'Tuesday' => 2,
@@ -37,21 +38,11 @@ class RegularSchedulerType extends AbstractType
                 ],
             )
             ->add(
-                'timeFrom',
-                TimeType::class,
+                'title',
+                TextType::class,
                 [
                     'label' => false,
-                    'attr' => ['class' => 'regular-scheduler-item-input input-field'],
-                    'widget' => 'single_text',
-                ],
-            )
-            ->add(
-                'timeTill',
-                TimeType::class,
-                [
-                    'label' => false,
-                    'attr' => ['class' => 'regular-scheduler-item-input input-field'],
-                    'widget' => 'single_text',
+                    'attr' => ['class' => 'vacation-scheduler-item-input input-field'],
                 ],
             )
             ->add(
@@ -59,7 +50,7 @@ class RegularSchedulerType extends AbstractType
                 DateType::class,
                 [
                     'label' => false,
-                    'attr' => ['class' => 'regular-scheduler-item-input input-field'],
+                    'attr' => ['class' => 'vacation-scheduler-item-input input-field'],
                     'widget' => 'single_text',
                 ],
             )
@@ -68,7 +59,7 @@ class RegularSchedulerType extends AbstractType
                 DateType::class,
                 [
                     'label' => false,
-                    'attr' => ['class' => 'regular-scheduler-item-input input-field'],
+                    'attr' => ['class' => 'vacation-scheduler-item-input input-field'],
                     'widget' => 'single_text',
                     'required' => false,
                 ],
@@ -79,7 +70,7 @@ class RegularSchedulerType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'attr' => ['class' => 'regular-scheduler-item-row'],
+                'attr' => ['class' => 'vacation-scheduler-item-row'],
             ],
         );
     }

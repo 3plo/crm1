@@ -35,10 +35,10 @@ class RegularScheduler
     private int $dayNumber;
 
     #[ORM\Column(type: Types::TIME_IMMUTABLE)]
-    private string $timeFrom;
+    private \DateTimeImmutable $timeFrom;
 
     #[ORM\Column(type: Types::TIME_IMMUTABLE)]
-    private string $timeTill;
+    private \DateTimeImmutable $timeTill;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $enabled = true;
@@ -100,23 +100,23 @@ class RegularScheduler
         return $this;
     }
 
-    public function getTimeFrom(): string
+    public function getTimeFrom(): \DateTimeImmutable
     {
         return $this->timeFrom;
     }
 
-    public function setTimeFrom(string $timeFrom): self
+    public function setTimeFrom(\DateTimeImmutable $timeFrom): self
     {
         $this->timeFrom = $timeFrom;
         return $this;
     }
 
-    public function getTimeTill(): string
+    public function getTimeTill(): \DateTimeImmutable
     {
         return $this->timeTill;
     }
 
-    public function setTimeTill(string $timeTill): self
+    public function setTimeTill(\DateTimeImmutable $timeTill): self
     {
         $this->timeTill = $timeTill;
         return $this;

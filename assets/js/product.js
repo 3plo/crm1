@@ -20,9 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // document.querySelectorAll('.toggle-price').forEach(function (button) {
     document.querySelectorAll('.prices').forEach(function (table) {
-        // button.addEventListener('click', function () {
         table.addEventListener('click', function (event) {
             let button = event.target;
             if (null === button || undefined === button || false === button.classList.contains('toggle-price')) {
