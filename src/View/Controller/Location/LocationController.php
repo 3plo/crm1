@@ -12,7 +12,7 @@ use App\Domain\Location\RegularScheduler;
 use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\Location\SpecialScheduler;
 use App\Domain\Location\VacationScheduler;
-use App\View\Form\Location\LocationFormType;
+use App\View\Form\Types\Location\LocationFormType;
 use App\View\Request\Location\LocationCreateRequest;
 use App\View\RequestResolver\FormRequestResolver;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,7 +36,7 @@ class LocationController extends AbstractController
     public function locationList(): Response
     {
         return $this->render('location/list.html.twig', [
-            'locations' => $this->locationRepository->findAll(),
+            'locationList' => $this->locationRepository->findAll(),
         ]);
     }
 

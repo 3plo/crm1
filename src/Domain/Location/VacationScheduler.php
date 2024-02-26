@@ -25,6 +25,9 @@ class VacationScheduler
     #[ORM\ManyToOne(targetEntity: Location::class)]
     private Location $location;
 
+    #[ORM\Column(type: Types::SMALLINT, options: ['unsigned' => true])]
+    private int $dayNumber;
+
     #[ORM\Column(type: Types::STRING)]
     private string $title;
 
@@ -33,9 +36,6 @@ class VacationScheduler
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true, options: ['default' => null])]
     private null|\DateTimeImmutable $dateTill = null;
-
-    #[ORM\Column(type: Types::SMALLINT, options: ['unsigned' => true])]
-    private int $dayNumber;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]

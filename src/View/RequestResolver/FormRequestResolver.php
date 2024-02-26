@@ -8,7 +8,7 @@
 namespace App\View\RequestResolver;
 
 use App\Infrastructure\Exception\ValidationException;
-use App\View\Form\AbstractRequestType;
+use App\View\Form\Types\AbstractRequestType;
 use App\View\Request\FormRequestInterface;
 use JMS\Serializer\ArrayTransformerInterface;
 use Symfony\Component\Form\FormFactoryInterface;

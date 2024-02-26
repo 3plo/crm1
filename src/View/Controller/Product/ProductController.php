@@ -10,7 +10,7 @@ namespace App\View\Controller\Product;
 use App\Domain\Product\Price;
 use App\Domain\Product\Product;
 use App\Domain\Product\Repository\ProductRepository;
-use App\View\Form\Product\ProductFormType;
+use App\View\Form\Types\Product\ProductFormType;
 use App\View\Request\Product\ProductCreateRequest;
 use App\View\Request\Product\ProductPriceCreateRequest;
 use App\View\Request\Product\ProductPriceToggleRequest;
@@ -19,9 +19,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends AbstractController
 {
@@ -37,7 +37,7 @@ class ProductController extends AbstractController
     public function productList(): Response
     {
         return $this->render('product/list.html.twig', [
-            'products' => $this->productRepository->findAll(),
+            'productList' => $this->productRepository->findAll(),
         ]);
     }
 

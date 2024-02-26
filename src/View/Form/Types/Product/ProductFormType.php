@@ -5,14 +5,14 @@
  * Time: 23:22
  */
 
-namespace App\View\Form\Product;
+namespace App\View\Form\Types\Product;
 
-use App\View\Form\AbstractRequestType;
+use App\View\Form\Types\AbstractRequestType;
 use App\View\Request\Product\ProductCreateRequest;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 

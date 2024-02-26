@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Location List{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{#    <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">#}
+{#    <link rel="stylesheet" href="{{ asset('build/css/modal.css') }}">#}
+    <link rel="stylesheet" href="{{ asset('build/css/location.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container-list">
+        <div class="page-title">
+            <h2>Location List</h2>
+
+            <a href="{{ path('location_create') }}">
+                <button class="create-button create-location-button">Create Location</button>
+            </a>
+        </div>
+
+        <div class="location-grid">
+            {% if locationList is not empty %}
+                {% for location in locationList %}
+                    <div class="location-item">
+                        <div class="location-item-grid">
+                            <div class="location-info">
+                                <h3 class="title">{{ location.title }}</h3>
+                                <p class="description">{{ location.description }}</p>
+                                <p class="status">{% if location.enabled %}Увімкнено{% else %}Вимкнено{% endif %}</p>
+                            </div>
+                            <div class="work-graph">
+                                <h4>Regular scheduler</h4>
+                                <table>
+                                <tbody>
+                                {% for regularSchedulerItem in location.regularSchedulerList %}
+                                    <tr>
+                                        <td>{{ regularSchedulerItem.dayNumber }}</td>
+{#                                        {{ todo map day  }}#}
+                                        <td>{{ regularSchedulerItem.dateFrom|date("Y-m-d") }} - <br> {{ regularSchedulerItem.dateTill|date("Y-m-d") }}</td>
+                                        <td>{{ regularSchedulerItem.timeFrom|date("H:i") }} - {{ regularSchedulerItem.timeTill|date("H:i") }}</td>
+                                        <td>{{ regularSchedulerItem.enabled }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                                <div class="divider-horizontal"></div>
+                                <h4>Special scheduler</h4>
+                                <table>
+                                <tbody>
+                                {% for specialSchedulerItem in location.specialSchedulerList %}
+                                    <tr>
+                                        <td>{{ specialSchedulerItem.dateFrom|date("Y-m-d") }} - <br> {{ specialSchedulerItem.dateTill|date("Y-m-d") }}</td>
+                                        <td>{{ specialSchedulerItem.timeFrom|date("H:i") }} - {{ specialSchedulerItem.timeTill|date("H:i") }}</td>
+{#                                        <td>{{ specialSchedulerItem.enabled }}</td>#}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                                <div class="divider-horizontal"></div>
+                                <h4>Vacation scheduler</h4>
+                                <table>
+                                <tbody>
+                                {% for vacationSchedulerItem in location.vacationSchedulerList %}
+                                    <tr>
+                                        <td>{{ vacationSchedulerItem.title }}</td>
+                                        <td>{{ vacationSchedulerItem.dayNumber }}</td>
+                                        <td>{{ vacationSchedulerItem.dateFrom|date("Y-m-d") }} - <br> {{ vacationSchedulerItem.dateTill|date("Y-m-d") }}</td>
+{#                                        <td>{{ regularSchedulerItem.enabled }}</td>#}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                                <div class="divider-horizontal"></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if not loop.last %}
+                        <div class="divider-horizontal"></div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>Локації відсутні.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/location') }}
+{% endblock %}

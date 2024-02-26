@@ -48,15 +48,6 @@
     width: 100%;
 }
 
-.title {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-}
-
-.description {
-    color: #555;
-}
-
 .toggle-price.enabled {
     background-color: #4caf50;
     color: #fff;
@@ -78,4 +69,8 @@
 .price-list.hidden {
     display: none;
     height: 0;
+}
+
+.create-product-button {
+    margin-top: 20px;
 }

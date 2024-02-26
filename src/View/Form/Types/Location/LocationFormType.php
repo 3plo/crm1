@@ -5,12 +5,12 @@
  * Time: 21:47
  */
 
-namespace App\View\Form\Location;
+namespace App\View\Form\Types\Location;
 
-use App\View\Form\AbstractRequestType;
-use App\View\Form\Location\Detail\RegularSchedulerType;
-use App\View\Form\Location\Detail\SpecialSchedulerType;
-use App\View\Form\Location\Detail\VacationSchedulerType;
+use App\View\Form\Types\AbstractRequestType;
+use App\View\Form\Types\Location\Detail\RegularSchedulerType;
+use App\View\Form\Types\Location\Detail\SpecialSchedulerType;
+use App\View\Form\Types\Location\Detail\VacationSchedulerType;
 use App\View\Request\Location\LocationCreateRequest;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

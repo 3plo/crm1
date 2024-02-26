@@ -4,7 +4,7 @@ namespace App\View\Controller\User\Registration;
 
 use App\Domain\User\User;
 use App\Infrastructure\Security\EmailVerifier;
-use App\View\Form\RegistrationFormType;
+use App\View\Form\Types\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

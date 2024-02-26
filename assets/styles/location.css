@@ -23,3 +23,28 @@ div:has(> .special-scheduler-item-button) {
     padding: 0 8px;
     width: 200px;
 }
+
+.location-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    gap: 20px;
+}
+
+.location-item {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.location-item-grid {
+    display: grid;
+    grid-template-columns: 80% 20%;
+}
+
+.work-graph {
+    width: 100%;
+}

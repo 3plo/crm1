@@ -17,6 +17,12 @@ Encore
     .addStyleEntry('css/security', './assets/styles/security.css')
     .addStyleEntry('css/product', './assets/styles/product.css')
     .addStyleEntry('css/location', './assets/styles/location.css')
+    .copyFiles({
+        from: './assets/image',
+        includeSubdirectories: true,
+        to: 'image/[folder]/[name].[ext]',
+        pattern: /.*/
+    })
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()

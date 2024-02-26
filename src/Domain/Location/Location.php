@@ -22,15 +22,15 @@ class Location
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private string $id;
 
-    #[ORM\OneToMany(mappedBy: 'regularScheduler', targetEntity: RegularScheduler::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: RegularScheduler::class, cascade: ['persist'], fetch: 'EAGER')]
     #[ORM\OrderBy(['enabled' => 'DESC', 'createdAt' => 'DESC'])]
     private Collection $regularSchedulerList;
 
-    #[ORM\OneToMany(mappedBy: 'specialScheduler', targetEntity: SpecialScheduler::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: SpecialScheduler::class, cascade: ['persist'], fetch: 'EAGER')]
     #[ORM\OrderBy(['enabled' => 'DESC', 'createdAt' => 'DESC'])]
     private Collection $specialSchedulerList;
 
-    #[ORM\OneToMany(mappedBy: 'vacationScheduler', targetEntity: VacationScheduler::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: VacationScheduler::class, cascade: ['persist'], fetch: 'EAGER')]
     #[ORM\OrderBy(['enabled' => 'DESC', 'createdAt' => 'DESC'])]
     private Collection $vacationSchedulerList;
 
