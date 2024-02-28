@@ -1,19 +1,19 @@
 <?php
 /**
  * Created by PhpStorm.
- * Date: 26.02.2024
- * Time: 22:12
+ * Date: 28.02.2024
+ * Time: 21:43
  */
 
-namespace App\View\Form\Constraint\Product;
+namespace App\View\Form\Constraint\Location;
 
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute]
-class ProductExist extends Constraint
+class LocationExist extends Constraint
 {
     public function getMessage(): string
     {
-        return 'Product not exist';
+        return 'Location not exist';
     }
 }

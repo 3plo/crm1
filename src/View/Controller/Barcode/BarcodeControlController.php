@@ -22,11 +22,17 @@ class BarcodeControlController extends AbstractController
     ) {
     }
 
-    #[Route(path: '/barcode/find', name: 'barcode_find', methods: 'ЗЩІЕ')]
+    #[Route(path: '/barcode/check', name: 'barcode_check', methods: 'GET')]
+    public function check(): Response
+    {
+        return $this->render('barcode/check.html.twig');
+    }
+
+    #[Route(path: '/barcode/find', name: 'barcode_find', methods: 'POST')]
     public function find(FindRequest $request): Response
     {
         return new JsonResponse(
-            $this->barcodeHandler->handle(),
+            $this->barcodeHandler->handle($request->getBarcode(), $request->getLocationId()),
         );
     }
 }

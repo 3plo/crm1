@@ -7,6 +7,7 @@
 
 namespace App\Domain\Location;
 
+use App\Domain\Product\Product;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -21,6 +22,9 @@ class Location
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private string $id;
+
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'locationList')]
+    private Collection $productList;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: RegularScheduler::class, cascade: ['persist'], fetch: 'EAGER')]
     #[ORM\OrderBy(['enabled' => 'DESC', 'createdAt' => 'DESC'])]
@@ -56,6 +60,7 @@ class Location
         $this->regularSchedulerList = new ArrayCollection();
         $this->specialSchedulerList = new ArrayCollection();
         $this->vacationSchedulerList = new ArrayCollection();
+        $this->productList = new ArrayCollection();
     }
 
     public function getId(): string

@@ -18,10 +18,9 @@ class FindRequestScheme
     public static function getSchemeConstraintList(): array
     {
         return [
-            'productId' => [
+            'locationId' => [
                 new Assert\NotBlank(),
                 new Assert\Type('string'),
-                //TODO add product exist constraint
             ],
             'barcode' => [
                 new Assert\NotBlank(),

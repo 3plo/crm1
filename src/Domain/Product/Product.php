@@ -7,6 +7,7 @@
 
 namespace App\Domain\Product;
 
+use App\Domain\Location\Location;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -21,6 +22,9 @@ class Product
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private string $id;
+
+    #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'productList')]
+    private Collection $locationList;
 
     #[ORM\Column(type: Types::INTEGER, options: ['unsigned' => true])]
     private int $durationDays;
@@ -48,12 +52,23 @@ class Product
 
     public function __construct()
     {
+        $this->locationList = new ArrayCollection();
         $this->priceList = new ArrayCollection();
     }
 
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getLocationList(): Collection
+    {
+        return $this->locationList;
+    }
+
+    public function hasLocation(Location $location): bool
+    {
+        return true === $this->locationList->contains($location);
     }
 
     public function getDurationDays(): int

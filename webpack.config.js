@@ -8,6 +8,7 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .addEntry('app', './assets/app.js')
+    .addEntry('js/barcode', './assets/js/barcode.js')
     .addEntry('js/product', './assets/js/product.js')
     .addEntry('js/location', './assets/js/location.js')
     .addEntry('js/modal', './assets/js/modal.js')

@@ -7,6 +7,7 @@
 
 namespace App\Domain\Barcode;
 
+use App\Domain\Card\Card;
 use App\Domain\Product\Product;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,6 +26,9 @@ class Barcode
 
     #[ORM\ManyToOne(targetEntity: Product::class)]
     private Product $product;
+
+    #[ORM\ManyToOne(targetEntity: Card::class)]
+    private Card $card;
 
     #[ORM\Column(type: Types::STRING)]
     private string $barcode;
@@ -53,6 +57,17 @@ class Barcode
     public function setProduct(Product $product): self
     {
         $this->product = $product;
+        return $this;
+    }
+
+    public function getCard(): Card
+    {
+        return $this->card;
+    }
+
+    public function setCard(Card $card): self
+    {
+        $this->card = $card;
         return $this;
     }
 

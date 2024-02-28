@@ -1,29 +1,29 @@
 <?php
 /**
  * Created by PhpStorm.
- * Date: 26.02.2024
- * Time: 22:12
+ * Date: 28.02.2024
+ * Time: 21:43
  */
 
-namespace App\View\Form\Constraint\Product;
+namespace App\View\Form\Constraint\Location;
 
-use App\Domain\Product\Repository\ProductRepository;
+use App\Domain\Location\Repository\LocationRepository;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
-class ProductExistValidator extends ConstraintValidator
+class LocationExistValidator extends ConstraintValidator
 {
     public function __construct(
-        private readonly ProductRepository $productRepository,
+        private readonly LocationRepository $locationRepository,
     ) {
     }
 
     #[\Override] public function validate(mixed $value, Constraint $constraint): void
     {
-        if (false === $constraint instanceof ProductExist) {
-            throw new UnexpectedTypeException($constraint, ProductExist::class);
+        if (false === $constraint instanceof LocationExist) {
+            throw new UnexpectedTypeException($constraint, LocationExist::class);
         }
 
         if (null === $value || '' === $value) {
@@ -34,13 +34,13 @@ class ProductExistValidator extends ConstraintValidator
             throw new UnexpectedValueException($value, 'string');
         }
 
-        $product = $this->productRepository->find($value);
-        if (null !== $product) {
+        $location = $this->locationRepository->find($value);
+        if (null !== $location) {
             return;
         }
 
         $this->context->buildViolation($constraint->getMessage())
-            ->setParameter('[productId]', $value)
+            ->setParameter('[locationId]', $value)
             ->addViolation();
     }
 }

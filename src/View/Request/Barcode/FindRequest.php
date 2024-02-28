@@ -7,6 +7,7 @@
 
 namespace App\View\Request\Barcode;
 
+use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Request\StructureValidatedRequestInterface;
 use App\View\Scheme\Barcode\FindRequestScheme;
 use JMS\Serializer\Annotation as JMS;
@@ -14,8 +15,9 @@ use Symfony\Component\Validator\Constraint;
 
 class FindRequest implements StructureValidatedRequestInterface
 {
-    #[JMS\SerializedName('productId')]
-    private string $productId;
+    #[JMS\SerializedName('locationId')]
+    #[LocationExist]
+    private string $locationId;
 
     private string $barcode;
 
@@ -27,9 +29,9 @@ class FindRequest implements StructureValidatedRequestInterface
         return FindRequestScheme::getSchemeConstraintList();
     }
 
-    public function getProductId(): string
+    public function getLocationId(): string
     {
-        return $this->productId;
+        return $this->locationId;
     }
 
     public function getBarcode(): string
