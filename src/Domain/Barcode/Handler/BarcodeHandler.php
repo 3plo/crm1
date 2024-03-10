@@ -7,6 +7,8 @@
 
 namespace App\Domain\Barcode\Handler;
 
+use App\Domain\Barcode\Barcode;
+use App\Domain\Barcode\Command\ScanLogCommand;
 use App\Domain\Barcode\Repository\BarcodeRepository;
 use App\Domain\Barcode\Result\BarcodeHandleResult;
 use App\Domain\Location\Repository\LocationRepository;
@@ -18,27 +20,63 @@ class BarcodeHandler
         private readonly BarcodeRepository  $barcodeRepository,
         private readonly LocationRepository $locationRepository,
         private readonly Security           $security,
+        private readonly ScanLogHandler     $scanLogHandler,
     ) {
     }
 
     public function handle(
         string $barcode,
         string $locationId,
-    ): BarcodeHandleResult {
+    ): BarcodeHandleResult
+    {
         $location = $this->locationRepository->find($locationId);
         $barcodeData = $this->barcodeRepository->findOneBy(['barcode' => $barcode]);
 
         if (null === $barcodeData) {
-            return new BarcodeHandleResult(false, 'Barcode not found');
+            return $this->makeResult(false, 'Barcode not found', $barcode, $barcodeData);
         }
 
         if (false === $barcodeData->getProduct()->hasLocation($location)) {
-            return new BarcodeHandleResult(false, 'No corresponding for current location');
+            return $this->makeResult(false, 'No corresponding for current location', $barcode, $barcodeData);
         }
-        //TODO check card state
-        //TODO add scan log
-        //TODO change count usage for card
 
-        return new BarcodeHandleResult(true, 'allow');
+        $card = $barcodeData->getCard();
+        if (false === $card->isEnabled()) {
+            return $this->makeResult(false, 'Card inactive', $barcode, $barcodeData);
+        }
+
+        $card = $barcodeData->getCard();
+        if ((new \DateTimeImmutable())->format('Y-m-d') >= $card->getValidFrom()->format('Y-m-d')) {
+            return $this->makeResult(false, 'Card expired', $barcode, $barcodeData);
+        }
+
+        if (
+            null !== $card->getLastUsage() &&
+            $card->getMaxUsage() >= $card->getCountUsage() &&
+            (new \DateTimeImmutable())->format('Y-m-d') !== $card->getLastUsage()->format('Y-m-d')
+        ) {
+            return $this->makeResult(false, 'Card used max times', $barcode, $barcodeData);
+        }
+
+        return $this->makeResult(true, 'allow', $barcode, $barcodeData);
+    }
+
+    private function makeResult(
+        bool $status,
+        string $message,//TODO maybe change status by enum
+        string $barcodeValue,
+        null|Barcode $barcode,
+    ): BarcodeHandleResult {
+        $result = new BarcodeHandleResult($status, $message);
+
+        $this->scanLogHandler->handle(
+            new ScanLogCommand(
+                $result,
+                $barcode,
+                $barcodeValue,
+            ),
+        );
+
+        return $result;
     }
 }

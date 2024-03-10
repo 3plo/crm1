@@ -1,23 +1,25 @@
 import axios from 'axios';
 
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('barcodeForm');
-    const barcodeInput = document.getElementById('barcodeInput');
+    document.querySelectorAll('#barcode_form').forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const barcodeInput = document.getElementById('barcode');
+            const locationIdInput = document.getElementById('location_id');
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        axios.post(
-            '/barcode/find',
-            {
-                    barcode: barcodeInput.value
-            }
-        )
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
+            axios.post(
+                '/barcode/find',
+                {
+                        barcode: barcodeInput.value,
+                        locationId: locationIdInput.value,
+                }
+            )
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                });
+        });
     });
 });

@@ -7,8 +7,10 @@
 
 namespace App\View\Form\Types\Product;
 
+use App\Domain\Card\Enum\Type;
 use App\View\Form\Types\AbstractRequestType;
 use App\View\Request\Product\ProductCreateRequest;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -32,6 +34,27 @@ class ProductFormType extends AbstractRequestType
                         new Assert\Positive(),
                     ],
                 ]
+            )
+            ->add(
+                'countUsage',
+                IntegerType::class,
+                [
+                    'label' => 'Max count usage',
+                    'attr' => ['min' => 1],
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                        new Assert\Positive(),
+                    ],
+                ]
+            )
+            ->add(
+                'type',
+                ChoiceType::class,
+                [
+                    'label' => 'Type',
+                    'attr' => ['class' => 'input-field'],
+                    'choices' => Type::viewCases(),
+                ],
             )
             ->add(
                 'title',

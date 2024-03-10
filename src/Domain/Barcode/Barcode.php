@@ -13,9 +13,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-//TODO add index uniq by barcode
-//TODO add relation to goods
 #[ORM\Entity]
+#[ORM\UniqueConstraint(fields: ['barcode'])]
 class Barcode
 {
     #[ORM\Id]

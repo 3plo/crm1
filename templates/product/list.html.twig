@@ -7,6 +7,23 @@
     <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">
     <link rel="stylesheet" href="{{ asset('build/css/modal.css') }}">
     <link rel="stylesheet" href="{{ asset('build/css/product.css') }}">
+    <style>
+        .sell-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .sell-button:hover {
+            background-color: #45a049;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -24,9 +41,11 @@
             {% if productList is not empty %}
                 {% for product in productList %}
                     <div class="product-item" data-product-id="{{ product.id }}">
+                        <a href="{{ path('card_create', {productId: product.id}) }}"><button class="sell-button">Sell</button></a>
                         <h3 class="title">{{ product.title }}</h3>
                         <p class="description">{{ product.description }}</p>
                         <p class="duration-days">{{ product.durationDays }} days</p>
+                        <p class="count-usage">{{ product.countUsage }} - max count usage</p>
 
 
                         <div class="prices">

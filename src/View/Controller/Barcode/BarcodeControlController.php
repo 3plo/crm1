@@ -9,6 +9,7 @@ namespace App\View\Controller\Barcode;
 
 
 use App\Domain\Barcode\Handler\BarcodeHandler;
+use App\Domain\Location\Repository\LocationRepository;
 use App\View\Request\Barcode\FindRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,13 +20,19 @@ class BarcodeControlController extends AbstractController
 {
     public function __construct(
         private BarcodeHandler $barcodeHandler,
+        private LocationRepository $locationRepository,
     ) {
     }
 
-    #[Route(path: '/barcode/check', name: 'barcode_check', methods: 'GET')]
-    public function check(): Response
+    #[Route(path: '/barcode/check/{locationId}', name: 'barcode_check', methods: 'GET')]
+    public function check(string $locationId): Response
     {
-        return $this->render('barcode/check.html.twig');
+        return $this->render(
+            'barcode/check.html.twig',
+            [
+                'location' => $this->locationRepository->find($locationId),//TODO check is exist and has access
+            ],
+        );
     }
 
     #[Route(path: '/barcode/find', name: 'barcode_find', methods: 'POST')]

@@ -7,6 +7,7 @@
 
 namespace App\View\Controller\Product;
 
+use App\Domain\Card\Enum\Type;
 use App\Domain\Product\Price;
 use App\Domain\Product\Product;
 use App\Domain\Product\Repository\ProductRepository;
@@ -51,6 +52,8 @@ class ProductController extends AbstractController
                 $product = (new Product())
                     ->setTitle($productRequest->getTitle())
                     ->setDescription($productRequest->getDescription())
+                    ->setType(Type::from($productRequest->getType()))
+                    ->setCountUsage($productRequest->getCountUsage())
                     ->setDurationDays($productRequest->getDurationDays())
                     ->setEnabled(true);
 

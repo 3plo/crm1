@@ -12,5 +12,14 @@ enum Type: string
     case SingleDayTicket = 'single_day_ticket';
     case MonthlyTicket = 'monthly_ticket';
     case YearlyTicket = 'yearly_ticket';
+
+    public static function viewCases(): array
+    {
+        return [
+            'Single day ticket' => self::SingleDayTicket->value,
+            'Monthly ticket' => self::MonthlyTicket->value,
+            'Yearly ticket' => self::YearlyTicket->value,
+        ];
+    }
 }
 

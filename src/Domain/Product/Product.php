@@ -7,6 +7,7 @@
 
 namespace App\Domain\Product;
 
+use App\Domain\Card\Enum\Type;
 use App\Domain\Location\Location;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -25,6 +26,12 @@ class Product
 
     #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'productList')]
     private Collection $locationList;
+
+    #[ORM\Column(type: Types::STRING, enumType: Type::class)]
+    private Type $type;
+
+    #[ORM\Column(type: Types::INTEGER, options: ['unsigned' => true])]
+    private int $countUsage;
 
     #[ORM\Column(type: Types::INTEGER, options: ['unsigned' => true])]
     private int $durationDays;
@@ -69,6 +76,28 @@ class Product
     public function hasLocation(Location $location): bool
     {
         return true === $this->locationList->contains($location);
+    }
+
+    public function getType(): Type
+    {
+        return $this->type;
+    }
+
+    public function setType(Type $type): self
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    public function getCountUsage(): int
+    {
+        return $this->countUsage;
+    }
+
+    public function setCountUsage(int $countUsage): self
+    {
+        $this->countUsage = $countUsage;
+        return $this;
     }
 
     public function getDurationDays(): int
@@ -132,10 +161,19 @@ class Product
         return $this->priceList;
     }
 
+    public function getActivePriceList(): Collection
+    {
+        return $this->getPriceList()->filter(
+            function (Price $price) {
+                return true === $price->isEnabled();
+            }
+        );
+    }
+
     public function getPriceById(string $priceId): null|Price
     {
         $price = $this->getPriceList()->filter(
-            function ($price) use ($priceId) {
+            function (Price $price) use ($priceId) {
                 return $priceId === $price->getId();
             }
         )->first();

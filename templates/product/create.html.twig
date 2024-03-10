@@ -9,10 +9,15 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="center-container">
         <h2>Create Product</h2>
 
         {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+        <div class="form-group">
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title, {'attr': {'class': 'input-field'}}) }}
+        </div>
 
         <div class="form-group">
             {{ form_label(form.durationDays) }}
@@ -20,8 +25,13 @@
         </div>
 
         <div class="form-group">
-            {{ form_label(form.title) }}
-            {{ form_widget(form.title, {'attr': {'class': 'input-field'}}) }}
+            {{ form_label(form.countUsage) }}
+            {{ form_widget(form.countUsage, {'attr': {'class': 'input-field'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.type) }}
+            {{ form_widget(form.type, {'attr': {'class': 'input-field'}}) }}
         </div>
 
         <div class="form-group">

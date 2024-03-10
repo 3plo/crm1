@@ -8,6 +8,7 @@
 namespace App\Domain\Card;
 
 use App\Domain\Card\Enum\Type;
+use App\Domain\Product\Product;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -21,6 +22,9 @@ class Card
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private string $id;
 
+    #[ORM\ManyToOne(targetEntity: Product::class)]
+    private Product $product;
+
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $enabled = true;
 
@@ -31,7 +35,10 @@ class Card
     private null|int $maxUsage = null;
 
     #[ORM\Column(type: Types::INTEGER)]
-    private int $countUsage;
+    private int $countUsage = 0;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true, options: ['default' => null])]
+    private null|\DateTimeImmutable $lastUsage = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private \DateTimeImmutable $validFrom;
@@ -50,6 +57,17 @@ class Card
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Product $product): self
+    {
+        $this->product = $product;
+        return $this;
     }
 
     public function isEnabled(): bool
@@ -93,6 +111,17 @@ class Card
     public function setCountUsage(int $countUsage): self
     {
         $this->countUsage = $countUsage;
+        return $this;
+    }
+
+    public function getLastUsage(): null|\DateTimeImmutable
+    {
+        return $this->lastUsage;
+    }
+
+    public function setLastUsage(null|\DateTimeImmutable $lastUsage): self
+    {
+        $this->lastUsage = $lastUsage;
         return $this;
     }
 

@@ -28,6 +28,11 @@
                                 <h3 class="title">{{ location.title }}</h3>
                                 <p class="description">{{ location.description }}</p>
                                 <p class="status">{% if location.enabled %}Увімкнено{% else %}Вимкнено{% endif %}</p>
+                                <p>
+                                    <a href="{{ path('barcode_check', {locationId: location.id}) }}">
+                                        <button class="info-button scan-button">Scan Barcode</button>
+                                    </a>
+                                </p>
                             </div>
                             <div class="work-graph">
                                 <h4>Regular scheduler</h4>

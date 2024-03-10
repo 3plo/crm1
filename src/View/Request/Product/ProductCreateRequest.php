@@ -15,6 +15,11 @@ class ProductCreateRequest implements FormRequestInterface
     #[JMS\SerializedName('durationDays')]
     private string $durationDays;
 
+    #[JMS\SerializedName('countUsage')]
+    private string $countUsage;
+
+    private string $type;
+
     private string $title;
 
     private string $description;
@@ -22,6 +27,16 @@ class ProductCreateRequest implements FormRequestInterface
     public function getDurationDays(): string
     {
         return $this->durationDays;
+    }
+
+    public function getCountUsage(): string
+    {
+        return $this->countUsage;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     public function getTitle(): string

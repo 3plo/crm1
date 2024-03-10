@@ -41,7 +41,7 @@ header > .logo > img {
     font-weight: bold;
 }
 
-.profile-button {
+.info-button {
     background-color: #007bff;
     color: #fff;
     padding: 10px 20px;
@@ -50,7 +50,7 @@ header > .logo > img {
     cursor: pointer;
 }
 
-.profile-button:hover {
+.info-button:hover {
     background-color: #0056b3;
 }
 

@@ -22,6 +22,14 @@
     font-size: 0.9rem;
 }
 
+.count-usage {
+    position: absolute;
+    top: 20px;
+    right: 5px;
+    color: #555;
+    font-size: 0.9rem;
+}
+
 .prices {
     margin-top: 10px;
     text-align: center;
