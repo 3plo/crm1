@@ -8,6 +8,7 @@
 namespace App\View\Controller\Product;
 
 use App\Domain\Card\Enum\Type;
+use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\Product\Price;
 use App\Domain\Product\Product;
 use App\Domain\Product\Repository\ProductRepository;
@@ -31,6 +32,7 @@ class ProductController extends AbstractController
         private readonly SerializerInterface    $serializer,
         private readonly FormRequestResolver    $formRequestResolver,
         private readonly ProductRepository      $productRepository,
+        private readonly LocationRepository     $locationRepository,
     ) {
     }
 
@@ -57,6 +59,10 @@ class ProductController extends AbstractController
                     ->setDurationDays($productRequest->getDurationDays())
                     ->setEnabled(true);
 
+                foreach ($productRequest->getLocationList() as $locationId) {
+                    $product->addLocation($this->locationRepository->find($locationId));
+                }
+
                 $this->entityManager->persist($product);
                 $this->entityManager->flush();
 
@@ -65,6 +71,7 @@ class ProductController extends AbstractController
             }
         } catch (\Throwable $throwable) {//TODO change exception to form validation exception
             //TODO handle exception ??
+            dd($throwable);
         }
         $form = $this->createForm(ProductFormType::class);
 

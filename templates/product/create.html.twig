@@ -39,6 +39,11 @@
             {{ form_widget(form.description, {'attr': {'class': 'textarea'}}) }}
         </div>
 
+        <div class="form-group">
+            {{ form_label(form.locationList) }}
+            {{ form_widget(form.locationList, {'attr': {'class': 'input-field', 'multiple': 'multiple'}}) }}
+        </div>
+
         {{ form_end(form, {'attr': {'class': 'btn'}}) }}
     </div>
 {% endblock %}

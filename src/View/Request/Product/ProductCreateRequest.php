@@ -24,6 +24,10 @@ class ProductCreateRequest implements FormRequestInterface
 
     private string $description;
 
+    #[JMS\SerializedName('locationList')]
+    #[JMS\Type('array<string>')]
+    private array $locationList;
+
     public function getDurationDays(): string
     {
         return $this->durationDays;
@@ -47,5 +51,10 @@ class ProductCreateRequest implements FormRequestInterface
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getLocationList(): array
+    {
+        return $this->locationList;
     }
 }

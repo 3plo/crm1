@@ -8,6 +8,7 @@
 namespace App\View\Form\Types\Product;
 
 use App\Domain\Card\Enum\Type;
+use App\Domain\Location\Repository\LocationRepository;
 use App\View\Form\Types\AbstractRequestType;
 use App\View\Request\Product\ProductCreateRequest;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,6 +21,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ProductFormType extends AbstractRequestType
 {
+    public function __construct(
+        private readonly LocationRepository $locationRepository,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -77,6 +83,19 @@ class ProductFormType extends AbstractRequestType
                 ]
             )
             ->add(
+                'locationList',
+                ChoiceType::class,
+                [
+                    'label' => 'Location list',
+                    'attr' => ['class' => 'input-field'],
+                    'choices' => $this->prepareLocationList(),
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                    ],
+                    'multiple' => true,
+                ]
+            )
+            ->add(
                 'save',
                 SubmitType::class,
                 [
@@ -90,5 +109,15 @@ class ProductFormType extends AbstractRequestType
     #[\Override] public static function getRequestClass(): string
     {
         return ProductCreateRequest::class;
+    }
+
+    private function prepareLocationList(): array
+    {
+        $result = [];
+        foreach ($this->locationRepository->findBy(['enabled' => true]) as $location) {
+            $result[$location->getTitle()] = $location->getId();
+        }
+
+        return $result;
     }
 }

@@ -68,6 +68,13 @@ class Product
         return $this->id;
     }
 
+    public function addLocation(Location $location): self
+    {
+        $this->locationList->add($location);
+
+        return $this;
+    }
+
     public function getLocationList(): Collection
     {
         return $this->locationList;
@@ -75,7 +82,9 @@ class Product
 
     public function hasLocation(Location $location): bool
     {
-        return true === $this->locationList->contains($location);
+        $locationList = $this->getLocationList();
+
+        return true === $locationList->contains($location);
     }
 
     public function getType(): Type

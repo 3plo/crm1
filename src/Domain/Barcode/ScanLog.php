@@ -27,7 +27,7 @@ class ScanLog
     private string $barcodeString;
 
     #[ORM\ManyToOne(targetEntity: Barcode::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private null|Barcode $barcode = null;
 
     #[ORM\Column(type: Types::STRING)]

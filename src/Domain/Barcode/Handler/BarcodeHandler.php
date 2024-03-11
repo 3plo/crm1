@@ -27,8 +27,7 @@ class BarcodeHandler
     public function handle(
         string $barcode,
         string $locationId,
-    ): BarcodeHandleResult
-    {
+    ): BarcodeHandleResult {
         $location = $this->locationRepository->find($locationId);
         $barcodeData = $this->barcodeRepository->findOneBy(['barcode' => $barcode]);
 
@@ -46,7 +45,7 @@ class BarcodeHandler
         }
 
         $card = $barcodeData->getCard();
-        if ((new \DateTimeImmutable())->format('Y-m-d') >= $card->getValidFrom()->format('Y-m-d')) {
+        if ((new \DateTimeImmutable())->format('Y-m-d') > $card->getValidFrom()->format('Y-m-d')) {
             return $this->makeResult(false, 'Card expired', $barcode, $barcodeData);
         }
 

@@ -11,6 +11,7 @@ namespace App\View\Controller\Barcode;
 use App\Domain\Barcode\Handler\BarcodeHandler;
 use App\Domain\Location\Repository\LocationRepository;
 use App\View\Request\Barcode\FindRequest;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,7 @@ class BarcodeControlController extends AbstractController
     public function __construct(
         private BarcodeHandler $barcodeHandler,
         private LocationRepository $locationRepository,
+        private SerializerInterface $serializer,
     ) {
     }
 
@@ -39,7 +41,11 @@ class BarcodeControlController extends AbstractController
     public function find(FindRequest $request): Response
     {
         return new JsonResponse(
-            $this->barcodeHandler->handle($request->getBarcode(), $request->getLocationId()),
+            data: $this->serializer->serialize(
+                $this->barcodeHandler->handle($request->getBarcode(), $request->getLocationId()),
+                'json',
+            ),
+            json: true,
         );
     }
 }

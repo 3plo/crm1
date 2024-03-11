@@ -64,7 +64,6 @@ final class Version20240310100151 extends AbstractMigration
             ALTER TABLE scan_log
                 DROP FOREIGN KEY FK_FB19A49229439E58
         ');
-        $this->addSql('DROP TABLE product_location');
         $this->addSql('DROP TABLE scan_log');
         $this->addSql('
             ALTER TABLE barcode
