@@ -5,7 +5,7 @@
  * Time: 21:57
  */
 
-namespace App\Domain\Barcode\Command;
+namespace App\Application\Barcode\Command;
 
 use App\Domain\Card\Card;
 

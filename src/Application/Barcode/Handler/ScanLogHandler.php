@@ -5,9 +5,9 @@
  * Time: 21:54
  */
 
-namespace App\Domain\Barcode\Handler;
+namespace App\Application\Barcode\Handler;
 
-use App\Domain\Barcode\Command\ScanLogCommand;
+use App\Application\Barcode\Command\ScanLogCommand;
 use App\Domain\Barcode\ScanLog;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -22,6 +22,7 @@ class ScanLogHandler
     {
         $log = (new ScanLog())
             ->setBarcodeString($command->getBarcodeString())
+            ->setLocation($command->getLocation())
             ->setBarcode($command->getBarcode())
             ->setStatus($command->getBarcodeHandleResult()->getStatus())
             ->setMessage($command->getBarcodeHandleResult()->getMessage());

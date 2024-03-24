@@ -7,7 +7,7 @@
 
 namespace App\View\Controller\Card;
 
-use App\Domain\Card\Command\CreateCommand;
+use App\Application\Card\Command\CreateCommand;
 use App\Domain\Card\Handler\CreateHandler;
 use App\Domain\Product\Repository\ProductRepository;
 use App\View\Form\Types\Card\CardFormType;

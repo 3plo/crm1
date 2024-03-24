@@ -5,15 +5,17 @@
  * Time: 21:54
  */
 
-namespace App\Domain\Barcode\Command;
+namespace App\Application\Barcode\Command;
 
+use App\Application\Barcode\Result\BarcodeHandleResult;
 use App\Domain\Barcode\Barcode;
-use App\Domain\Barcode\Result\BarcodeHandleResult;
+use App\Domain\Location\Location;
 
 class ScanLogCommand
 {
     public function __construct(
         private readonly BarcodeHandleResult $barcodeHandleResult,
+        private readonly Location $location,
         private readonly null|Barcode $barcode,
         private readonly string $barcodeString,
     ) {
@@ -22,6 +24,11 @@ class ScanLogCommand
     public function getBarcodeHandleResult(): BarcodeHandleResult
     {
         return $this->barcodeHandleResult;
+    }
+
+    public function getLocation(): Location
+    {
+        return $this->location;
     }
 
     public function getBarcode(): null|Barcode

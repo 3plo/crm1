@@ -1,0 +1,28 @@
+.form-group label {
+    width: 125px !important;
+}
+
+.right-form-group {
+    width: 17%;
+}
+
+.filter-item {
+    width: 17%;
+}
+
+.report-content-container {
+    width: 100%;
+}
+
+.report-content {
+    width: 100%;
+}
+
+.report-content {
+    text-align: center;
+}
+
+.report-table, .report-table tr, .report-table td, .report-table th {
+    border: 1px solid #333333;
+    border-collapse: collapse;
+}

@@ -20,11 +20,11 @@
                 <ul>
                     <li><a href="{{ path('location_list') }}">Locations</a></li>
                     <li><a href="{{ path('product_list') }}">Products</a></li>
-                    <li><a href="#">Reports</a></li>
+                    <li><a href="{{ path('report_visit_general_report') }}">Reports</a></li>
                 </ul>
             </nav>
 
-            <button class="info-button profile-button">Увійти / Профіль</button>
+            <a href="{{ path('login') }}"><button class="info-button profile-button">Увійти / Профіль</button></a>
 
         </header>
 

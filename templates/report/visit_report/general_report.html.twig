@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Report Form{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/report.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="full-container">
+        <h2>Report Form</h2>
+        {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+        <div class="form-row">
+            <div class="form-group filter-item">
+                {{ form_label(form.dateFrom) }}
+                {% if request is defined and request != null %}
+                    {{ form_widget(form.dateFrom, {'value': request.getDateFrom().format('Y-m-d')}) }}
+                {% else %}
+                    {{ form_widget(form.dateFrom) }}
+                {% endif %}
+                {{ form_errors(form.dateFrom) }}
+            </div>
+
+            <div class="form-group filter-item">
+                {{ form_label(form.dateTill) }}
+                {% if request is defined and request != null %}
+                    {{ form_widget(form.dateTill, {'value': request.getDateTill().format('Y-m-d')}) }}
+                {% else %}
+                    {{ form_widget(form.dateTill) }}
+                {% endif %}
+                {{ form_errors(form.dateTill) }}
+            </div>
+
+            <div class="form-group filter-item">
+                {{ form_label(form.location) }}
+                {% if request is defined and request != null %}
+                    {{ form_widget(form.location, {'value': request.getLocation()}) }}
+                {% else %}
+                    {{ form_widget(form.location) }}
+                {% endif %}
+                {{ form_errors(form.location) }}
+            </div>
+
+            <div class="form-group filter-item">
+                {{ form_label(form.product) }}
+                {% if request is defined and request != null %}
+                    {{ form_widget(form.product, {'value': request.getProduct()}) }}
+                {% else %}
+                    {{ form_widget(form.product) }}
+                {% endif %}
+                {{ form_errors(form.product) }}
+            </div>
+
+            <div class="right-form-group">
+                <button type="submit" class="btn">Generate Report</button>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+
+        <div class="report-content-container">
+            <table class="report-content report-table">
+                <thead>
+                <tr>
+                    <th style="width: 35%">Location</th>
+                    <th style="width: 35%">Product</th>
+                    <th style="width: 15%">Successful Entries</th>
+                    <th style="width: 35%">Failed Entries</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for reportItem in reportData %}
+                    <tr>
+                        <td>{{ reportItem.locationTitle }}</td>
+                        <td>{{ reportItem.productTitle }}</td>
+                        <td>{{ reportItem.countSuccess }}</td>
+                        <td>{{ reportItem.countDecline }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{% endblock %}

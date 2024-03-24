@@ -5,7 +5,7 @@
  * Time: 22:36
  */
 
-namespace App\Domain\Card\Command;
+namespace App\Application\Card\Command;
 
 use App\Domain\Product\Product;
 

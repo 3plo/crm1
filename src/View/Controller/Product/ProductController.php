@@ -12,7 +12,7 @@ use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\Product\Price;
 use App\Domain\Product\Product;
 use App\Domain\Product\Repository\ProductRepository;
-use App\View\Form\Types\Product\ProductFormType;
+use App\View\Form\Types\Product\ProductCreateRequestType;
 use App\View\Request\Product\ProductCreateRequest;
 use App\View\Request\Product\ProductPriceCreateRequest;
 use App\View\Request\Product\ProductPriceToggleRequest;
@@ -49,7 +49,7 @@ class ProductController extends AbstractController
     {
         try {
             /** @var ProductCreateRequest $productRequest */
-            $productRequest = $this->formRequestResolver->resolve($request, ProductFormType::class);
+            $productRequest = $this->formRequestResolver->resolve($request, ProductCreateRequestType::class);
             if (null !== $productRequest) {
                 $product = (new Product())
                     ->setTitle($productRequest->getTitle())
@@ -71,9 +71,8 @@ class ProductController extends AbstractController
             }
         } catch (\Throwable $throwable) {//TODO change exception to form validation exception
             //TODO handle exception ??
-            dd($throwable);
         }
-        $form = $this->createForm(ProductFormType::class);
+        $form = $this->createForm(ProductCreateRequestType::class);
 
         return $this->render('product/create.html.twig', [
             'form' => $form->createView(),

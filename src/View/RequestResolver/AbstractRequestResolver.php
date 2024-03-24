@@ -9,6 +9,7 @@ use JMS\Serializer\ArrayTransformerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -65,6 +66,10 @@ abstract class AbstractRequestResolver implements ValueResolverInterface
      */
     private function isSupport(Request $request, string $argumentType): bool
     {
+        if (true === is_a($argumentType, AuthenticationUtils::class, true)) {
+            return false;
+        }
+
         if ('' === $argumentType || false === $this->canProcess($request)) {
             return false;
         }

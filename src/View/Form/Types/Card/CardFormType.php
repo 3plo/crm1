@@ -7,7 +7,6 @@
 
 namespace App\View\Form\Types\Card;
 
-use App\Domain\Card\Enum\Type;
 use App\Domain\Product\Price;
 use App\View\Form\Constraint\Product\ProductExist;
 use App\View\Form\Types\AbstractRequestType;
@@ -21,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class CardFormType extends AbstractRequestType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    #[\Override] public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $productId = $options['data']['productId'] ?? '';
         $builder

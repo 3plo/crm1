@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class LocationFormType extends AbstractRequestType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    #[\Override] public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(

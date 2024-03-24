@@ -5,10 +5,10 @@
  * Time: 21:56
  */
 
-namespace App\Domain\Barcode\Handler;
+namespace App\Application\Barcode\Handler;
 
+use App\Application\Barcode\Command\CreateCommand;
 use App\Domain\Barcode\Barcode;
-use App\Domain\Barcode\Command\CreateCommand;
 use App\Domain\Barcode\Repository\BarcodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 

@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SpecialSchedulerType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    #[\Override] public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(

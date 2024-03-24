@@ -5,7 +5,7 @@
  * Time: 21:14
  */
 
-namespace App\Domain\Barcode\Result;
+namespace App\Application\Barcode\Result;
 
 class BarcodeHandleResult
 {

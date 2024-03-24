@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VacationSchedulerType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    #[\Override] public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(

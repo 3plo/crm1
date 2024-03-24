@@ -9,6 +9,7 @@ namespace App\View\Form\Types\Product;
 
 use App\Domain\Card\Enum\Type;
 use App\Domain\Location\Repository\LocationRepository;
+use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Form\Types\AbstractRequestType;
 use App\View\Request\Product\ProductCreateRequest;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,14 +20,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ProductFormType extends AbstractRequestType
+class ProductCreateRequestType extends AbstractRequestType
 {
     public function __construct(
         private readonly LocationRepository $locationRepository,
     ) {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    #[\Override] public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -90,6 +91,7 @@ class ProductFormType extends AbstractRequestType
                     'attr' => ['class' => 'input-field'],
                     'choices' => $this->prepareLocationList(),
                     'constraints' => [
+                        new LocationExist(),
                         new Assert\NotBlank(),
                     ],
                     'multiple' => true,

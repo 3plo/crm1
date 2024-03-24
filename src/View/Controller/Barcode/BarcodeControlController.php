@@ -8,7 +8,7 @@
 namespace App\View\Controller\Barcode;
 
 
-use App\Domain\Barcode\Handler\BarcodeHandler;
+use App\Application\Barcode\Handler\BarcodeHandler;
 use App\Domain\Location\Repository\LocationRepository;
 use App\View\Request\Barcode\FindRequest;
 use JMS\Serializer\SerializerInterface;

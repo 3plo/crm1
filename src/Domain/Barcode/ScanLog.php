@@ -7,6 +7,7 @@
 
 namespace App\Domain\Barcode;
 
+use App\Domain\Location\Location;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -22,6 +23,9 @@ class ScanLog
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $status;
+
+    #[ORM\ManyToOne(targetEntity: Location::class)]
+    private Location $location;
 
     #[ORM\Column(type: Types::STRING)]
     private string $barcodeString;
@@ -40,6 +44,17 @@ class ScanLog
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getLocation(): Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(Location $location): self
+    {
+        $this->location = $location;
+        return $this;
     }
 
     public function isStatus(): bool

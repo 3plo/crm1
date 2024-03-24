@@ -7,11 +7,10 @@
 
 namespace App\Domain\Card\Handler;
 
-use App\Domain\Barcode\Command\CreateCommand as BarcodeCreateCommand;
-use App\Domain\Barcode\Handler\CreateHandler as BarcodeCreateHandler;
+use App\Application\Barcode\Command\CreateCommand as BarcodeCreateCommand;
+use App\Application\Barcode\Handler\CreateHandler as BarcodeCreateHandler;
+use App\Application\Card\Command\CreateCommand;
 use App\Domain\Card\Card;
-use App\Domain\Card\Command\CreateCommand;
-use App\Domain\Card\Enum\Type;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CreateHandler
