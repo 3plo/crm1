@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Traffic report by location {{ location.title }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/report.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="full-container">
+    <h2>Traffic report by location {{ location.title }}</h2>
+    {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+    <div class="form-row">
+        <input id="location" type="hidden" value="{{ location.id }}">
+        <div class="form-group filter-item">
+            {{ form_label(form.dateFrom) }}
+            {% if request is defined and request != null %}
+                {{ form_widget(form.dateFrom, {'value': request.getDateFrom().format('Y-m-d')}) }}
+            {% else %}
+                {{ form_widget(form.dateFrom) }}
+            {% endif %}
+            {{ form_errors(form.dateFrom) }}
+        </div>
+
+        <div class="form-group filter-item">
+            {{ form_label(form.dateTill) }}
+            {% if request is defined and request != null %}
+                {{ form_widget(form.dateTill, {'value': request.getDateTill().format('Y-m-d')}) }}
+            {% else %}
+                {{ form_widget(form.dateTill) }}
+            {% endif %}
+            {{ form_errors(form.dateTill) }}
+        </div>
+
+        <div class="form-group filter-item">
+            {{ form_label(form.product) }}
+            {% if request is defined and request != null %}
+                {{ form_widget(form.product, {'value': request.getProduct()}) }}
+            {% else %}
+                {{ form_widget(form.product) }}
+            {% endif %}
+            {{ form_errors(form.product) }}
+        </div>
+
+        <div class="right-form-group">
+            <button type="submit" class="btn">Generate Report</button>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+    <div id="traffic-report-chart-wrap">
+        <canvas id="traffic-report-chart"></canvas>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script defer>
+        var chartContent = {};
+        {% if reportData is defined and reportData != null %}
+            {% for reportItem in reportData %}
+                chartContent['{{reportItem.getTitle()}}'] = {{ reportItem.getValue() }};
+            {% endfor %}
+        {% endif %}
+    </script>
+
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/report') }}
+{% endblock %}

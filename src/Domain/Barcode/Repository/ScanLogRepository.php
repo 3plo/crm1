@@ -72,4 +72,38 @@ class ScanLogRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findByIntervalAggregatedByHours(
+        \DateTimeImmutable $dateFrom,
+        \DateTimeImmutable $dateTill,
+        string $locationId,
+        null|string $productId,
+    ): array {
+        $qb = $this->createQueryBuilder(self::ALIAS);
+
+        $qb
+            ->select(
+                sprintf('CONCAT(DATE(%1$s.createdAt), \' \', HOUR(%1$s.createdAt)) AS title', self::ALIAS),
+                'COUNT(1) AS countSuccess',
+            )
+            ->leftJoin(Barcode::class, 'bc', Join::WITH, sprintf('%s.barcode = bc.id', self::ALIAS))
+            ->leftJoin(Product::class, 'p', Join::WITH, 'bc.product = p.id')
+            ->leftJoin(Location::class, 'l', Join::WITH, sprintf('%s.location = l.id', self::ALIAS))
+            ->where($qb->expr()->between(sprintf('%s.createdAt', self::ALIAS), ':startDate', ':endDate'))
+            ->andWhere(sprintf('%s.status = :status', self::ALIAS))
+            ->andWhere(sprintf('%s.id = :locationId', 'l'))
+            ->setParameter('locationId', $locationId)
+            ->setParameter('startDate', $dateFrom)
+            ->setParameter('endDate', $dateTill)
+            ->setParameter('status', true)
+            ->groupBy('title');
+
+        if (null !== $productId && '' !== $productId) {
+            $qb
+                ->andWhere(sprintf('%s.id = :productId', 'p'))
+                ->setParameter('productId', $productId);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -30,6 +30,8 @@ doctrine:
     dql:
       string_functions:
         IF: DoctrineExtensions\Query\Mysql\IfElse
+        DATE: DoctrineExtensions\Query\Mysql\Date
+        HOUR: DoctrineExtensions\Query\Mysql\Hour
 
 when@test:
   doctrine:

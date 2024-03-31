@@ -26,3 +26,16 @@
     border: 1px solid #333333;
     border-collapse: collapse;
 }
+
+#traffic-report-chart-wrap {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#traffic-report-chart {
+    width: 400px !important;
+    height: 100% !important;
+}

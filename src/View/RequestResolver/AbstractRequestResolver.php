@@ -46,6 +46,10 @@ abstract class AbstractRequestResolver implements ValueResolverInterface
     {
         /** @var class-string|StructureValidatedRequestInterface $argumentType */
         $argumentType = (string) $argument->getType();
+        if (false === is_a($argumentType, StructureValidatedRequestInterface::class, true)) {
+            return [$request];
+        }
+
         if (false === $this->isSupport($request, $argumentType)) {
             return [];
         }

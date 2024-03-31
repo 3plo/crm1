@@ -8,9 +8,14 @@
 namespace App\View\Controller\Report;
 
 use App\Application\Report\VisitReport\GeneralReport\Builder\GeneralReportBuilder;
-use App\Application\Report\VisitReport\GeneralReport\Command\ReportFilterCommand;
+use App\Application\Report\VisitReport\GeneralReport\Command\ReportFilterCommand as GeneralReportFilterCommand;
+use App\Application\Report\VisitReport\TrafficReport\Builder\TrafficReportBuilder;
+use App\Application\Report\VisitReport\TrafficReport\Command\ReportFilterCommand as TrafficReportFilterCommand;
+use App\Domain\Location\Repository\LocationRepository;
 use App\View\Form\Types\Report\VisitReport\GeneralRequestType;
+use App\View\Form\Types\Report\VisitReport\TrafficRequestType;
 use App\View\Request\Report\VisitReport\GeneralRequest;
+use App\View\Request\Report\VisitReport\TrafficRequest;
 use App\View\RequestResolver\FormRequestResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,11 +28,13 @@ class VisitReportController extends AbstractController
 {
     public function __construct(
         private readonly GeneralReportBuilder $generalReportBuilder,
-        private readonly FormRequestResolver    $formRequestResolver,
+        private readonly TrafficReportBuilder $trafficReportBuilder,
+        private readonly FormRequestResolver   $formRequestResolver,
+        private readonly LocationRepository    $locationRepository,
     ) {
     }
 
-    #[Route(path: '/report/visit/general/report', name: 'report_visit_general_report')]
+    #[Route(path: '/report/visit/general/report', name: 'report_visit_general_report', methods: 'GET')]
     public function generalReport(Request $request): Response
     {
         $reportData = [];
@@ -37,7 +44,7 @@ class VisitReportController extends AbstractController
             $generalRequest = $this->formRequestResolver->resolve($request, GeneralRequestType::class);
             if (null !== $generalRequest) {
                 $reportData = $this->generalReportBuilder->build(
-                    new ReportFilterCommand(
+                    new GeneralReportFilterCommand(
                         $generalRequest->getDateFrom(),
                         $generalRequest->getDateTill(),
                         $generalRequest->getLocation(),
@@ -54,7 +61,56 @@ class VisitReportController extends AbstractController
         return $this->render('report/visit_report/general_report.html.twig', [
             'form' => $form->createView(),
             'request' => $generalRequest,
-            'reportData' => $reportData
+            'reportData' => $reportData,
+        ]);
+    }
+
+    #[Route(path: '/report/visit/traffic', name: 'report_visit_traffic_report', methods: 'GET')]
+    public function trafficReport(Request $request): Response
+    {
+        $locationId = (string) $request->get('location');
+        $reportData = [];
+        $trafficRequest = null;
+        try {
+            /** @var TrafficRequest $trafficRequest */
+            $trafficRequest = $this->formRequestResolver->resolve($request, TrafficRequestType::class);
+            if ('' === $locationId) {
+                $locationId = $trafficRequest->getLocation();
+            }
+
+            if (null === $trafficRequest) {
+                $trafficRequest =
+                    (new TrafficRequest())
+                        ->setLocation($locationId)
+                        ->setDateFrom(new \DateTimeImmutable('midnight'))
+                        ->setDateTill((new \DateTimeImmutable('midnight'))->add(new \DateInterval('P1D')));
+            }
+
+            $reportData = $this->trafficReportBuilder->build(
+                new TrafficReportFilterCommand(
+                    $locationId,
+                    $trafficRequest->getDateFrom(),
+                    $trafficRequest->getDateTill(),
+                    $trafficRequest->getProduct(),
+                ),
+            );
+        } catch (\Throwable $throwable) {//TODO change exception to form validation exception
+            //TODO handle exception ??
+            dd($throwable);
+        }
+
+        $form = $this->createForm(
+            TrafficRequestType::class,
+            [
+                'locationId' => $locationId,
+            ],
+        );
+
+        return $this->render('report/visit_report/traffic_report.html.twig', [
+            'form' => $form->createView(),
+            'request' => $trafficRequest,
+            'reportData' => $reportData,
+            'location' => $this->locationRepository->find($locationId),
         ]);
     }
 }

@@ -1,19 +1,17 @@
 <?php
 /**
  * Created by PhpStorm.
- * Date: 13.03.2024
- * Time: 19:58
+ * Date: 31.03.2024
+ * Time: 15:35
  */
 
-namespace App\Application\Report\VisitReport\GeneralReport\Builder;
+namespace App\Application\Report\VisitReport\TrafficReport\Builder;
 
-use App\Application\Report\VisitReport\GeneralReport\Command\ReportFilterCommand;
-use App\Application\Report\VisitReport\GeneralReport\Result\Item;
+use App\Application\Report\VisitReport\TrafficReport\Command\ReportFilterCommand;
+use App\Application\Report\VisitReport\TrafficReport\Result\Item;
 use App\Domain\Barcode\Repository\ScanLogRepository;
-use App\Domain\Location\Repository\LocationRepository;
-use App\Domain\Product\Repository\ProductRepository;
 
-class GeneralReportBuilder
+class TrafficReportBuilder
 {
     public function __construct(
         private readonly ScanLogRepository $scanLogRepository,
@@ -25,7 +23,7 @@ class GeneralReportBuilder
      */
     public function build(ReportFilterCommand $command): array
     {
-        $scanLogAggregateList = $this->scanLogRepository->findByInterval(
+        $scanLogAggregateList = $this->scanLogRepository->findByIntervalAggregatedByHours(
             $command->getDateFrom(),
             $command->getDateTill(),
             $command->getLocationId(),
@@ -34,13 +32,14 @@ class GeneralReportBuilder
 
         $result = [];
         foreach ($scanLogAggregateList as $item) {
-            $result[] = new Item(
-                $item['locationTitle'] ?? '',
-                $item['productTitle'] ?? '',
+            $title = $item['title'] ?? '';
+            $result[$title] = new Item(
+                $title,
                 (int) $item['countSuccess'],
-                (int) $item['countDecline'],
             );
         }
+
+        ksort($scanLogAggregateList);
 
         return $result;
     }

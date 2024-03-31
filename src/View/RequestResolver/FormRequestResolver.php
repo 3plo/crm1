@@ -7,6 +7,7 @@
 
 namespace App\View\RequestResolver;
 
+use App\Infrastructure\Exception\FormValidationException;
 use App\Infrastructure\Exception\ValidationException;
 use App\View\Form\Types\AbstractRequestType;
 use App\View\Request\FormRequestInterface;
@@ -37,7 +38,7 @@ class FormRequestResolver
         }
 
         if (false === $form->isValid()) {
-            throw new ValidationException($form->getErrors(true));//TODO use other exception
+            throw new FormValidationException($form->getErrors(true));//TODO use other exception
         }
 
         return $this->arrayTransformer->fromArray($this->prepareData($form->getData()), $formType::getRequestClass());

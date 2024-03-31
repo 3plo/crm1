@@ -1,0 +1,107 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * Date: 16.03.2024
+ * Time: 10:15
+ */
+
+namespace App\View\Form\Types\Report\VisitReport;
+
+use App\Domain\Product\Repository\ProductRepository;
+use App\View\Form\Constraint\Location\LocationExist;
+use App\View\Form\Constraint\Product\ProductExist;
+use App\View\Form\Types\AbstractRequestType;
+use App\View\Request\Report\VisitReport\TrafficRequest;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+
+class TrafficRequestType extends AbstractRequestType
+{
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+    ) {
+    }
+
+    #[\Override] public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults(['method' => 'GET']);
+    }
+
+    #[\Override] public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $locationId = $options['data']['locationId'] ?? '';
+        $builder
+            ->add(
+                'dateFrom',
+                DateType::class,
+                [
+                    'label' => 'Date from',
+                    'attr' => ['class' => 'input-field'],
+                    'required' => true,
+                    'widget' => 'single_text',
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                    ],
+                ],
+            )
+            ->add(
+                'dateTill',
+                DateType::class,
+                [
+                    'label' => 'Date till',
+                    'attr' => ['class' => 'input-field'],
+                    'required' => true,
+                    'widget' => 'single_text',
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                    ],
+                ],
+            )
+            ->add(
+                'location',
+                HiddenType::class,
+                [
+                    'label' => false,
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                        new LocationExist(),
+                    ],
+                    'attr' => ['value' => $locationId],
+                ],
+            )
+            ->add(
+                'product',
+                ChoiceType::class,
+                [
+                    'label' => 'Product',
+                    'attr' => ['class' => 'input-field'],
+                    'choices' => $this->prepareProductList(),
+                    'placeholder' => '---',
+                    'required' => false,
+                    'empty_data' => null,
+                    'constraints' => [
+                        new ProductExist(),
+                    ],
+                ],
+            );
+    }
+
+    #[\Override] public static function getRequestClass(): string
+    {
+        return TrafficRequest::class;
+    }
+
+    private function prepareProductList(): array
+    {
+        $result = [];
+        foreach ($this->productRepository->findBy(['enabled' => true]) as $product) {
+            $result[$product->getTitle()] = $product->getId();
+        }
+
+        return $result;
+    }
+}

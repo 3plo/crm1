@@ -7,12 +7,13 @@
 
 namespace App\Infrastructure\Exception;
 
+use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class ValidationException extends \Exception
 {
     public function __construct(
-        private readonly ConstraintViolationListInterface $errorList,
+        private readonly ConstraintViolationListInterface $errorList
     ) {
         parent::__construct('Validation exception');
     }
