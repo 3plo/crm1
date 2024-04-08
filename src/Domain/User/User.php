@@ -19,60 +19,77 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private string $id;
 
-    #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
+    #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
+    private string $email;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $firstName;
+
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $lastName;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, length: 4096)]
     private array $roles = [];//admin employee
 
-    #[ORM\Column]
-    private array $access = [];//employee - action list
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, length: 4096)]
+    private array $accessList = [];//employee - action list
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, length: 4096)]
+    private array $locationAccessList = [];//employee - locationIdList
 
     #[ORM\Column]
-    private array $locationAccess = [];//employee - locationIdList
+    private null|string $password = null;
 
-    #[ORM\Column]
-    private array $productAccess = [];//employee - productIdList
-
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
-    private ?string $password = null;
-
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $isVerified = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $enabled = true;
 
     public function getId(): string
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
+    public function getFirstName(): string
     {
-        return (string) $this->email;
+        return $this->firstName;
     }
 
-    /**
-     * @see UserInterface
-     */
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -86,6 +103,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->roles = $roles;
 
+        return $this;
+    }
+
+    public function getAccessList(): array
+    {
+        return $this->accessList;
+    }
+
+    public function setAccessList(array $accessList): self
+    {
+        $this->accessList = $accessList;
+        return $this;
+    }
+
+    public function getLocationAccessList(): array
+    {
+        return $this->locationAccessList;
+    }
+
+    public function setLocationAccessList(array $locationAccessList): self
+    {
+        $this->locationAccessList = $locationAccessList;
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
         return $this;
     }
 
