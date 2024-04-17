@@ -96,7 +96,6 @@ class VisitReportController extends AbstractController
             );
         } catch (\Throwable $throwable) {//TODO change exception to form validation exception
             //TODO handle exception ??
-            dd($throwable);
         }
 
         $form = $this->createForm(

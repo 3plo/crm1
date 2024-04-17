@@ -30,7 +30,7 @@ class LocationExistValidator extends ConstraintValidator
             return;
         }
 
-        if (!is_string($value)) {
+        if (false === is_string($value)) {
             throw new UnexpectedValueException($value, 'string');
         }
 

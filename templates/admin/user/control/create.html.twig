@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="center-container">
+        <h2>Edit User</h2>
+        {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+        <div class="form-group">
+            {{ form_label(form.userId) }}
+            {{ form_widget(form.userId, {'attr': {'class': 'input-field'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, {'attr': {'class': 'input-field'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.firstName) }}
+            {{ form_widget(form.firstName, {'attr': {'class': 'input-field'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.lastName) }}
+            {{ form_widget(form.lastName, {'attr': {'class': 'input-field'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password, {'attr': {'class': 'input-field'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.role) }}
+            {{ form_widget(form.role, {'attr': {'class': 'input-field'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.accessList) }}
+            {{ form_widget(form.accessList, {'attr': {'class': 'input-field', 'multiple': 'multiple'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.locationAccessList) }}
+            {{ form_widget(form.locationAccessList, {'attr': {'class': 'input-field', 'multiple': 'multiple'}}) }}
+        </div>
+
+        {{ form_end(form, {'attr': {'class': 'btn'}}) }}
+    </div>
+{% endblock %}

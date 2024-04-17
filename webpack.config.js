@@ -20,6 +20,7 @@ Encore
     .addStyleEntry('css/product', './assets/styles/product.css')
     .addStyleEntry('css/location', './assets/styles/location.css')
     .addStyleEntry('css/report', './assets/styles/report.css')
+    .addStyleEntry('css/user_control', './assets/styles/user_control.css')
     .copyFiles({
         from: './assets/image',
         includeSubdirectories: true,

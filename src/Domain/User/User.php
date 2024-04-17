@@ -2,6 +2,7 @@
 
 namespace App\Domain\User;
 
+use App\Domain\User\Enum\Role;
 use App\Domain\User\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -93,8 +94,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+
+        if ([] === $roles) {
+            $roles = [Role::ROLE_USER->value];
+        }
 
         return array_unique($roles);
     }

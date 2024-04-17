@@ -9,12 +9,15 @@ namespace App\View\Form\Types\Admin\UserControl;
 
 use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\User\Enum\Access;
+use App\Domain\User\Enum\Role;
 use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Form\Constraint\User\UserExist;
 use App\View\Form\Types\AbstractRequestType;
 use App\View\Request\Admin\UserControl\ChangeUserRequest;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,6 +46,17 @@ class ChangeUserRequestType extends AbstractRequestType
                 ],
             )
             ->add(
+                'email',
+                EmailType::class,
+                [
+                    'label' => 'Email',
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                        new Assert\Email(),
+                    ],
+                ]
+            )
+            ->add(
                 'firstName',
                 TextType::class,
                 [
@@ -63,12 +77,22 @@ class ChangeUserRequestType extends AbstractRequestType
                 ]
             )
             ->add(
+                'password',
+                PasswordType::class,
+                [
+                    'label' => 'Password',
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                    ],
+                ]
+            )
+            ->add(
                 'role',
                 ChoiceType::class,
                 [
                     'label' => 'Role',
                     'attr' => ['class' => 'input-field'],
-                    'choices' => Access::toArray(),
+                    'choices' => Role::toArray(),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],
@@ -95,8 +119,12 @@ class ChangeUserRequestType extends AbstractRequestType
                     'attr' => ['class' => 'input-field'],
                     'choices' => $this->prepareLocationList(),
                     'constraints' => [
-                        new LocationExist(),
-                        new Assert\NotBlank(),
+                        new Assert\All(
+                            [
+                                new LocationExist(),
+                                new Assert\NotBlank(),
+                            ]
+                        ),
                     ],
                     'multiple' => true,
                 ]

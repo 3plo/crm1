@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User List{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/user_control.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container-list">
+        <div class="page-title">
+            <h2>User List</h2>
+
+            <a href="{{ path('user_control_user_create') }}">
+                <button class="create-button create-user-button">Create User</button>
+            </a>
+        </div>
+        <div class="users">
+            <table class="user-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in userList %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.firstName }} {{ user.lastName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.roles|join(', ') }}</td>
+                        <td>
+                            <button class="create-button toggle-user {{ true == user.enabled ? 'disabled' : 'enabled' }}"
+                                    data-user="{{ user.id }}"
+                                    data-enabled="{{ true == user.enabled ? 'true' : 'false' }}">
+                                {{ true == user.enabled ? 'Disable' : 'Enable' }}
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

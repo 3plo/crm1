@@ -7,14 +7,17 @@
 
 namespace App\View\Request\Admin\UserControl;
 
+use App\View\Request\FormRequestInterface;
 use JMS\Serializer\Annotation as JMS;
 
-class ChangeUserRequest
+class ChangeUserRequest implements FormRequestInterface
 {
     #[JMS\SerializedName('userId')]
     private null|string $userId = null;
 
     private string $role;
+
+    private string $email;
 
     #[JMS\SerializedName('firstName')]
     private string $firstName;
@@ -35,6 +38,11 @@ class ChangeUserRequest
     public function getUserId(): null|string
     {
         return $this->userId;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
     }
 
     public function getRole(): string
