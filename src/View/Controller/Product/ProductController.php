@@ -7,11 +7,16 @@
 
 namespace App\View\Controller\Product;
 
+use App\Application\Product\Builder\UserProductListBuilder;
 use App\Domain\Card\Enum\Type;
 use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\Product\Price;
 use App\Domain\Product\Product;
 use App\Domain\Product\Repository\ProductRepository;
+use App\Domain\User\Enum\Action;
+use App\Domain\User\Enum\Role;
+use App\Domain\User\User;
+use App\View\Access\Attribute\ActionAccess;
 use App\View\Form\Types\Product\ProductCreateRequestType;
 use App\View\Request\Product\ProductCreateRequest;
 use App\View\Request\Product\ProductPriceCreateRequest;
@@ -24,23 +29,28 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class ProductController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly SerializerInterface    $serializer,
         private readonly FormRequestResolver    $formRequestResolver,
-        private readonly ProductRepository      $productRepository,
         private readonly LocationRepository     $locationRepository,
+        private readonly ProductRepository      $productRepository,
+        private readonly UserProductListBuilder $userProductListBuilder,
     ) {
     }
 
+    #[ActionAccess([Action::ProductList->value])]
     #[Route(path: '/product/list', name: 'product_list', methods: 'GET')]
     public function productList(): Response
     {
         return $this->render('product/list.html.twig', [
-            'productList' => $this->productRepository->findAll(),
+            'productList' => $this->userProductListBuilder->build(),
         ]);
     }
 

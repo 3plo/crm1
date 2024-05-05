@@ -7,8 +7,8 @@
 
 namespace App\View\Form\Types\Product;
 
+use App\Application\Location\Builder\UserLocationListBuilder;
 use App\Domain\Card\Enum\Type;
-use App\Domain\Location\Repository\LocationRepository;
 use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Form\Types\AbstractRequestType;
 use App\View\Request\Product\ProductCreateRequest;
@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ProductCreateRequestType extends AbstractRequestType
 {
     public function __construct(
-        private readonly LocationRepository $locationRepository,
+        private readonly UserLocationListBuilder $userLocationListBuilder,
     ) {
     }
 
@@ -91,8 +91,13 @@ class ProductCreateRequestType extends AbstractRequestType
                     'attr' => ['class' => 'input-field'],
                     'choices' => $this->prepareLocationList(),
                     'constraints' => [
-                        new LocationExist(),
                         new Assert\NotBlank(),
+                        new Assert\All(
+                            [
+                                new LocationExist(),
+                                new Assert\NotBlank(),
+                            ]
+                        ),
                     ],
                     'multiple' => true,
                 ]
@@ -116,7 +121,11 @@ class ProductCreateRequestType extends AbstractRequestType
     private function prepareLocationList(): array
     {
         $result = [];
-        foreach ($this->locationRepository->findBy(['enabled' => true]) as $location) {
+        foreach ($this->userLocationListBuilder->build() as $location) {
+            if (false === $location->isEnabled()) {
+                continue;
+            }
+
             $result[$location->getTitle()] = $location->getId();
         }
 

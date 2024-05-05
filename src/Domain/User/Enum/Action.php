@@ -7,7 +7,7 @@
 
 namespace App\Domain\User\Enum;
 
-enum Access: string
+enum Action: string
 {
     case ProductList = 'product_list';
     case ProductCreate = 'product_create';

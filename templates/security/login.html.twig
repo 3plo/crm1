@@ -12,10 +12,13 @@
     <h2>Login</h2>
 
     {% if error %}
-        <p style="color: red;">{{ error }}</p>
+        <p style="color: red;">Invalid login or password</p>
+        <div style="display: none">{{ error }}</div>
     {% endif %}
 
     <form action="{{ path('login') }}" method="post">
+        <input type="hidden" value="{{ csrf_token('authenticate') }}" name="_csrf_token" required>
+
         <label for="email">Email:</label>
         <input type="text" id="email" name="email" required>
 

@@ -19,16 +19,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserControlController extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly FormRequestResolver    $formRequestResolver,
-        private readonly UserRepository         $userRepository,
-        private readonly LoggerInterface        $logger,
-    ) {
+        private readonly EntityManagerInterface      $entityManager,
+        private readonly LoggerInterface             $logger,
+        private readonly UserPasswordHasherInterface $userPasswordHasher,
+        private readonly FormRequestResolver         $formRequestResolver,
+        private readonly UserRepository              $userRepository,
+    )
+    {
     }
 
     #[Route(path: '/user/control/list', name: 'user_control_user_list', methods: 'GET')]
@@ -54,8 +57,14 @@ class UserControlController extends AbstractController
                     ->setAccessList($userRequest->getAccessList())
                     ->setLocationAccessList($userRequest->getLocationAccessList())
                     ->setEnabled(true)
-                    ->setPassword($userRequest->getPassword())//TODO
                     ->setIsVerified(true);
+                $user
+                    ->setPassword(
+                        $this->userPasswordHasher->hashPassword(
+                            $user,
+                            $userRequest->getPassword(),
+                        )
+                    );
 
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();

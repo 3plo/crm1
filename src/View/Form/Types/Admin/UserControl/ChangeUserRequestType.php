@@ -8,7 +8,7 @@
 namespace App\View\Form\Types\Admin\UserControl;
 
 use App\Domain\Location\Repository\LocationRepository;
-use App\Domain\User\Enum\Access;
+use App\Domain\User\Enum\Action;
 use App\Domain\User\Enum\Role;
 use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Form\Constraint\User\UserExist;
@@ -104,7 +104,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 [
                     'label' => 'Access list',
                     'attr' => ['class' => 'input-field'],
-                    'choices' => Access::toArray(),
+                    'choices' => Action::toArray(),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],

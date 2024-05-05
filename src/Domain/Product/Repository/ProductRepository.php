@@ -19,8 +19,25 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
+    private const ALIAS = 'p';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);
+    }
+
+    /**
+     * @param string[] $locationIdList
+     * @return Product[]
+     */
+    public function findByLocationList(array $locationIdList): array
+    {
+        return
+            $this->createQueryBuilder(self::ALIAS)
+                ->select(sprintf('DISTINCT %s', self::ALIAS))
+                ->andWhere(':locationList MEMBER OF p.locationList')
+                ->setParameter('locationList', $locationIdList)
+                ->getQuery()
+                ->getResult();
     }
 }
