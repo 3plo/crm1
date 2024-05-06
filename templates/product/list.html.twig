@@ -14,17 +14,20 @@
 
         <div class="page-title">
             <h2>Product List</h2>
-
-            <a href="{{ path('product_create') }}">
-                <button class="create-button create-product-button">Create Product</button>
-            </a>
+            {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.ProductCreate.value in app.user.accessList) %}
+                <a href="{{ path('product_create') }}">
+                    <button class="create-button create-product-button">Create Product</button>
+                </a>
+            {% endif %}
         </div>
 
         <div class="product-grid">
             {% if productList is not empty %}
                 {% for product in productList %}
                     <div class="product-item" data-product-id="{{ product.id }}">
-                        <a href="{{ path('card_create', {productId: product.id}) }}"><button class="sell-button">Sell</button></a>
+                        {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.Sell.value in app.user.accessList) %}
+                            <a href="{{ path('card_create', {productId: product.id}) }}"><button class="sell-button">Sell</button></a>
+                        {% endif %}
                         <h3 class="title">{{ product.title }}</h3>
                         <p class="description">{{ product.description }}</p>
                         <p class="duration-days">{{ product.durationDays }} days</p>
@@ -39,7 +42,9 @@
                                         <h4>Prices</h4>
                                     </th>
                                     <th colspan="2" width="50%">
-                                        <button class="create-button create-price-button" data-product-id="{{ product.id }}">Create Price</button>
+                                        {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.ProductCreate.value in app.user.accessList) %}
+                                            <button class="create-button create-price-button" data-product-id="{{ product.id }}">Create Price</button>
+                                        {% endif %}
                                     </th>
                                 </tr>
                                 </thead>

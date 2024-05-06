@@ -30,7 +30,7 @@ class UserProductListBuilder
         $user = $this->tokenStorage->getToken()?->getUser();
 
         return
-            true === in_array(Role::ROLE_ADMIN->value, $user->getRoles() , true) ?
+            true === in_array(Role::RoleAdmin->value, $user->getRoles() , true) ?
                 $this->productRepository->findAll() :
                 $this->productRepository->findByLocationList($user->getLocationAccessList());
     }

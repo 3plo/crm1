@@ -14,8 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
+/**
+ * Create new user from admin interface
+ */
 class RegistrationController extends AbstractController
-{//todo temp disable
+{
     public function __construct(
         private EntityManagerInterface $entityManager,
         private TranslatorInterface $translator,
@@ -24,7 +27,7 @@ class RegistrationController extends AbstractController
     ) {
     }
 
-    #[Route('/register', name: 'register')]
+//    #[Route('/register', name: 'register')]
     public function register(Request $request): Response
     {
         $user = new User();
@@ -60,7 +63,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/verify/email', name: 'app_verify_email')]
+//    #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');

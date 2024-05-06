@@ -9,31 +9,32 @@ namespace App\View\Controller\Admin;
 
 use App\Domain\User\Repository\UserRepository;
 use App\Domain\User\User;
+use App\View\Access\Attribute\ActionAccess;
 use App\View\Form\Types\Admin\UserControl\ChangeUserRequestType;
 use App\View\Request\Admin\UserControl\ChangeUserRequest;
 use App\View\Request\Admin\UserControl\ToggleUserRequest;
 use App\View\RequestResolver\FormRequestResolver;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class UserControlController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface      $entityManager,
-        private readonly LoggerInterface             $logger,
         private readonly UserPasswordHasherInterface $userPasswordHasher,
         private readonly FormRequestResolver         $formRequestResolver,
         private readonly UserRepository              $userRepository,
-    )
-    {
+    ) {
     }
 
+    #[ActionAccess]
     #[Route(path: '/user/control/list', name: 'user_control_user_list', methods: 'GET')]
     public function userList(): Response
     {
@@ -42,6 +43,7 @@ class UserControlController extends AbstractController
         ]);
     }
 
+    #[ActionAccess]
     #[Route(path: '/user/control/create', name: 'user_control_user_create')]
     public function changeUser(Request $request): Response
     {
@@ -82,6 +84,7 @@ class UserControlController extends AbstractController
         ]);
     }
 
+    #[ActionAccess]
     #[Route(path: '/user/control/toggle', name: 'user_control_user_toggle', methods: 'POST')]
     public function toggleUser(ToggleUserRequest $request): JsonResponse
     {

@@ -11,7 +11,7 @@ namespace App\View\Access\Attribute;
 class ActionAccess
 {
     public function __construct(
-        private readonly array $actionList,
+        private readonly array $actionList = [],
     ) {
     }
 

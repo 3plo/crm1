@@ -19,6 +19,8 @@ enum Action: string
 
     case EntranceControl = 'entrance_control';
 
+    case Sell = 'sell';
+
     public static function toArray(): array
     {
         $result = [];

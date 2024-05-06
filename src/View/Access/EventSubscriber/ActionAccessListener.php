@@ -46,7 +46,7 @@ class ActionAccessListener implements EventSubscriberInterface
             throw new \RuntimeException('User not exist');
         }
 
-        if (true === in_array(Role::ROLE_ADMIN->value, $user->getRoles(), true)) {
+        if (true === in_array(Role::RoleAdmin->value, $user->getRoles(), true)) {
             return;
         }
 

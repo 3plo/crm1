@@ -12,6 +12,9 @@ use App\Application\Report\VisitReport\GeneralReport\Command\ReportFilterCommand
 use App\Application\Report\VisitReport\TrafficReport\Builder\TrafficReportBuilder;
 use App\Application\Report\VisitReport\TrafficReport\Command\ReportFilterCommand as TrafficReportFilterCommand;
 use App\Domain\Location\Repository\LocationRepository;
+use App\Domain\User\Enum\Action;
+use App\View\Access\Attribute\ActionAccess;
+use App\View\Access\Checker\LocationChecker;
 use App\View\Form\Types\Report\VisitReport\GeneralRequestType;
 use App\View\Form\Types\Report\VisitReport\TrafficRequestType;
 use App\View\Request\Report\VisitReport\GeneralRequest;
@@ -23,17 +26,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-//#[IsGranted('IS_AUTHENTICATED_FULLY')]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class VisitReportController extends AbstractController
 {
     public function __construct(
         private readonly GeneralReportBuilder $generalReportBuilder,
         private readonly TrafficReportBuilder $trafficReportBuilder,
-        private readonly FormRequestResolver   $formRequestResolver,
-        private readonly LocationRepository    $locationRepository,
+        private readonly FormRequestResolver  $formRequestResolver,
+        private readonly LocationRepository   $locationRepository,
+        private readonly LocationChecker      $locationChecker,
     ) {
     }
 
+    #[ActionAccess([Action::EntranceControl->value])]
     #[Route(path: '/report/visit/general/report', name: 'report_visit_general_report', methods: 'GET')]
     public function generalReport(Request $request): Response
     {
@@ -65,10 +70,13 @@ class VisitReportController extends AbstractController
         ]);
     }
 
+    #[ActionAccess([Action::EntranceControl->value])]
     #[Route(path: '/report/visit/traffic', name: 'report_visit_traffic_report', methods: 'GET')]
     public function trafficReport(Request $request): Response
     {
         $locationId = (string) $request->get('location');
+        $this->locationChecker->checkAccessToAnyLocationList([$locationId]);
+
         $reportData = [];
         $trafficRequest = null;
         try {

@@ -9,8 +9,8 @@ namespace App\Domain\User\Enum;
 
 enum Role: string
 {
-    case ROLE_USER = 'user';
-    case ROLE_ADMIN = 'admin';
+    case RoleUser = 'user';
+    case RoleAdmin = 'admin';
 
     public static function toArray(): array
     {

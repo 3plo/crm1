@@ -21,7 +21,6 @@ class ErrorController extends AbstractController
 
     public function showErrorPage(\Throwable $exception): Response
     {
-        dd($exception);
         if (true === $exception instanceof HttpException) {
             $statusCode = $exception->getStatusCode();
             $errorPageTemplatePath = sprintf('bundles/TwigBundle/Exception/error%s.html.twig', $statusCode);

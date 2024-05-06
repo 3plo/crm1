@@ -7,6 +7,7 @@
 
 namespace App\View\Form\Types\Admin\UserControl;
 
+use App\Application\Location\Builder\UserLocationListBuilder;
 use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\User\Enum\Action;
 use App\Domain\User\Enum\Role;
@@ -26,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ChangeUserRequestType extends AbstractRequestType
 {
     public function __construct(
-        private readonly LocationRepository $locationRepository,
+        private readonly UserLocationListBuilder $userLocationListBuilder,
     ) {
     }
 
@@ -148,7 +149,11 @@ class ChangeUserRequestType extends AbstractRequestType
     private function prepareLocationList(): array
     {
         $result = [];
-        foreach ($this->locationRepository->findBy(['enabled' => true]) as $location) {
+        foreach ($this->userLocationListBuilder->build() as $location) {
+            if (false === $location->isEnabled()) {
+                continue;
+            }
+
             $result[$location->getTitle()] = $location->getId();
         }
 

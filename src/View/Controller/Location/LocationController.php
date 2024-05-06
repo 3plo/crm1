@@ -7,39 +7,43 @@
 
 namespace App\View\Controller\Location;
 
+use App\Application\Location\Builder\UserLocationListBuilder;
 use App\Domain\Location\Location;
 use App\Domain\Location\RegularScheduler;
-use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\Location\SpecialScheduler;
 use App\Domain\Location\VacationScheduler;
+use App\Domain\User\Enum\Action;
+use App\View\Access\Attribute\ActionAccess;
 use App\View\Form\Types\Location\LocationFormType;
 use App\View\Request\Location\LocationCreateRequest;
 use App\View\RequestResolver\FormRequestResolver;
 use Doctrine\ORM\EntityManagerInterface;
-use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class LocationController extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly SerializerInterface    $serializer,
-        private readonly FormRequestResolver    $formRequestResolver,
-        private readonly LocationRepository     $locationRepository,
+        private readonly EntityManagerInterface  $entityManager,
+        private readonly FormRequestResolver     $formRequestResolver,
+        private readonly UserLocationListBuilder $userLocationListBuilder,
     ) {
     }
 
+    #[ActionAccess([Action::LocationList->value])]
     #[Route(path: '/location/list', name: 'location_list', methods: 'GET')]
     public function locationList(): Response
     {
         return $this->render('location/list.html.twig', [
-            'locationList' => $this->locationRepository->findAll(),
+            'locationList' => $this->userLocationListBuilder->build(),
         ]);
     }
 
+    #[ActionAccess([Action::LocationCreate->value])]
     #[Route(path: '/location/create', name: 'location_create')]
     public function locationCreate(Request $request): Response
     {

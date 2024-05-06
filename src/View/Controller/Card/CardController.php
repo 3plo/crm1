@@ -10,6 +10,8 @@ namespace App\View\Controller\Card;
 use App\Application\Card\Command\CreateCommand;
 use App\Domain\Card\Handler\CreateHandler;
 use App\Domain\Product\Repository\ProductRepository;
+use App\Domain\User\Enum\Action;
+use App\View\Access\Attribute\ActionAccess;
 use App\View\Form\Types\Card\CardFormType;
 use App\View\Request\Card\CreateRequest;
 use App\View\RequestResolver\FormRequestResolver;
@@ -17,7 +19,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class CardController extends AbstractController
 {
     public function __construct(
@@ -27,9 +31,10 @@ class CardController extends AbstractController
     ) {
     }
 
+    #[ActionAccess([Action::Sell->value])]
     #[Route(path: '/card/create/{productId}', name: 'card_create')]
     public function create(string $productId, Request $request): Response
-    {
+    {//TODO check access to product
         try {
             /** @var CreateRequest $cardRequest */
 

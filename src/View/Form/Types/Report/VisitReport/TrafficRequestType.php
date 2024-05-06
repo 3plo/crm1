@@ -7,6 +7,7 @@
 
 namespace App\View\Form\Types\Report\VisitReport;
 
+use App\Application\Product\Builder\UserProductListBuilder;
 use App\Domain\Product\Repository\ProductRepository;
 use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Form\Constraint\Product\ProductExist;
@@ -22,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class TrafficRequestType extends AbstractRequestType
 {
     public function __construct(
-        private readonly ProductRepository $productRepository,
+        private readonly UserProductListBuilder $userProductListBuilder,
     ) {
     }
 
@@ -98,7 +99,11 @@ class TrafficRequestType extends AbstractRequestType
     private function prepareProductList(): array
     {
         $result = [];
-        foreach ($this->productRepository->findBy(['enabled' => true]) as $product) {
+        foreach ($this->userProductListBuilder->build() as $product) {
+            if (false === $product->isEnabled()) {
+                continue;
+            }
+
             $result[$product->getTitle()] = $product->getId();
         }
 

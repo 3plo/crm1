@@ -23,16 +23,14 @@ class FormValidationException extends \Exception
      */
     public function toArray(): array//TODO
     {
-//        $errorList = [];
-//        foreach ($this->errorList as $error) {
-//            $errorList[] = [
-//                'property' => $error->getPropertyPath(),
-//                'message' => $error->getMessage(),
-//            ];
-//        }
-//
-//        return $errorList;
-        dd($this->errorList);
-        return [];
+        $errorList = [];
+        foreach ($this->errorList as $error) {
+            $errorList[] = [
+                'property' => $error->getPropertyPath(),
+                'message' => $error->getMessage(),
+            ];
+        }
+
+        return $errorList;
     }
 }

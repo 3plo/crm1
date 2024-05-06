@@ -14,8 +14,6 @@ use App\Domain\Product\Price;
 use App\Domain\Product\Product;
 use App\Domain\Product\Repository\ProductRepository;
 use App\Domain\User\Enum\Action;
-use App\Domain\User\Enum\Role;
-use App\Domain\User\User;
 use App\View\Access\Attribute\ActionAccess;
 use App\View\Form\Types\Product\ProductCreateRequestType;
 use App\View\Request\Product\ProductCreateRequest;
@@ -29,12 +27,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class ProductController extends AbstractController
-{
+{//TODO add check access by location
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly SerializerInterface    $serializer,
@@ -54,6 +51,7 @@ class ProductController extends AbstractController
         ]);
     }
 
+    #[ActionAccess([Action::ProductCreate->value])]
     #[Route(path: '/product/create', name: 'product_create')]
     public function productCreate(Request $request): Response
     {
@@ -89,6 +87,7 @@ class ProductController extends AbstractController
         ]);
     }
 
+    #[ActionAccess([Action::ProductActivate->value])]
     #[Route(path: '/product/price/toggle', name: 'product_price_toggle', methods: 'POST')]
     public function togglePrice(ProductPriceToggleRequest $request): JsonResponse
     {
@@ -105,6 +104,7 @@ class ProductController extends AbstractController
         ]);
     }
 
+    #[ActionAccess([Action::ProductCreate->value])]
     #[Route(path: '/product/price/create', name: 'product_price_create', methods: 'POST')]
     public function createPrice(ProductPriceCreateRequest $request): JsonResponse
     {

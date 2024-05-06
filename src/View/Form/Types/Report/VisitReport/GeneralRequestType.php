@@ -7,8 +7,8 @@
 
 namespace App\View\Form\Types\Report\VisitReport;
 
-use App\Domain\Location\Repository\LocationRepository;
-use App\Domain\Product\Repository\ProductRepository;
+use App\Application\Location\Builder\UserLocationListBuilder;
+use App\Application\Product\Builder\UserProductListBuilder;
 use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Form\Constraint\Product\ProductExist;
 use App\View\Form\Types\AbstractRequestType;
@@ -22,8 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class GeneralRequestType extends AbstractRequestType
 {
     public function __construct(
-        private readonly LocationRepository $locationRepository,
-        private readonly ProductRepository $productRepository,
+        private readonly UserLocationListBuilder $userLocationListBuilder,
+        private readonly UserProductListBuilder  $userProductListBuilder,
     ) {
     }
 
@@ -101,7 +101,11 @@ class GeneralRequestType extends AbstractRequestType
     private function prepareLocationList(): array
     {
         $result = [];
-        foreach ($this->locationRepository->findBy(['enabled' => true]) as $location) {
+        foreach ($this->userLocationListBuilder->build() as $location) {
+            if (false === $location->isEnabled()) {
+                continue;
+            }
+
             $result[$location->getTitle()] = $location->getId();
         }
 
@@ -111,7 +115,11 @@ class GeneralRequestType extends AbstractRequestType
     private function prepareProductList(): array
     {
         $result = [];
-        foreach ($this->productRepository->findBy(['enabled' => true]) as $product) {
+        foreach ($this->userProductListBuilder->build() as $product) {
+            if (false === $product->isEnabled()) {
+                continue;
+            }
+
             $result[$product->getTitle()] = $product->getId();
         }
 

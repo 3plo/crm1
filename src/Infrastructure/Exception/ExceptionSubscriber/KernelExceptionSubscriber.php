@@ -42,20 +42,12 @@ class KernelExceptionSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param \Throwable $exception
-     * @param ExceptionEvent $event
-     */
     public function handleValidationException(\Throwable $exception, ExceptionEvent $event): void
     {
         $event->setResponse(new JsonResponse($exception->toArray()));
         $event->stopPropagation();
     }
 
-    /**
-     * @param \Throwable $exception
-     * @param ExceptionEvent $event
-     */
     public function handleAccessDeniedException(\Throwable $exception, ExceptionEvent $event): void
     {
         $event->setResponse(new RedirectResponse('/error/403'));

@@ -1,3 +1,6 @@
+{% set Action = enum('\\App\\Domain\\User\\Enum\\Action') %}
+{% set Role = enum('\\App\\Domain\\User\\Enum\\Role') %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,14 +21,27 @@
             </div>
             <nav class="navigation">
                 <ul>
-                    <li><a href="{{ path('location_list') }}">Locations</a></li>
-                    <li><a href="{{ path('product_list') }}">Products</a></li>
-                    <li><a href="{{ path('report_visit_general_report') }}">Reports</a></li>
-                    <li><a href="{{ path('user_control_user_list') }}">Users</a></li>
+                    {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.LocationList.value in app.user.accessList) %}
+                        <li><a href="{{ path('location_list') }}">Locations</a></li>
+                    {% endif %}
+                    {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.ProductList.value in app.user.accessList) %}
+                        <li><a href="{{ path('product_list') }}">Products</a></li>
+                    {% endif %}
+                    {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.EntranceControl.value in app.user.accessList) %}
+                        <li><a href="{{ path('report_visit_general_report') }}">Reports</a></li>
+                    {% endif %}
+                    {% if null != app.user and Role.RoleAdmin.value in app.user.roles %}
+                        <li><a href="{{ path('user_control_user_list') }}">Users</a></li>
+                    {% endif %}
                 </ul>
             </nav>
 
-            <a href="{{ path('login') }}"><button class="info-button profile-button">Увійти / Профіль</button></a>
+
+            {% if null != app.user %}
+                <a href="{{ path('logout') }}"><button class="info-button profile-button">Вийти</button></a>
+            {% else %}
+                <a href="{{ path('login') }}"><button class="info-button profile-button">Увійти</button></a>
+            {% endif %}
 
         </header>
 
