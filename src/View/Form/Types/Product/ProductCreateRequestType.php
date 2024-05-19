@@ -107,7 +107,7 @@ class ProductCreateRequestType extends AbstractRequestType
                 SubmitType::class,
                 [
                     'label' => 'Create Product',
-                    'attr' => ['class' => 'btn'],
+                    'attr' => ['class' => 'button'],
                 ]
             )
         ;

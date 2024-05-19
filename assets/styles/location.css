@@ -30,6 +30,10 @@ div:has(> .special-scheduler-item-button) {
     gap: 20px;
 }
 
+.location-info .title {
+    font-size: 24px;
+}
+
 .location-item {
     position: relative;
     border: 1px solid #ccc;
@@ -42,9 +46,70 @@ div:has(> .special-scheduler-item-button) {
 
 .location-item-grid {
     display: grid;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 50% 50%;
 }
 
 .work-graph {
     width: 100%;
 }
+
+.location-create {
+    position: relative;
+}
+
+.location-create-main {
+    width: 400px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 100px;
+}
+
+.location-create-main textarea {
+    width: 280px !important;
+}
+
+.location-create-main-separator {
+    padding-bottom: 200px
+}
+
+.location-create-button {
+    width: 300px;
+}
+
+.location-add-button {
+    background-color: #4fa1a8;
+}
+
+.location-create-button-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.location-create select,
+.location-create input[type="text"] {
+    width: 100px;
+}
+
+.day-range {
+    font-size: 0.8rem;
+    vertical-align: bottom;
+}
+
+.date-range {
+    font-size: 1.2rem;
+}
+
+.time-range {
+    font-size: 0.8rem;
+    vertical-align: bottom;
+}
+
+.range-title {
+    font-size: 1.2rem;
+}
+
+.info-button {
+    width: 140px;
+}
+

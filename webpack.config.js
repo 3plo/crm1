@@ -14,6 +14,7 @@ Encore
     .addEntry('js/modal', './assets/js/modal.js')
     .addEntry('js/report', './assets/js/report.js')
     .addStyleEntry('css/app', './assets/styles/app.css')
+    .addStyleEntry('css/imports', './assets/styles/imports.scss')
     .addStyleEntry('css/form', './assets/styles/form.css')
     .addStyleEntry('css/modal', './assets/styles/modal.css')
     .addStyleEntry('css/security', './assets/styles/security.css')
@@ -21,6 +22,7 @@ Encore
     .addStyleEntry('css/location', './assets/styles/location.css')
     .addStyleEntry('css/report', './assets/styles/report.css')
     .addStyleEntry('css/user_control', './assets/styles/user_control.css')
+    .addStyleEntry('css/select2', './assets/styles/select2.css')
     .copyFiles({
         from: './assets/image',
         includeSubdirectories: true,
@@ -37,6 +39,8 @@ Encore
         config.useBuiltIns = 'usage';
         config.corejs = '3.23';
     })
+    .enableSassLoader()
+    .autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();

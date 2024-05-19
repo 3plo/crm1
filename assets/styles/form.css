@@ -17,6 +17,7 @@
 .form-group label {
     margin-right: 10px;
     width: 100px;
+    text-align: left;
 }
 
 .form-group input[type="text"],
@@ -25,6 +26,7 @@
     flex: 1;
     padding: 8px 0;
     margin-right: 10px;
+    width: 230px;
 }
 
 .form-group input[type="checkbox"],
@@ -33,13 +35,23 @@
 }
 
 .input-field, textarea, select {
-    width: 100%;
+    /*width: 100%;*/
     padding: 8px 10px;
     margin-top: 5px;
     margin-bottom: 10px;
     margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
+}
+
+.form-group select{
+    width: 240px;
+    padding-right: 0;
+}
+
+.form-group textarea{
+    width: 240px;
+    padding-right: 0;
 }
 
 .form-row {

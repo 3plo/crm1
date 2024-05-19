@@ -65,13 +65,15 @@ label {
 .title {
     font-size: 1.2rem;
     margin-bottom: 10px;
+    margin-left: 50px;
+    width: 170px;
 }
 
 .description {
     color: #555;
 }
 
-.btn {
+.button {
     width: 100%;
     padding: 10px;
     background-color: #4caf50;
@@ -81,7 +83,7 @@ label {
     cursor: pointer;
 }
 
-.btn:hover {
+.button:hover {
     background-color: #45a049;
 }
 
@@ -89,6 +91,7 @@ label {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .center-container {
@@ -155,7 +158,7 @@ label {
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: #4caf50;
+    background-color: #4c91af;
     color: #fff;
     border: none;
     border-radius: 3px;
@@ -164,5 +167,5 @@ label {
 }
 
 .sell-button:hover {
-    background-color: #45a049;
+    background-color: #455aa0;
 }

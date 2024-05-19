@@ -1,4 +1,11 @@
 import axios from 'axios';
+// import $ from 'jquery';
+// import select2 from 'select2';
+// import bootstrap from 'bootstrap';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import $ from 'jquery';
+import 'select2';
+import 'select2/dist/css/select2.css';
 
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.price-list-control').forEach(function (button) {
@@ -54,4 +61,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
     });
+});
+
+$(".multiselect").select2({
+    closeOnSelect : false,
+    placeholder : "",
+    allowHtml: true,
+    allowClear: true
 });

@@ -135,7 +135,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 SubmitType::class,
                 [
                     'label' => 'Save User',
-                    'attr' => ['class' => 'btn'],
+                    'attr' => ['class' => 'button'],
                 ]
             )
         ;

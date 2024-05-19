@@ -6,6 +6,8 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">
     <link rel="stylesheet" href="{{ asset('build/css/product.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/select2.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block body %}
@@ -41,9 +43,14 @@
 
         <div class="form-group">
             {{ form_label(form.locationList) }}
-            {{ form_widget(form.locationList, {'attr': {'class': 'input-field', 'multiple': 'multiple'}}) }}
+            {{ form_widget(form.locationList, {'attr': {'class': 'input-field multiselect', 'multiple': 'multiple'}}) }}
         </div>
 
-        {{ form_end(form, {'attr': {'class': 'btn'}}) }}
+        {{ form_end(form, {'attr': {'class': 'create-button'}}) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/product') }}
 {% endblock %}

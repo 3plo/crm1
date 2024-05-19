@@ -12,22 +12,27 @@
 {% block body %}
     <div class="full-container">
         <h2>Create Location</h2>
-        <form method="post" action="{{ path('location_create') }}">
+        <form method="post" action="{{ path('location_create') }}" class="location-create">
             {{ form_row(form._token) }}
-            <div class="form-group">
-                {{ form_label(form.title) }}
-                {{ form_widget(form.title, {'attr': {'class': 'input-field'}}) }}
+            <div class="location-create-main">
+                <div class="form-group">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'input-field'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'input-field'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.enabled) }}
+                    {{ form_widget(form.enabled, {'attr': {'class': 'checkbox-field'}}) }}
+                </div>
             </div>
-            <div class="form-group">
-                {{ form_label(form.description) }}
-                {{ form_widget(form.description, {'attr': {'class': 'input-field'}}) }}
+            <div class="location-create-main-separator">
             </div>
-            <div class="form-group">
-                {{ form_label(form.enabled) }}
-                {{ form_widget(form.enabled, {'attr': {'class': 'checkbox-field'}}) }}
+            <div class="location-create-button-wrapper">
+                <button type="button" class="button location-create-button location-add-button" id="add-regular-scheduler">Add Regular Scheduler</button>
             </div>
-
-            <button type="button" class="btn" id="add-regular-scheduler">Add Regular Scheduler</button>
             <div class="form-group">
                 {{ form_label(form.regularSchedulerList) }}
                 <div id="regular-schedulers-container">
@@ -53,7 +58,9 @@
                 </div>
             </div>
 
-            <button type="button" class="btn" id="add-vacation-scheduler">Add Vacation Scheduler</button>
+            <div class="location-create-button-wrapper">
+                <button type="button" class="button location-create-button location-add-button" id="add-vacation-scheduler">Add Vacation Scheduler</button>
+            </div>
             <div class="form-group">
                 {{ form_label(form.vacationSchedulerList) }}
                 <div id="vacation-schedulers-container">
@@ -76,7 +83,9 @@
                 </div>
             </div>
 
-            <button type="button" class="btn" id="add-special-scheduler">Add Special Scheduler</button>
+            <div class="location-create-button-wrapper">
+                <button type="button" class="button location-create-button location-add-button" id="add-special-scheduler">Add Special Scheduler</button>
+            </div>
             <div class="form-group">
                 {{ form_label(form.specialSchedulerList) }}
                 <div id="special-schedulers-container">
@@ -99,7 +108,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn">Create</button>
+            <div class="location-create-button-wrapper">
+                <button type="submit" class="button location-create-button">Create</button>
+            </div>
         </form>
     </div>
 {% endblock %}

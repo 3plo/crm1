@@ -41,7 +41,7 @@ class CardFormType extends AbstractRequestType
                 SubmitType::class,
                 [
                     'label' => 'Create Card',
-                    'attr' => ['class' => 'btn'],
+                    'attr' => ['class' => 'button'],
                 ]
             );
 

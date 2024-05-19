@@ -14,6 +14,10 @@
     overflow: hidden;
 }
 
+.product-item-head {
+    height: 100px;
+}
+
 .duration-days {
     position: absolute;
     top: 5px;
@@ -54,6 +58,7 @@
 
 .prices table {
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .toggle-price.enabled {

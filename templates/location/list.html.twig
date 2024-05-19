@@ -51,11 +51,10 @@
                                 <tbody>
                                 {% for regularSchedulerItem in location.regularSchedulerList %}
                                     <tr>
-                                        <td>{{ regularSchedulerItem.dayNumber }}</td>
-{#                                        {{ todo map day  }}#}
-                                        <td>{{ regularSchedulerItem.dateFrom|date("Y-m-d") }} - <br> {{ regularSchedulerItem.dateTill|date("Y-m-d") }}</td>
-                                        <td>{{ regularSchedulerItem.timeFrom|date("H:i") }} - {{ regularSchedulerItem.timeTill|date("H:i") }}</td>
-                                        <td>{{ regularSchedulerItem.enabled }}</td>
+                                        <td class="date-range">{{ regularSchedulerItem.dateFrom|date("Y-m-d") }} - {{ regularSchedulerItem.dateTill|date("Y-m-d") }}</td>
+                                        <td class="day-range">{{ regularSchedulerItem.dayNumber | day_name }}</td>
+                                        <td class="time-range">{{ regularSchedulerItem.timeFrom|date("H:i") }} - {{ regularSchedulerItem.timeTill|date("H:i") }}</td>
+{#                                        <td>{{ regularSchedulerItem.enabled }}</td>#}
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -66,8 +65,8 @@
                                 <tbody>
                                 {% for specialSchedulerItem in location.specialSchedulerList %}
                                     <tr>
-                                        <td>{{ specialSchedulerItem.dateFrom|date("Y-m-d") }} - <br> {{ specialSchedulerItem.dateTill|date("Y-m-d") }}</td>
-                                        <td>{{ specialSchedulerItem.timeFrom|date("H:i") }} - {{ specialSchedulerItem.timeTill|date("H:i") }}</td>
+                                        <td class="date-range">{{ specialSchedulerItem.dateFrom|date("Y-m-d") }} - {{ specialSchedulerItem.dateTill|date("Y-m-d") }}</td>
+                                        <td class="time-range">{{ specialSchedulerItem.timeFrom|date("H:i") }} - {{ specialSchedulerItem.timeTill|date("H:i") }}</td>
 {#                                        <td>{{ specialSchedulerItem.enabled }}</td>#}
                                     </tr>
                                 {% endfor %}
@@ -79,9 +78,9 @@
                                 <tbody>
                                 {% for vacationSchedulerItem in location.vacationSchedulerList %}
                                     <tr>
-                                        <td>{{ vacationSchedulerItem.title }}</td>
-                                        <td>{{ vacationSchedulerItem.dayNumber }}</td>
-                                        <td>{{ vacationSchedulerItem.dateFrom|date("Y-m-d") }} - <br> {{ vacationSchedulerItem.dateTill|date("Y-m-d") }}</td>
+                                        <td class="range-title">{{ vacationSchedulerItem.title }} - </td>
+                                        <td class="date-range">{{ vacationSchedulerItem.dateFrom|date("Y-m-d") }} - {{ vacationSchedulerItem.dateTill|date("Y-m-d") }}</td>
+                                        <td class="day-range">{{ vacationSchedulerItem.dayNumber | day_name }}</td>
 {#                                        <td>{{ regularSchedulerItem.enabled }}</td>#}
                                     </tr>
                                 {% endfor %}
