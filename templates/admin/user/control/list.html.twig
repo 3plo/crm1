@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                 {% for user in userList %}
-                    <tr>
+                    <tr class="user-item">
                         <td>{{ user.id }}</td>
                         <td>{{ user.firstName }} {{ user.lastName }}</td>
                         <td>{{ user.email }}</td>
@@ -49,4 +49,9 @@
             </table>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/user') }}
 {% endblock %}

@@ -13,6 +13,7 @@ Encore
     .addEntry('js/location', './assets/js/location.js')
     .addEntry('js/modal', './assets/js/modal.js')
     .addEntry('js/report', './assets/js/report.js')
+    .addEntry('js/user', './assets/js/user.js')
     .addStyleEntry('css/app', './assets/styles/app.css')
     .addStyleEntry('css/imports', './assets/styles/imports.scss')
     .addStyleEntry('css/form', './assets/styles/form.css')

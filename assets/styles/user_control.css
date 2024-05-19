@@ -6,3 +6,13 @@
 .user-table {
     width: 100%;
 }
+
+.toggle-user.enabled {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.toggle-user.disabled {
+    background-color: #e74c3c;
+    color: #fff;
+}

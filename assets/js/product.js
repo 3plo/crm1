@@ -1,7 +1,4 @@
 import axios from 'axios';
-// import $ from 'jquery';
-// import select2 from 'select2';
-// import bootstrap from 'bootstrap';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import $ from 'jquery';
 import 'select2';
@@ -51,8 +48,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     let newEnabled = response.data.enabled;
                     button.setAttribute('data-enabled', newEnabled);
                     button.innerHTML = true === newEnabled ? 'Disable' : 'Enable';
-
-                    // Додайте/видаліть класи "enabled" та "disabled" для зміни кольорів
                     button.classList.remove('disabled', 'enabled');
                     button.classList.add(true === newEnabled ? 'disabled' : 'enabled');
                 })
