@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create Product{% endblock %}
+{% block title %}{% trans %}product_create_title{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -12,7 +12,7 @@
 
 {% block body %}
     <div class="center-container">
-        <h2>Create Product</h2>
+        <h2>{% trans %}product_create_title{% endtrans %}</h2>
 
         {{ form_start(form, {'attr': {'class': 'form'}}) }}
 

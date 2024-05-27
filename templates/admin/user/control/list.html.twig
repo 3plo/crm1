@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User List{% endblock %}
+{% block title %}{% trans %}list_user_title{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -12,20 +12,20 @@
 {% block body %}
     <div class="container-list">
         <div class="page-title">
-            <h2>User List</h2>
+            <h2>{% trans %}list_user_title{% endtrans %}</h2>
 
             <a href="{{ path('user_control_user_create') }}">
-                <button class="create-button create-user-button">Create User</button>
+                <button class="create-button create-user-button">{% trans %}create_user_button{% endtrans %}</button>
             </a>
         </div>
         <div class="users">
             <table class="user-table">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
+                    <th>{% trans %}id_title{% endtrans %}</th>
+                    <th>{% trans %}name_title{% endtrans %}</th>
+                    <th>{% trans %}email_title{% endtrans %}</th>
+                    <th>{% trans %}role_title{% endtrans %}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -39,8 +39,14 @@
                         <td>
                             <button class="create-button toggle-user {{ true == user.enabled ? 'disabled' : 'enabled' }}"
                                     data-user="{{ user.id }}"
+                                    data-disable-title="{% trans %}disable_button{% endtrans %}"
+                                    data-enable-title="{% trans %}enable_button{% endtrans %}"
                                     data-enabled="{{ true == user.enabled ? 'true' : 'false' }}">
-                                {{ true == user.enabled ? 'Disable' : 'Enable' }}
+                                {% if true == user.enabled %}
+                                    {% trans %}disable_button{% endtrans %}
+                                {% else %}
+                                    {% trans %}enable_button{% endtrans %}
+                                {% endif %}
                             </button>
                         </td>
                     </tr>

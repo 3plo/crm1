@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}{% trans %}edit_user_title{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -12,7 +12,7 @@
 
 {% block body %}
     <div class="center-container">
-        <h2>Edit User</h2>
+        <h2>{% trans %}edit_user_title{% endtrans %}</h2>
         {{ form_start(form, {'attr': {'class': 'form'}}) }}
 
         <div class="form-group">

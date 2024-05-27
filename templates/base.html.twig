@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% trans %}general_page_title{% endtrans %}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
@@ -23,25 +23,25 @@
             <nav class="navigation">
                 <ul>
                     {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.LocationList.value in app.user.accessList) %}
-                        <li><a href="{{ path('location_list') }}">Locations</a></li>
+                        <li><a href="{{ path('location_list') }}">{% trans %}general_page_locations_menu_item{% endtrans %}</a></li>
                     {% endif %}
                     {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.ProductList.value in app.user.accessList) %}
-                        <li><a href="{{ path('product_list') }}">Products</a></li>
+                        <li><a href="{{ path('product_list') }}">{% trans %}general_page_products_menu_item{% endtrans %}</a></li>
                     {% endif %}
                     {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.EntranceControl.value in app.user.accessList) %}
-                        <li><a href="{{ path('report_visit_general_report') }}">Reports</a></li>
+                        <li><a href="{{ path('report_visit_general_report') }}">{% trans %}general_page_reports_menu_item{% endtrans %}</a></li>
                     {% endif %}
                     {% if null != app.user and Role.RoleAdmin.value in app.user.roles %}
-                        <li><a href="{{ path('user_control_user_list') }}">Users</a></li>
+                        <li><a href="{{ path('user_control_user_list') }}">{% trans %}general_page_users_menu_item{% endtrans %}</a></li>
                     {% endif %}
                 </ul>
             </nav>
 
 
             {% if null != app.user %}
-                <a href="{{ path('logout') }}"><button class="info-button profile-button">Вийти</button></a>
+                <a href="{{ path('logout') }}"><button class="info-button profile-button">{% trans %}general_page_logout_button{% endtrans %}</button></a>
             {% else %}
-                <a href="{{ path('login') }}"><button class="info-button profile-button">Увійти</button></a>
+                <a href="{{ path('login') }}"><button class="info-button profile-button">{% trans %}general_page_login_button{% endtrans %}</button></a>
             {% endif %}
 
         </header>

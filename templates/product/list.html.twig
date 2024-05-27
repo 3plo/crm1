@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product List{% endblock %}
+{% block title %}{% trans %}product_create_page_title{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -16,7 +16,7 @@
             <h2>Product List</h2>
             {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.ProductCreate.value in app.user.accessList) %}
                 <a href="{{ path('product_create') }}">
-                    <button class="create-button create-product-button">Create Product</button>
+                    <button class="create-button create-product-button">{% trans %}product_create_page_title{% endtrans %}</button>
                 </a>
             {% endif %}
         </div>
@@ -31,8 +31,8 @@
                             {% endif %}
                             <h3 class="title">{{ product.title }}</h3>
                             <p class="description">{{ product.description }}</p>
-                            <p class="duration-days">{{ product.durationDays }} days</p>
-                            <p class="count-usage">{{ product.countUsage }} - max count usage</p>
+                            <p class="duration-days">{{ product.durationDays }} {% trans %}product_list_days_label{% endtrans %}</p>
+                            <p class="count-usage">{{ product.countUsage }} - {% trans %}product_list_max_count_usage_label{% endtrans %}</p>
                         </div>
 
                         <div class="prices">
@@ -44,7 +44,7 @@
                                     </th>
                                     <th colspan="2" width="50%">
                                         {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.ProductCreate.value in app.user.accessList) %}
-                                            <button class="create-button create-price-button" data-product-id="{{ product.id }}">Create Price</button>
+                                            <button class="create-button create-price-button" data-product-id="{{ product.id }}">{% trans %}product_create_price_title{% endtrans %}</button>
                                         {% endif %}
                                     </th>
                                 </tr>
@@ -53,13 +53,19 @@
                                     {% for price in product.priceList %}
                                         <tr>
                                             <td width="50%">{{ price.title }}</td>
-                                            <td width="30%">{{ price.amountInUAH }} ГРН</td>
+                                            <td width="30%">{{ price.amountInUAH }} {% trans %}product_list_default_currency{% endtrans %}</td>
                                             <td width="20%">
                                                 <button class="create-button toggle-price {{ true == price.enabled ? 'disabled' : 'enabled' }}"
                                                         data-product="{{ product.id }}"
                                                         data-price="{{ price.id }}"
+                                                        data-disable-title="{% trans %}disable_button{% endtrans %}"
+                                                        data-enable-title="{% trans %}enable_button{% endtrans %}"
                                                         data-enabled="{{ true == price.enabled ? 'true' : 'false' }}">
-                                                    {{ true == price.enabled ? 'Disable' : 'Enable' }}
+                                                    {% if true == user.enabled %}
+                                                        {% trans %}disable_button{% endtrans %}
+                                                    {% else %}
+                                                        {% trans %}enable_button{% endtrans %}
+                                                    {% endif %}
                                                 </button>
                                             </td>
                                         </tr>
@@ -80,7 +86,7 @@
                     </div>
                 {% endfor %}
             {% else %}
-                <p>No products available.</p>
+                <p>{% trans %}product_list_empty_title{% endtrans %}</p>
             {% endif %}
         </div>
     </div>
@@ -91,24 +97,24 @@
     <div id="modal-product-price-create" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Create Price</h2>
+                <h2>{% trans %}product_create_price_title{% endtrans %}</h2>
                 <span id="close-modal-product-price-create" class="close">&times;</span>
             </div>
             <form id="price-form">
                 <input type="hidden" id="product-id" name="product_id">
                 <div class="form-group">
-                    <label for="title">Title:</label>
+                    <label for="title">{% trans %}product_list_price_title_form_label{% endtrans %}</label>
                     <input type="text" id="title" name="title" class="input-field">
                 </div>
                 <div class="form-group">
-                    <label for="amount">Amount:</label>
+                    <label for="amount">{% trans %}product_list_price_amount_form_label{% endtrans %}</label>
                     <input type="number" id="amount" name="amount" class="input-field">
                 </div>
                 <div class="form-group">
-                    <label for="enabled">Enabled:</label>
+                    <label for="enabled">{% trans %}product_list_price_enabled_form_label{% endtrans %}</label>
                     <input type="checkbox" id="enabled" name="enabled" class="input-field">
                 </div>
-                <button type="submit" class="button">Submit</button>
+                <button type="submit" class="button">{% trans %}product_dave_product_price_title{% endtrans %}</button>
             </form>
         </div>
     </div>

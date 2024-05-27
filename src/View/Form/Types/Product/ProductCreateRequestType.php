@@ -19,11 +19,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProductCreateRequestType extends AbstractRequestType
 {
     public function __construct(
         private readonly UserLocationListBuilder $userLocationListBuilder,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -34,7 +36,7 @@ class ProductCreateRequestType extends AbstractRequestType
                 'durationDays',
                 IntegerType::class,
                 [
-                    'label' => 'Duration (in days)',
+                    'label' => $this->translator->trans('product_duration_create_label'),
                     'attr' => ['min' => 1],
                     'constraints' => [
                         new Assert\NotBlank(),
@@ -46,7 +48,7 @@ class ProductCreateRequestType extends AbstractRequestType
                 'countUsage',
                 IntegerType::class,
                 [
-                    'label' => 'Max count usage',
+                    'label' => $this->translator->trans('product_max_count_usage_create_label'),
                     'attr' => ['min' => 1],
                     'constraints' => [
                         new Assert\NotBlank(),
@@ -58,7 +60,7 @@ class ProductCreateRequestType extends AbstractRequestType
                 'type',
                 ChoiceType::class,
                 [
-                    'label' => 'Type',
+                    'label' => $this->translator->trans('product_type_create_label'),
                     'attr' => ['class' => 'input-field'],
                     'choices' => Type::viewCases(),
                 ],
@@ -67,7 +69,7 @@ class ProductCreateRequestType extends AbstractRequestType
                 'title',
                 TextType::class,
                 [
-                    'label' => 'Title',
+                    'label' => $this->translator->trans('product_title_create_label'),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],
@@ -77,7 +79,7 @@ class ProductCreateRequestType extends AbstractRequestType
                 'description',
                 TextareaType::class,
                 [
-                    'label' => 'Description',
+                    'label' => $this->translator->trans('product_description_create_label'),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],
@@ -87,7 +89,7 @@ class ProductCreateRequestType extends AbstractRequestType
                 'locationList',
                 ChoiceType::class,
                 [
-                    'label' => 'Location list',
+                    'label' => $this->translator->trans('product_list_create_label'),
                     'attr' => ['class' => 'input-field'],
                     'choices' => $this->prepareLocationList(),
                     'constraints' => [
@@ -106,7 +108,7 @@ class ProductCreateRequestType extends AbstractRequestType
                 'save',
                 SubmitType::class,
                 [
-                    'label' => 'Create Product',
+                    'label' => $this->translator->trans('product_form_create_button'),
                     'attr' => ['class' => 'button'],
                 ]
             )

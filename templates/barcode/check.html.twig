@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Barcode check{% endblock %}
+{% block title %}{% trans %}barcode_check_title{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -8,14 +8,14 @@
 {% endblock %}
 {% block body %}
     <div class="center-container">
-        <h2>Barcode Scanner by location {{ location.title }}</h2>
+        <h2>{% trans %}barcode_scan_title{% endtrans %} {{ location.title }}</h2>
         <form id="barcode_form" action="{{ path('barcode_find') }}" method="POST">
             <input id="location_id" type="hidden" value="{{ location.id }}">
             <div class="form-group">
                 <input id="barcode" type="text" name="barcode" placeholder="Enter barcode...">
             </div>
             <div class="form-group">
-                <button type="submit" class="button">Check</button>
+                <button type="submit" class="button">{% trans %}barcode_check_button{% endtrans %}</button>
             </div>
         </form>
     </div>

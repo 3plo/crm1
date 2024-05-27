@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Traffic report by location {{ location.title }}{% endblock %}
+{% block title %}{% trans %}location_traffic_traffic_report_page_title{% endtrans %}{{ location.title }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -10,7 +10,7 @@
 
 {% block body %}
 <div class="full-container">
-    <h2>Traffic report by location {{ location.title }}</h2>
+    <h2>{% trans %}location_traffic_traffic_report_page_title{% endtrans %}{{ location.title }}</h2>
     {{ form_start(form, {'attr': {'class': 'form'}}) }}
 
     <div class="form-row">
@@ -46,7 +46,7 @@
         </div>
 
         <div class="right-form-group">
-            <button type="submit" class="button">Generate Report</button>
+            <button type="submit" class="button">{% trans %}location_traffic_report_button{% endtrans %}</button>
         </div>
     </div>
 

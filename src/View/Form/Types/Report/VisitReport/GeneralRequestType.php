@@ -18,12 +18,14 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GeneralRequestType extends AbstractRequestType
 {
     public function __construct(
         private readonly UserLocationListBuilder $userLocationListBuilder,
         private readonly UserProductListBuilder  $userProductListBuilder,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -39,7 +41,7 @@ class GeneralRequestType extends AbstractRequestType
                 'dateFrom',
                 DateType::class,
                 [
-                    'label' => 'Date from',
+                    'label' => $this->translator->trans('general_traffic_report_date_from_label'),
                     'attr' => ['class' => 'input-field'],
                     'required' => true,
                     'widget' => 'single_text',
@@ -52,7 +54,7 @@ class GeneralRequestType extends AbstractRequestType
                 'dateTill',
                 DateType::class,
                 [
-                    'label' => 'Date till',
+                    'label' => $this->translator->trans('general_traffic_report_date_till_label'),
                     'attr' => ['class' => 'input-field'],
                     'required' => true,
                     'widget' => 'single_text',
@@ -65,7 +67,7 @@ class GeneralRequestType extends AbstractRequestType
                 'location',
                 ChoiceType::class,
                 [
-                    'label' => 'Location',
+                    'label' => $this->translator->trans('general_traffic_report_location_label'),
                     'attr' => ['class' => 'input-field'],
                     'choices' => $this->prepareLocationList(),
                     'placeholder' => '---',
@@ -80,7 +82,7 @@ class GeneralRequestType extends AbstractRequestType
                 'product',
                 ChoiceType::class,
                 [
-                    'label' => 'Product',
+                    'label' => $this->translator->trans('general_traffic_report_product_label'),
                     'attr' => ['class' => 'input-field'],
                     'choices' => $this->prepareProductList(),
                     'placeholder' => '---',

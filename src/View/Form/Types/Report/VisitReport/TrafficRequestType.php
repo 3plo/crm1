@@ -8,7 +8,6 @@
 namespace App\View\Form\Types\Report\VisitReport;
 
 use App\Application\Product\Builder\UserProductListBuilder;
-use App\Domain\Product\Repository\ProductRepository;
 use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Form\Constraint\Product\ProductExist;
 use App\View\Form\Types\AbstractRequestType;
@@ -19,11 +18,13 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TrafficRequestType extends AbstractRequestType
 {
     public function __construct(
         private readonly UserProductListBuilder $userProductListBuilder,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -40,7 +41,7 @@ class TrafficRequestType extends AbstractRequestType
                 'dateFrom',
                 DateType::class,
                 [
-                    'label' => 'Date from',
+                    'label' => $this->translator->trans('location_traffic_report_date_from_label'),
                     'attr' => ['class' => 'input-field'],
                     'required' => true,
                     'widget' => 'single_text',
@@ -53,7 +54,7 @@ class TrafficRequestType extends AbstractRequestType
                 'dateTill',
                 DateType::class,
                 [
-                    'label' => 'Date till',
+                    'label' => $this->translator->trans('location_traffic_report_date_till_label'),
                     'attr' => ['class' => 'input-field'],
                     'required' => true,
                     'widget' => 'single_text',

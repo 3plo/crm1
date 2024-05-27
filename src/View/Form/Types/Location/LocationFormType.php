@@ -18,9 +18,15 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LocationFormType extends AbstractRequestType
 {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
+    }
+
     #[\Override] public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -28,7 +34,7 @@ class LocationFormType extends AbstractRequestType
                 'title',
                 TextType::class,
                 [
-                    'label' => 'Title',
+                    'label' => $this->translator->trans('location_title_label'),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],
@@ -38,7 +44,7 @@ class LocationFormType extends AbstractRequestType
                 'description',
                 TextareaType::class,
                 [
-                    'label' => 'Description',
+                    'label' => $this->translator->trans('location_description_label'),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],
@@ -48,7 +54,7 @@ class LocationFormType extends AbstractRequestType
                 'enabled',
                 CheckboxType::class,
                 [
-                    'label' => 'Enabled',
+                    'label' => $this->translator->trans('location_enabled_label'),
                     'required' => false,
                 ]
             )

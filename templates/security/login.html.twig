@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}{% trans %}login_page_title{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -12,20 +12,20 @@
     <h2>Login</h2>
 
     {% if error %}
-        <p style="color: red;">Invalid login or password</p>
+        <p style="color: red;">{% trans %}login_page_error_title{% endtrans %}</p>
         <div style="display: none">{{ error }}</div>
     {% endif %}
 
     <form action="{{ path('login') }}" method="post">
         <input type="hidden" value="{{ csrf_token('authenticate') }}" name="_csrf_token" required>
 
-        <label for="email">Email:</label>
+        <label for="email">{% trans %}login_page_email_label{% endtrans %}</label>
         <input type="text" id="email" name="email" required>
 
-        <label for="password">Password:</label>
+        <label for="password">{% trans %}login_page_password_label{% endtrans %}</label>
         <input type="password" id="password" name="password" required>
 
-        <button type="submit">Login</button>
+        <button type="submit">{% trans %}login_page_login_button{% endtrans %}</button>
     </form>
 {#    TODO add forgot password #}
     <div style="width: 100%; text-align: center; margin-top: 10px">

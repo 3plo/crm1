@@ -17,9 +17,15 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CardFormType extends AbstractRequestType
 {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
+    }
+
     #[\Override] public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $productId = $options['data']['productId'] ?? '';
@@ -40,7 +46,7 @@ class CardFormType extends AbstractRequestType
                 'save',
                 SubmitType::class,
                 [
-                    'label' => 'Create Card',
+                    'label' => $this->translator->trans('create_card_button'),
                     'attr' => ['class' => 'button'],
                 ]
             );
@@ -51,7 +57,7 @@ class CardFormType extends AbstractRequestType
                     'price',
                     ChoiceType::class,
                     [
-                        'label' => 'Price',
+                        'label' => $this->translator->trans('price_select_label'),
                         'attr' => ['class' => 'input-field'],
                         'choices' => $this->preparePriceList($options['data']['priceList']),
                     ],

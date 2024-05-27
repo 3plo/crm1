@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Report Form{% endblock %}
+{% block title %}{% trans %}general_traffic_report_page_title{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -10,7 +10,7 @@
 
 {% block body %}
     <div class="full-container">
-        <h2>Report Form</h2>
+        <h2>{% trans %}general_traffic_report_page_title{% endtrans %}</h2>
         {{ form_start(form, {'attr': {'class': 'form'}}) }}
 
         <div class="form-row">
@@ -55,7 +55,7 @@
             </div>
 
             <div class="right-form-group">
-                <button type="submit" class="button">Generate Report</button>
+                <button type="submit" class="button">{% trans %}general_traffic_report_button{% endtrans %}</button>
             </div>
         </div>
 
@@ -65,10 +65,10 @@
             <table class="report-content report-table">
                 <thead>
                 <tr>
-                    <th style="width: 35%">Location</th>
-                    <th style="width: 35%">Product</th>
-                    <th style="width: 15%">Successful Entries</th>
-                    <th style="width: 35%">Failed Entries</th>
+                    <th style="width: 35%">{% trans %}general_traffic_report_location_column_title{% endtrans %}</th>
+                    <th style="width: 35%">{% trans %}general_traffic_report_product_column_title{% endtrans %}</th>
+                    <th style="width: 15%">{% trans %}general_traffic_report_successful_entrance_column_title{% endtrans %}</th>
+                    <th style="width: 35%">{% trans %}general_traffic_report_failed_entrance_column_title{% endtrans %}</th>
                 </tr>
                 </thead>
                 <tbody>

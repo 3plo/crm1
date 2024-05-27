@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create Location{% endblock %}
+{% block title %}{% trans %}create_location_title{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -12,7 +12,7 @@
 {% block body %}
     <div class="full-container">
         <h2>Create Location</h2>
-        <form method="post" action="{{ path('location_create') }}" class="location-create">
+            <form method="post" action="{{ path('location_create') }}" class="location-create">
             {{ form_row(form._token) }}
             <div class="location-create-main">
                 <div class="form-group">
@@ -31,27 +31,27 @@
             <div class="location-create-main-separator">
             </div>
             <div class="location-create-button-wrapper">
-                <button type="button" class="button location-create-button location-add-button" id="add-regular-scheduler">Add Regular Scheduler</button>
+                <button type="button" class="button location-create-button location-add-button" id="add-regular-scheduler">{% trans %}add_regular_scheduler_button{% endtrans %}</button>
             </div>
             <div class="form-group">
                 {{ form_label(form.regularSchedulerList) }}
                 <div id="regular-schedulers-container">
-                    <h3>Regular scheduler list</h3><br>
+                    <h3>{% trans %}regular_scheduler_block_title{% endtrans %}</h3><br>
                     <div class="regular-scheduler-item regular-scheduler-item-head">
                         <div>
-                            <label>Day number</label>
+                            <label>{% trans %}day_number_column_label{% endtrans %}</label>
                         </div>
                         <div>
-                            <label>Time from</label>
+                            <label>{% trans %}time_from_column_label{% endtrans %}</label>
                         </div>
                         <div>
-                            <label>Time till</label>
+                            <label>{% trans %}time_till_column_label{% endtrans %}</label>
                         </div>
                         <div>
-                            <label>Date from</label>
+                            <label>{% trans %}date_from_column_label{% endtrans %}</label>
                         </div>
                         <div>
-                            <label>Date till</label>
+                            <label>{% trans %}date_till_column_label{% endtrans %}</label>
                         </div>
                     </div>
                     {{ form_widget(form.regularSchedulerList, {'attr': {'class': 'regular-scheduler-item'}}) }}
@@ -59,24 +59,24 @@
             </div>
 
             <div class="location-create-button-wrapper">
-                <button type="button" class="button location-create-button location-add-button" id="add-vacation-scheduler">Add Vacation Scheduler</button>
+                <button type="button" class="button location-create-button location-add-button" id="add-vacation-scheduler">{% trans %}add_vacation_scheduler_button{% endtrans %}</button>
             </div>
             <div class="form-group">
                 {{ form_label(form.vacationSchedulerList) }}
                 <div id="vacation-schedulers-container">
-                    <h3>Vacation scheduler list</h3><br>
+                    <h3>{% trans %}vacation_scheduler_block_title{% endtrans %}</h3><br>
                     <div class="vacation-scheduler-item vacation-scheduler-item-head">
                         <div>
-                            <label>Day number</label>
+                            <label>{% trans %}day_number_column_label{% endtrans %}</label>
                         </div>
                         <div>
-                            <label>Title</label>
+                            <label>{% trans %}title_column_label{% endtrans %}</label>
                         </div>
                         <div>
-                            <label>Date from</label>
+                            <label>{% trans %}date_from_column_label{% endtrans %}</label>
                         </div>
                         <div>
-                            <label>Date till</label>
+                            <label>{% trans %}date_till_column_label{% endtrans %}</label>
                         </div>
                     </div>
                     {{ form_widget(form.vacationSchedulerList, {'attr': {'class': 'vacation-scheduler-item'}}) }}
@@ -84,24 +84,24 @@
             </div>
 
             <div class="location-create-button-wrapper">
-                <button type="button" class="button location-create-button location-add-button" id="add-special-scheduler">Add Special Scheduler</button>
+                <button type="button" class="button location-create-button location-add-button" id="add-special-scheduler">{% trans %}add_special_scheduler_button{% endtrans %}</button>
             </div>
             <div class="form-group">
                 {{ form_label(form.specialSchedulerList) }}
                 <div id="special-schedulers-container">
-                    <h3>Special scheduler list</h3><br>
+                    <h3>{% trans %}special_scheduler_block_title{% endtrans %}</h3><br>
                     <div class="special-scheduler-item special-scheduler-item-head">
                         <div>
-                            <label>Time from</label>
+                            <label>{% trans %}time_from_column_label{% endtrans %}</label>
                         </div>
                         <div>
-                            <label>Time till</label>
+                            <label>{% trans %}time_till_column_label{% endtrans %}</label>
                         </div>
                         <div>
-                            <label>Date from</label>
+                            <label>{% trans %}date_from_column_label{% endtrans %}</label>
                         </div>
                         <div>
-                            <label>Date till</label>
+                            <label>{% trans %}date_till_column_label{% endtrans %}</label>
                         </div>
                     </div>
                     {{ form_widget(form.specialSchedulerList, {'attr': {'class': 'special-scheduler-item'}}) }}
@@ -109,7 +109,7 @@
             </div>
 
             <div class="location-create-button-wrapper">
-                <button type="submit" class="button location-create-button">Create</button>
+                <button type="submit" class="button location-create-button">{% trans %}create_location_button{% endtrans %}</button>
             </div>
         </form>
     </div>

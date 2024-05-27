@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     let newEnabled = response.data.enabled;
                     button.setAttribute('data-enabled', newEnabled);
-                    button.innerHTML = true === newEnabled ? 'Disable' : 'Enable';
+                    button.innerHTML = true === newEnabled ? button.getAttribute('data-disable-title') : button.getAttribute('data-enable-title');
                     button.classList.remove('disabled', 'enabled');
                     button.classList.add(true === newEnabled ? 'disabled' : 'enabled');
                 })

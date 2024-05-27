@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Location List{% endblock %}
+{% block title %}{% trans %}location_list_title{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -12,11 +12,11 @@
 {% block body %}
     <div class="container-list">
         <div class="page-title">
-            <h2>Location List</h2>
+            <h2>{% trans %}location_list_title{% endtrans %}</h2>
 
             {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.LocationCreate.value in app.user.accessList) %}
                 <a href="{{ path('location_create') }}">
-                    <button class="create-button create-location-button">Create Location</button>
+                    <button class="create-button create-location-button">{% trans %}location_create_button{% endtrans %}</button>
                 </a>
             {% endif %}
         </div>
@@ -29,24 +29,24 @@
                             <div class="location-info">
                                 <h3 class="title">{{ location.title }}</h3>
                                 <p class="description">{{ location.description }}</p>
-                                <p class="status">{% if location.enabled %}Увімкнено{% else %}Вимкнено{% endif %}</p>
+                                <p class="status">{% if location.enabled %}{% trans %}enable_status_label{% endtrans %}{% else %}{% trans %}disable_status_label{% endtrans %}{% endif %}</p>
                                 <p>
                                     {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.EntranceControl.value in app.user.accessList) %}
                                         <a href="{{ path('barcode_check', {locationId: location.id}) }}">
-                                            <button class="info-button scan-button">Scan Barcode</button>
+                                            <button class="info-button scan-button">{% trans %}location_scan_barcode_action_button{% endtrans %}</button>
                                         </a>
                                     {% endif %}
                                 </p>
                                 <p>
                                     {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.EntranceControl.value in app.user.accessList) %}
                                         <a href="{{ path('report_visit_traffic_report', {location: location.id}) }}">
-                                            <button class="info-button scan-button">Traffic report</button>
+                                            <button class="info-button scan-button">{% trans %}location_traffic_report_action_button{% endtrans %}</button>
                                         </a>
                                     {% endif %}
                                 </p>
                             </div>
                             <div class="work-graph">
-                                <h4>Regular scheduler</h4>
+                                <h4>{% trans %}location_detail_regular_scheduler_block{% endtrans %}</h4>
                                 <table>
                                 <tbody>
                                 {% for regularSchedulerItem in location.regularSchedulerList %}
@@ -60,7 +60,7 @@
                                 </tbody>
                                 </table>
                                 <div class="divider-horizontal"></div>
-                                <h4>Special scheduler</h4>
+                                <h4>{% trans %}location_detail_special_scheduler_block{% endtrans %}</h4>
                                 <table>
                                 <tbody>
                                 {% for specialSchedulerItem in location.specialSchedulerList %}
@@ -73,7 +73,7 @@
                                 </tbody>
                                 </table>
                                 <div class="divider-horizontal"></div>
-                                <h4>Vacation scheduler</h4>
+                                <h4>{% trans %}location_detail_vacation_scheduler_block{% endtrans %}</h4>
                                 <table>
                                 <tbody>
                                 {% for vacationSchedulerItem in location.vacationSchedulerList %}
@@ -95,7 +95,7 @@
                     {% endif %}
                 {% endfor %}
             {% else %}
-                <p>Локації відсутні.</p>
+                <p>{% trans %}location_list_empty_title{% endtrans %}</p>
             {% endif %}
         </div>
     </div>

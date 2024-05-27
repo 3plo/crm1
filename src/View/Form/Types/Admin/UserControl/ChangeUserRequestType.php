@@ -23,11 +23,13 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChangeUserRequestType extends AbstractRequestType
 {
     public function __construct(
         private readonly UserLocationListBuilder $userLocationListBuilder,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -50,7 +52,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 'email',
                 EmailType::class,
                 [
-                    'label' => 'Email',
+                    'label' => $this->translator->trans('email_label'),
                     'constraints' => [
                         new Assert\NotBlank(),
                         new Assert\Email(),
@@ -61,7 +63,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 'firstName',
                 TextType::class,
                 [
-                    'label' => 'First name',
+                    'label' => $this->translator->trans('first_name_label'),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],
@@ -71,7 +73,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 'lastName',
                 TextType::class,
                 [
-                    'label' => 'Last name',
+                    'label' => $this->translator->trans('last_name_label'),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],
@@ -81,7 +83,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 'password',
                 PasswordType::class,
                 [
-                    'label' => 'Password',
+                    'label' => $this->translator->trans('password_label'),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],
@@ -91,7 +93,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 'role',
                 ChoiceType::class,
                 [
-                    'label' => 'Role',
+                    'label' => $this->translator->trans('role_label'),
                     'attr' => ['class' => 'input-field'],
                     'choices' => Role::toArray(),
                     'constraints' => [
@@ -103,7 +105,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 'accessList',
                 ChoiceType::class,
                 [
-                    'label' => 'Access list',
+                    'label' => $this->translator->trans('access_list_label'),
                     'attr' => ['class' => 'input-field'],
                     'choices' => Action::toArray(),
                     'constraints' => [
@@ -116,7 +118,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 'locationAccessList',
                 ChoiceType::class,
                 [
-                    'label' => 'Location access list',
+                    'label' => $this->translator->trans('location_access_list_label'),
                     'attr' => ['class' => 'input-field'],
                     'choices' => $this->prepareLocationList(),
                     'constraints' => [
@@ -134,7 +136,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 'save',
                 SubmitType::class,
                 [
-                    'label' => 'Save User',
+                    'label' => $this->translator->trans('save_user_button'),
                     'attr' => ['class' => 'button'],
                 ]
             )
