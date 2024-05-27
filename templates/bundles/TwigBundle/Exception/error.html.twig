@@ -1,11 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Error{% endblock %}
-
 {% block body %}
     <div class="container">
-        <h2>Oops! Something went wrong 000</h2>
-        <p>We're sorry, but an error occurred while processing your request.</p>
-        <p>Please try again later or contact support for assistance.</p>
+        <h2>{% trans %}error_page_head_text{% endtrans %} 000</h2>
+        <p>{% trans %}error_page_apologize_text{% endtrans %}</p>
+        <p>{% trans %}error_page_contact_us_head{% endtrans %}</p>
     </div>
 {% endblock %}

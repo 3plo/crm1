@@ -6,7 +6,9 @@
 
 <div class="center-container">
     <h1>{% trans %}main_page_greetings_description{% endtrans %}</h1>
-    <p>{% trans %}main_mage_login_description{% endtrans %}</p>
+    <p>{% trans %}main_mage_login_description{% endtrans %}
+        <a href="{{ path('login') }}">{% trans %}general_page_login_button{% endtrans %}</a>
+    </p>
     <p>{% trans %}main_mage_register_description{% endtrans %}</p>
 </div>
 {% endblock %}

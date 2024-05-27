@@ -13,7 +13,7 @@
     <div class="container-list">
 
         <div class="page-title">
-            <h2>Product List</h2>
+            <h2>{% trans %}product_create_page_title{% endtrans %}</h2>
             {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.ProductCreate.value in app.user.accessList) %}
                 <a href="{{ path('product_create') }}">
                     <button class="create-button create-product-button">{% trans %}product_create_page_title{% endtrans %}</button>
@@ -27,7 +27,7 @@
                     <div class="product-item" data-product-id="{{ product.id }}">
                         <div class="product-item-head">
                             {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.Sell.value in app.user.accessList) %}
-                                <a href="{{ path('card_create', {productId: product.id}) }}"><button class="sell-button">Sell</button></a>
+                                <a href="{{ path('card_create', {productId: product.id}) }}"><button class="sell-button">{% trans %}product_list_sell_button{% endtrans %}</button></a>
                             {% endif %}
                             <h3 class="title">{{ product.title }}</h3>
                             <p class="description">{{ product.description }}</p>
@@ -40,7 +40,7 @@
                                 <thead>
                                 <tr>
                                     <th colspan="1" width="50%">
-                                        <h4>Prices</h4>
+                                        <h4>{% trans %}product_list_prices_title{% endtrans %}</h4>
                                     </th>
                                     <th colspan="2" width="50%">
                                         {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.ProductCreate.value in app.user.accessList) %}
@@ -61,7 +61,7 @@
                                                         data-disable-title="{% trans %}disable_button{% endtrans %}"
                                                         data-enable-title="{% trans %}enable_button{% endtrans %}"
                                                         data-enabled="{{ true == price.enabled ? 'true' : 'false' }}">
-                                                    {% if true == user.enabled %}
+                                                    {% if true == price.enabled %}
                                                         {% trans %}disable_button{% endtrans %}
                                                     {% else %}
                                                         {% trans %}enable_button{% endtrans %}

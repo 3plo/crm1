@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Page not found</h1>
+    <div class="center-container">
+        <h3>{% trans %}error_page_page_not_found{% endtrans %}</h3>
 
-    <p>
-        The requested page couldn't be located. Checkout for any URL
-        misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.
-    </p>
+        <a href="{{ path('main') }}"><button class="button">{% trans %}error_page_page_to_main_page{% endtrans %}</button></a>.
+    </div>
 {% endblock %}

@@ -7,6 +7,8 @@
 
 namespace App\Domain\User\Enum;
 
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 enum Action: string
 {
     case ProductList = 'product_list';

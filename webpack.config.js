@@ -24,6 +24,7 @@ Encore
     .addStyleEntry('css/report', './assets/styles/report.css')
     .addStyleEntry('css/user_control', './assets/styles/user_control.css')
     .addStyleEntry('css/select2', './assets/styles/select2.css')
+    .addStyleEntry('css/select2_1', './assets/styles/select2_1.css')
     .copyFiles({
         from: './assets/image',
         includeSubdirectories: true,

@@ -1,10 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}403 Forbidden{% endblock %}
-
 {% block body %}
     <div class="center-container">
-        <h1>403 Forbidden</h1>
-        <p>Access to this resource is forbidden.</p>
+        <h1>403 {% trans %}error_page_forbidden{% endtrans %}</h1>
+        <p>{% trans %}error_page_forbidden_description{% endtrans %}</p>
     </div>
 {% endblock %}

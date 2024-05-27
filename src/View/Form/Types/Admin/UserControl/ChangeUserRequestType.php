@@ -11,6 +11,7 @@ use App\Application\Location\Builder\UserLocationListBuilder;
 use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\User\Enum\Action;
 use App\Domain\User\Enum\Role;
+use App\Infrastructure\Services\TranslateService;
 use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Form\Constraint\User\UserExist;
 use App\View\Form\Types\AbstractRequestType;
@@ -28,8 +29,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ChangeUserRequestType extends AbstractRequestType
 {
     public function __construct(
-        private readonly UserLocationListBuilder $userLocationListBuilder,
         private readonly TranslatorInterface $translator,
+        private readonly TranslateService $translateService,
+        private readonly UserLocationListBuilder $userLocationListBuilder,
     ) {
     }
 
@@ -95,7 +97,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 [
                     'label' => $this->translator->trans('role_label'),
                     'attr' => ['class' => 'input-field'],
-                    'choices' => Role::toArray(),
+                    'choices' => array_flip($this->translateService->translateList(Role::toArray(), 'role_', '_option')),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],
@@ -107,7 +109,7 @@ class ChangeUserRequestType extends AbstractRequestType
                 [
                     'label' => $this->translator->trans('access_list_label'),
                     'attr' => ['class' => 'input-field'],
-                    'choices' => Action::toArray(),
+                    'choices' => array_flip($this->translateService->translateList(Action::toArray(), 'action_', '_option')),
                     'constraints' => [
                         new Assert\NotBlank(),
                     ],

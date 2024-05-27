@@ -11,7 +11,7 @@
 
 {% block body %}
     <div class="full-container">
-        <h2>Create Location</h2>
+        <h2>{% trans %}create_location_title{% endtrans %}</h2>
             <form method="post" action="{{ path('location_create') }}" class="location-create">
             {{ form_row(form._token) }}
             <div class="location-create-main">
