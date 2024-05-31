@@ -14,30 +14,30 @@ use App\Domain\Barcode\Repository\BarcodeRepository;
 use App\Domain\Location\Location;
 use App\Domain\Location\Repository\LocationRepository;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BarcodeHandler
 {
     public function __construct(
-        private readonly BarcodeRepository  $barcodeRepository,
-        private readonly LocationRepository $locationRepository,
-        private readonly Security           $security,
-        private readonly ScanLogHandler     $scanLogHandler,
-    )
-    {
+        private readonly TranslatorInterface $translator,
+        private readonly BarcodeRepository   $barcodeRepository,
+        private readonly LocationRepository  $locationRepository,
+        private readonly Security            $security,
+        private readonly ScanLogHandler      $scanLogHandler,
+    ) {
     }
 
     public function handle(
         string $barcode,
         string $locationId,
-    ): BarcodeHandleResult
-    {
+    ): BarcodeHandleResult {
         $location = $this->locationRepository->find($locationId);
         $barcodeData = $this->barcodeRepository->findOneBy(['barcode' => $barcode]);
 
         if (null === $barcodeData) {
             return $this->makeResult(
                 false,
-                'Barcode not found',
+                $this->translator->trans('barcode_scan_status_barcode_not_found_title'),
                 $barcode,
                 $location,
                 $barcodeData,
@@ -47,7 +47,7 @@ class BarcodeHandler
         if (false === $barcodeData->getProduct()->hasLocation($location)) {
             return $this->makeResult(
                 false,
-                'No corresponding for current location',
+                $this->translator->trans('barcode_scan_status_not_corresponding_for_location_title'),
                 $barcode,
                 $location,
                 $barcodeData,
@@ -58,7 +58,7 @@ class BarcodeHandler
         if (false === $card->isEnabled()) {
             return $this->makeResult(
                 false,
-                'Card inactive',
+                $this->translator->trans('barcode_scan_status_card_inactive_title'),
                 $barcode,
                 $location,
                 $barcodeData,
@@ -69,7 +69,7 @@ class BarcodeHandler
         if ((new \DateTimeImmutable())->format('Y-m-d') > $card->getValidFrom()->format('Y-m-d')) {
             return $this->makeResult(
                 false,
-                'Card expired',
+                $this->translator->trans('barcode_scan_status_card_expired_title'),
                 $barcode,
                 $location,
                 $barcodeData,
@@ -83,7 +83,7 @@ class BarcodeHandler
         ) {
             return $this->makeResult(
                 false,
-                'Card used max times',
+                $this->translator->trans('barcode_scan_status_card_used_max_times_title'),
                 $barcode,
                 $location,
                 $barcodeData,
@@ -92,7 +92,7 @@ class BarcodeHandler
 
         return $this->makeResult(
             true,
-            'allow',
+            $this->translator->trans('barcode_scan_status_allow_title'),
             $barcode,
             $location,
             $barcodeData,
@@ -105,10 +105,8 @@ class BarcodeHandler
         string       $barcodeValue,
         Location     $location,
         null|Barcode $barcode,
-    ): BarcodeHandleResult
-    {
+    ): BarcodeHandleResult {
         $result = new BarcodeHandleResult($status, $message);
-
         $this->scanLogHandler->handle(
             new ScanLogCommand(
                 $result,

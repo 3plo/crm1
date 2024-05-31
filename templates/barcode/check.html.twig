@@ -12,13 +12,21 @@
         <form id="barcode_form" action="{{ path('barcode_find') }}" method="POST">
             <input id="location_id" type="hidden" value="{{ location.id }}">
             <div class="form-group">
-                <input id="barcode" type="text" name="barcode" placeholder="Enter barcode...">
+                <input id="barcode" type="text" name="barcode" placeholder="{% trans %}barcode_check_hint{% endtrans %}...">
             </div>
             <div class="form-group">
                 <button type="submit" class="button">{% trans %}barcode_check_button{% endtrans %}</button>
             </div>
         </form>
     </div>
+    <div
+            style="display: none"
+            id="translate"
+            data-allow_title="{% trans %}barcode_scan_allow_modal_action_title{% endtrans %}"
+            data-close_title="{% trans %}barcode_scan_close_modal_action_title{% endtrans %}"
+            data-deny_title="{% trans %}barcode_scan_deny_modal_action_title{% endtrans %}"
+            data-error_title="{% trans %}barcode_scan_error_modal_action_title{% endtrans %}"
+    ></div>
 {% endblock %}
 
 {% block javascripts %}

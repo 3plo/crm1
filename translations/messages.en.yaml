@@ -21,6 +21,7 @@ disable_status_label: 'Disabled'
 enable_status_label: 'Enabled'
 
 barcode_check_title: 'Barcode check'
+barcode_check_hint: 'Enter barcode'
 barcode_scan_title: 'Barcode scanner by location'
 barcode_check_button: 'Check'
 
@@ -142,3 +143,15 @@ action_location_create_option: 'Location create'
 action_location_activate_option: 'Location activate'
 action_entrance_control_option: 'Entrance control'
 action_sell_option: 'Sell'
+
+barcode_scan_status_barcode_not_found_title: 'Barcode not found'
+barcode_scan_status_not_corresponding_for_location_title: 'Not corresponding for location'
+barcode_scan_status_card_inactive_title: 'Card inactive'
+barcode_scan_status_card_expired_title: 'Card expired'
+barcode_scan_status_card_used_max_times_title: 'Card used max times'
+barcode_scan_status_allow_title: 'Allow'
+
+barcode_scan_allow_modal_action_title: 'Allow'
+barcode_scan_close_modal_action_title: 'Close'
+barcode_scan_deny_modal_action_title: 'Deny'
+barcode_scan_error_modal_action_title: 'Error'
