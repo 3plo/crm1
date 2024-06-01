@@ -8,10 +8,12 @@ document.addEventListener('DOMContentLoaded', function () {
     let labelList = [];
     let valueList = [];
     let backgroundColorList = [];
+    let borderColorList = [];
     for (const [key, value] of Object.entries(chartContent)) {
         labelList.push(key);
         valueList.push(value);
         backgroundColorList.push(randomRgba(null, null, null, 0.2));
+        borderColorList.push(randomRgba(null, null, null, 1));
     }
 
     let ctx = document.getElementById('traffic-report-chart').getContext('2d');
@@ -20,16 +22,11 @@ document.addEventListener('DOMContentLoaded', function () {
         data: {
             labels: labelList,
             datasets: [{
-                label: 'Traffic report',
+                label: 'Entrance amount',//TODO translate
                 data: valueList,
                 backgroundColor: backgroundColorList,
-                borderColor: [
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 159, 64, 1)',
-                ],
-                borderWidth: 1
+                borderColor: borderColorList,
+                borderWidth: 1,
             }]
         },
         options: {
@@ -43,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     ticks: {
                         beginAtZero: true
                     }
-                }]
+                }],
             }
         }
     });
@@ -51,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-function randomRgba(r = null, g = null, b = null, a = null) {//TODO remove to base
+function randomRgba(r = null, g = null, b = null, a = null) {//TODO move to base
     let round = Math.round;
     let rand = Math.random;
     let s = 255;

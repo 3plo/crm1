@@ -39,7 +39,7 @@ class TrafficReportBuilder
             );
         }
 
-        ksort($scanLogAggregateList);
+        ksort($result);
 
         return $result;
     }

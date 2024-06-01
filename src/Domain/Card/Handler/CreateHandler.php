@@ -11,13 +11,15 @@ use App\Application\Barcode\Command\CreateCommand as BarcodeCreateCommand;
 use App\Application\Barcode\Handler\CreateHandler as BarcodeCreateHandler;
 use App\Application\Card\Command\CreateCommand;
 use App\Domain\Card\Card;
+use App\Infrastructure\Provider\CardProvider;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CreateHandler
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly BarcodeCreateHandler $barcodeCreateHandler,
+        private readonly BarcodeCreateHandler   $barcodeCreateHandler,
+        private readonly CardProvider           $cardProvider,
     ) {
     }
 
@@ -37,6 +39,8 @@ class CreateHandler
 
         $this->entityManager->persist($card);
         $this->entityManager->flush();
+
+        $this->cardProvider->setCard($card);
 
         $this->barcodeCreateHandler->handle(
             new BarcodeCreateCommand(

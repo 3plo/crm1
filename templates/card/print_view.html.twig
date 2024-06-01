@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans %}card_print_title{% endtrans %}</title>
+
+    <style>
+        .print-container {
+            width: 210mm;
+            height: 297mm;
+            padding: 20mm;
+            box-sizing: border-box;
+            page-break-after: always;
+            background-color: #ffffff;
+        }
+        @media print {
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            .print-container {
+                width: 210mm;
+                height: 297mm;
+                padding: 20mm;
+                box-sizing: border-box;
+                page-break-after: always;
+            }
+        }
+
+        @media screen {
+            .print-container {
+                margin: 20px auto;
+                padding: 20px;
+                border: 1px solid #ccc;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+{% block body %}
+    <div class="print-container" style="text-align: center">
+        <h1>{% trans %}card_print_title{% endtrans %}</h1>
+        <p>{% trans %}card_print_description{% endtrans %}</p>
+        <p>{% trans %}card_print_for_product_text{% endtrans %} {{ card.product.title }}</p>
+        <p>{% trans %}card_print_valid_from_text{% endtrans %} {{ card.validFrom|date("Y-m-d") }}</p>
+        <p>{% trans %}card_print_valid_till_text{% endtrans %} {{ card.validTill|date("Y-m-d") }}</p>
+        <div style="padding-left: 75mm">{{ barcode.html|raw }}</div>
+        <p style="margin-top: 1mm">{{ barcode.value }}</p>
+    </div>
+{% endblock %}
+</body>
+</html>

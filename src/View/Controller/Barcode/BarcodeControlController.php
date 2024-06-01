@@ -8,7 +8,7 @@
 namespace App\View\Controller\Barcode;
 
 
-use App\Application\Barcode\Handler\BarcodeHandler;
+use App\Application\Barcode\Handler\BarcodeCheckHandler;
 use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\User\Enum\Action;
 use App\View\Access\Attribute\ActionAccess;
@@ -25,7 +25,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class BarcodeControlController extends AbstractController
 {
     public function __construct(
-        private readonly BarcodeHandler      $barcodeHandler,
+        private readonly BarcodeCheckHandler $barcodeHandler,
         private readonly LocationChecker     $locationChecker,
         private readonly LocationRepository  $locationRepository,
         private readonly SerializerInterface $serializer,

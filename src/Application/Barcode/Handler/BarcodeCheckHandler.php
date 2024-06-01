@@ -16,7 +16,7 @@ use App\Domain\Location\Repository\LocationRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class BarcodeHandler
+class BarcodeCheckHandler
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
@@ -78,8 +78,8 @@ class BarcodeHandler
 
         if (
             null !== $card->getLastUsage() &&
-            $card->getMaxUsage() >= $card->getCountUsage() &&
-            (new \DateTimeImmutable())->format('Y-m-d') !== $card->getLastUsage()->format('Y-m-d')
+            $card->getCountUsage() >= $card->getMaxUsage() &&
+            (new \DateTimeImmutable())->format('Y-m-d') !== $card->getLastUsage()->format('Y-m-d') //TODO add to database configuration
         ) {
             return $this->makeResult(
                 false,

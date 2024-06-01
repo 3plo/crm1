@@ -23,7 +23,7 @@ class CreateHandler
     public function handle(CreateCommand $command): void
     {
         do {
-            $barcode = $this->generateBarcode((string) rand(0, 10000));
+            $barcode = $this->generateBarcodeEan13((string) rand(0, 10000));
         } while (null !== $this->barcodeRepository->findOneBy(['barcode' => $barcode]));
 
         $barcodeEntity = (new Barcode())
@@ -36,7 +36,7 @@ class CreateHandler
         $this->entityManager->flush();
     }
 
-    private function generateBarcode(string $number): string
+    private function generateBarcodeEan13(string $number): string
     {
         $code = '200' . str_pad($number, 9, '0');
         $weightFlag = true;

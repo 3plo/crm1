@@ -50,8 +50,8 @@ class VisitReportController extends AbstractController
             if (null !== $generalRequest) {
                 $reportData = $this->generalReportBuilder->build(
                     new GeneralReportFilterCommand(
-                        $generalRequest->getDateFrom(),
-                        $generalRequest->getDateTill(),
+                        new \DateTimeImmutable($generalRequest->getDateFrom()->format('Y-m-d 00:00:00')),
+                        new \DateTimeImmutable($generalRequest->getDateTill()->format('Y-m-d 23:59:59')),
                         $generalRequest->getLocation(),
                         $generalRequest->getProduct(),
                     ),
@@ -97,8 +97,8 @@ class VisitReportController extends AbstractController
             $reportData = $this->trafficReportBuilder->build(
                 new TrafficReportFilterCommand(
                     $locationId,
-                    $trafficRequest->getDateFrom(),
-                    $trafficRequest->getDateTill(),
+                    new \DateTimeImmutable($trafficRequest->getDateFrom()->format('Y-m-d 00:00:00')),
+                    new \DateTimeImmutable($trafficRequest->getDateTill()->format('Y-m-d 23:59:59')),
                     $trafficRequest->getProduct(),
                 ),
             );

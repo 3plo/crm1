@@ -79,7 +79,7 @@ class TrafficRequestType extends AbstractRequestType
                 'product',
                 ChoiceType::class,
                 [
-                    'label' => 'Product',
+                    'label' => $this->translator->trans('location_traffic_report_product_label'),
                     'attr' => ['class' => 'input-field'],
                     'choices' => $this->prepareProductList(),
                     'placeholder' => '---',

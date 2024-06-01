@@ -9,6 +9,7 @@ namespace App\View\Form\Types\Product;
 
 use App\Application\Location\Builder\UserLocationListBuilder;
 use App\Domain\Card\Enum\Type;
+use App\Infrastructure\Services\TranslateService;
 use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Form\Types\AbstractRequestType;
 use App\View\Request\Product\ProductCreateRequest;
@@ -24,8 +25,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProductCreateRequestType extends AbstractRequestType
 {
     public function __construct(
-        private readonly UserLocationListBuilder $userLocationListBuilder,
         private readonly TranslatorInterface $translator,
+        private readonly UserLocationListBuilder $userLocationListBuilder,
+        private readonly TranslateService $translateService,
     ) {
     }
 
@@ -62,7 +64,7 @@ class ProductCreateRequestType extends AbstractRequestType
                 [
                     'label' => $this->translator->trans('product_type_create_label'),
                     'attr' => ['class' => 'input-field'],
-                    'choices' => Type::viewCases(),
+                    'choices' => $this->translateService->translateList(Type::viewCases(), 'product_type_', '_option'),
                 ],
             )
             ->add(

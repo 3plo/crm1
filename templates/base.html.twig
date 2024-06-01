@@ -11,6 +11,13 @@
             <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
             <link rel="stylesheet" href="{{ asset('build/css/imports.css') }}">
         {% endblock %}
+        <script type="importmap">
+            {
+                "imports": {
+                    "Chart": "chart.js/auto",
+                }
+            }
+        </script>
     </head>
     <body>
         <header>
@@ -22,6 +29,7 @@
             </div>
             <nav class="navigation">
                 <ul>
+                    <li><a href="{{ path('barcode_info_page') }}">{% trans %}barcode_info_title{% endtrans %}</a></li>
                     {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.LocationList.value in app.user.accessList) %}
                         <li><a href="{{ path('location_list') }}">{% trans %}general_page_locations_menu_item{% endtrans %}</a></li>
                     {% endif %}
