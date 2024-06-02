@@ -66,7 +66,7 @@ main_mage_register_description: 'Якщо у вас немає доступу - 
 product_create_title: 'Створити продукт'
 product_duration_create_label: 'Термін дії продукта(в днях)'
 product_max_count_usage_create_label: 'Кількість використань вхідного документа'
-product_type_create_label: 'Тир'
+product_type_create_label: 'Тип'
 product_title_create_label: 'Назва'
 product_description_create_label: 'Опис'
 product_list_create_label: 'Список локацій'

@@ -27,15 +27,15 @@ class Location
     private Collection $productList;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: RegularScheduler::class, cascade: ['persist'], fetch: 'EAGER')]
-    #[ORM\OrderBy(['enabled' => 'DESC', 'createdAt' => 'DESC'])]
+    #[ORM\OrderBy([/*'enabled' => 'DESC', */'createdAt' => 'DESC'])]
     private Collection $regularSchedulerList;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: SpecialScheduler::class, cascade: ['persist'], fetch: 'EAGER')]
-    #[ORM\OrderBy(['enabled' => 'DESC', 'createdAt' => 'DESC'])]
+    #[ORM\OrderBy([/*'enabled' => 'DESC', */'createdAt' => 'DESC'])]
     private Collection $specialSchedulerList;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: VacationScheduler::class, cascade: ['persist'], fetch: 'EAGER')]
-    #[ORM\OrderBy(['enabled' => 'DESC', 'createdAt' => 'DESC'])]
+    #[ORM\OrderBy([/*'enabled' => 'DESC', */'createdAt' => 'DESC'])]
     private Collection $vacationSchedulerList;
 
     #[ORM\Column(type: Types::BOOLEAN)]

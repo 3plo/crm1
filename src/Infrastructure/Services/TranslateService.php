@@ -29,4 +29,18 @@ class TranslateService
 
         return $result;
     }
+
+    /**
+     * @param string[] $list
+     * @return string[]
+     */
+    public function translateOptions(array $list, string $prefix = '', string $postfix = ''): array
+    {
+        $result = [];
+        foreach ($list as $key => $item) {
+            $result[$this->translator->trans(sprintf('%s%s%s', $prefix, $item, $postfix))] = $item;
+        }
+
+        return $result;
+    }
 }

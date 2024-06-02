@@ -64,7 +64,7 @@ class ProductCreateRequestType extends AbstractRequestType
                 [
                     'label' => $this->translator->trans('product_type_create_label'),
                     'attr' => ['class' => 'input-field'],
-                    'choices' => $this->translateService->translateList(Type::viewCases(), 'product_type_', '_option'),
+                    'choices' => $this->translateService->translateOptions(Type::viewCases(), 'product_type_', '_option'),
                 ],
             )
             ->add(
