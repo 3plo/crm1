@@ -25,7 +25,7 @@ class DateExtension extends AbstractExtension
         ];
     }
 
-    public function getDayName($dayNumber)
+    public function getDayName($dayNumber): string
     {
         $days = [
             1 => $this->translator->trans('day_number_monday'),

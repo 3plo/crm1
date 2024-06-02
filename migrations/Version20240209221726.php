@@ -9,7 +9,7 @@ final class Version20240209221726 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Create location';
     }
 
     public function up(Schema $schema): void

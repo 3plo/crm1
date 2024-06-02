@@ -31,12 +31,6 @@ final class Version20240310100151 extends AbstractMigration
                     FOREIGN KEY (barcode_id)
                     REFERENCES barcode (id)
         ');
-        $this->addSql('
-            ALTER TABLE barcode
-                ADD CONSTRAINT FK_97AE02664ACC9A20
-                    FOREIGN KEY (card_id)
-                    REFERENCES card (id)
-        ');
         $this->addSql('CREATE INDEX IDX_97AE02664ACC9A20 ON barcode (card_id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_97AE026697AE0266 ON barcode (barcode)');
         $this->addSql('
@@ -65,10 +59,6 @@ final class Version20240310100151 extends AbstractMigration
                 DROP FOREIGN KEY FK_FB19A49229439E58
         ');
         $this->addSql('DROP TABLE scan_log');
-        $this->addSql('
-            ALTER TABLE barcode
-                DROP FOREIGN KEY FK_97AE02664ACC9A20
-        ');
         $this->addSql('DROP INDEX IDX_97AE02664ACC9A20 ON barcode');
         $this->addSql('DROP INDEX UNIQ_97AE026697AE0266 ON barcode');
         $this->addSql('
