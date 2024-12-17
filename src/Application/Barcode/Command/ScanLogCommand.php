@@ -11,13 +11,13 @@ use App\Application\Barcode\Result\BarcodeHandleResult;
 use App\Domain\Barcode\Barcode;
 use App\Domain\Location\Location;
 
-class ScanLogCommand
+readonly class ScanLogCommand
 {
     public function __construct(
-        private readonly BarcodeHandleResult $barcodeHandleResult,
-        private readonly Location $location,
-        private readonly null|Barcode $barcode,
-        private readonly string $barcodeString,
+        private BarcodeHandleResult $barcodeHandleResult,
+        private Location            $location,
+        private null|Barcode        $barcode,
+        private string              $barcodeString,
     ) {
     }
 

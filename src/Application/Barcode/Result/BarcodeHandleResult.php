@@ -7,7 +7,7 @@
 
 namespace App\Application\Barcode\Result;
 
-class BarcodeHandleResult
+readonly class BarcodeHandleResult
 {
     public function __construct(
         private bool $status,

@@ -33,6 +33,7 @@ class Price
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $enabled = true;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private \DateTimeImmutable $createdAt;

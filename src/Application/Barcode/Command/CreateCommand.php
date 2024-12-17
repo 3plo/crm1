@@ -9,10 +9,10 @@ namespace App\Application\Barcode\Command;
 
 use App\Domain\Card\Card;
 
-class CreateCommand
+readonly class CreateCommand
 {
     public function __construct(
-        private readonly Card $card,
+        private Card $card,
     ) {
     }
 

@@ -1,18 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}edit_user_title{% endtrans %}{% endblock %}
+{% block title %}{% trans %}edit_admin_title{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">
     <link rel="stylesheet" href="{{ asset('build/css/user_control.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/css/select2.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/css/select2_1.css') }}">
 {% endblock %}
 
 {% block body %}
     <div class="center-container">
-        <h2>{% trans %}edit_user_title{% endtrans %}</h2>
+        <h2>{% trans %}edit_admin_title{% endtrans %}</h2>
         {{ form_start(form, {'attr': {'class': 'form'}}) }}
 
         <div class="form-group">
@@ -40,21 +38,6 @@
             {{ form_widget(form.password, {'attr': {'class': 'input-field'}}) }}
         </div>
 
-        <div class="form-group">
-            {{ form_label(form.accessList) }}
-            {{ form_widget(form.accessList, {'attr': {'class': 'input-field multiselect', 'multiple': 'multiple'}}) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_label(form.locationAccessList) }}
-            {{ form_widget(form.locationAccessList, {'attr': {'class': 'input-field multiselect', 'multiple': 'multiple'}}) }}
-        </div>
-
         {{ form_end(form, {'attr': {'class': 'button'}}) }}
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('js/user') }}
 {% endblock %}

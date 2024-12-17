@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block body %}
+
     <div class="container-list">
 
         <div class="page-title">
@@ -86,7 +87,7 @@
                     </div>
                 {% endfor %}
             {% else %}
-                <p>{% trans %}product_list_empty_title{% endtrans %}</p>
+                <p>{% trans %}enable_status_label{% endtrans %}</p>
             {% endif %}
         </div>
     </div>
@@ -94,6 +95,14 @@
 
 
 {% block modal %}
+
+    <div
+            style="display: none"
+            id="translate"
+            data-enable_status_label="{% trans %}enable_status_label{% endtrans %}"
+            data-disable_status_label="{% trans %}disable_status_label{% endtrans %}"
+    ></div>
+
     <div id="modal-product-price-create" class="modal">
         <div class="modal-content">
             <div class="modal-header">

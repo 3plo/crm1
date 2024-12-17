@@ -56,6 +56,7 @@ class LocationFormType extends AbstractRequestType
                 [
                     'label' => $this->translator->trans('location_enabled_label'),
                     'required' => false,
+                    'attr' => ['checked' => 'checked'],
                 ]
             )
             ->add(

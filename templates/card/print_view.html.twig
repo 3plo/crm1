@@ -46,7 +46,7 @@
         <p>{% trans %}card_print_for_product_text{% endtrans %} {{ card.product.title }}</p>
         <p>{% trans %}card_print_valid_from_text{% endtrans %} {{ card.validFrom|date("Y-m-d") }}</p>
         <p>{% trans %}card_print_valid_till_text{% endtrans %} {{ card.validTill|date("Y-m-d") }}</p>
-        <div style="padding-left: 75mm">{{ barcode.html|raw }}</div>
+        <div>{{ barcode.svg|raw }}</div>
         <p style="margin-top: 1mm">{{ barcode.value }}</p>
     </div>
 {% endblock %}

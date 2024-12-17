@@ -10,7 +10,7 @@ namespace App\View\Request\Admin\UserControl;
 use App\View\Request\FormRequestInterface;
 use JMS\Serializer\Annotation as JMS;
 
-class ChangeUserRequest implements FormRequestInterface
+class ChangeAdminRequest implements FormRequestInterface
 {
     #[JMS\SerializedName('userId')]
     private null|string $userId = null;
@@ -22,14 +22,6 @@ class ChangeUserRequest implements FormRequestInterface
 
     #[JMS\SerializedName('lastName')]
     private string $lastName;
-
-    #[JMS\Type('array<string>')]
-    #[JMS\SerializedName('accessList')]
-    private array $accessList;
-
-    #[JMS\Type('array<string>')]
-    #[JMS\SerializedName('locationAccessList')]
-    private array $locationAccessList;
 
     private string $password;
 
@@ -51,16 +43,6 @@ class ChangeUserRequest implements FormRequestInterface
     public function getLastName(): string
     {
         return $this->lastName;
-    }
-
-    public function getAccessList(): array
-    {
-        return $this->accessList;
-    }
-
-    public function getLocationAccessList(): array
-    {
-        return $this->locationAccessList;
     }
 
     public function getPassword(): string

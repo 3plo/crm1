@@ -13,17 +13,15 @@ use App\Domain\Barcode\Barcode;
 use App\Domain\Barcode\Repository\BarcodeRepository;
 use App\Domain\Location\Location;
 use App\Domain\Location\Repository\LocationRepository;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class BarcodeCheckHandler
+readonly class BarcodeCheckHandler
 {
     public function __construct(
-        private readonly TranslatorInterface $translator,
-        private readonly BarcodeRepository   $barcodeRepository,
-        private readonly LocationRepository  $locationRepository,
-        private readonly Security            $security,
-        private readonly ScanLogHandler      $scanLogHandler,
+        private TranslatorInterface $translator,
+        private BarcodeRepository   $barcodeRepository,
+        private LocationRepository  $locationRepository,
+        private ScanLogHandler      $scanLogHandler,
     ) {
     }
 
@@ -55,7 +53,7 @@ class BarcodeCheckHandler
         }
 
         $card = $barcodeData->getCard();
-        if (false === $card->isEnabled()) {
+        if (false === $barcodeData->isEnabled() || false === $card->isEnabled()) {
             return $this->makeResult(
                 false,
                 $this->translator->trans('barcode_scan_status_card_inactive_title'),

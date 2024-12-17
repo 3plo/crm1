@@ -12,7 +12,7 @@
         <form id="barcode_form" action="{{ path('barcode_find') }}" method="POST">
             <input id="location_id" type="hidden" value="{{ location.id }}">
             <div class="form-group">
-                <input id="barcode" type="text" name="barcode" placeholder="{% trans %}barcode_check_hint{% endtrans %}...">
+                <input id="barcode" type="text" name="barcode" placeholder="{% trans %}barcode_check_hint{% endtrans %}..." style="margin-right: 0px;">
             </div>
             <div class="form-group">
                 <button type="submit" class="button">{% trans %}barcode_check_button{% endtrans %}</button>

@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeModalButton = document.getElementById('close-modal-product-price-create');
     const productIdInput = document.getElementById('product-id');
     const priceForm = document.getElementById('price-form');
+    const translateObject = document.getElementById('translate');
+    const enableStatusLabel = translateObject.getAttribute('data-enable_status_label');
+    const disableStatusLabel = translateObject.getAttribute('data-disable_status_label');
 
     openModalButtons.forEach(function (button) {
         button.addEventListener('click', function () {
@@ -38,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: formData.get('title'),
             })
             .then(function (response) {
-                console.log('Price created successfully:', response.data);
                 modal.style.display = 'none';
                 let responseData = JSON.parse(response.data);
 
@@ -54,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 ' data-product="' + productId + '"' +
                                 ' data-price="' + responseData.price.id + '"' +
                                 ' data-enabled="' + (true === responseData.price.enabled ? 'true' : 'false') + '">' +
-                                (true === responseData.price.enabled ? 'Disabled' : 'Enabled') +
+                                (true === responseData.price.enabled ? disableStatusLabel : enableStatusLabel) +
                             '</button></td>' +
                         '</tr>';
             })

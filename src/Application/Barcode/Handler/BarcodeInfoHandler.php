@@ -16,11 +16,11 @@ use App\Domain\Barcode\Repository\BarcodeRepository;
 use App\Domain\Card\Card;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class BarcodeInfoHandler
+readonly class BarcodeInfoHandler
 {
     public function __construct(
-        private readonly TranslatorInterface $translator,
-        private readonly BarcodeRepository   $barcodeRepository,
+        private TranslatorInterface $translator,
+        private BarcodeRepository   $barcodeRepository,
     ) {
     }
 

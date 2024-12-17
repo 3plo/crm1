@@ -11,10 +11,10 @@ use App\Application\Barcode\Command\ScanLogCommand;
 use App\Domain\Barcode\ScanLog;
 use Doctrine\ORM\EntityManagerInterface;
 
-class ScanLogHandler
+readonly class ScanLogHandler
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private EntityManagerInterface $entityManager,
     ) {
     }
 

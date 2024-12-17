@@ -7,10 +7,13 @@
 
 namespace App\View\Controller\Admin;
 
+use App\Domain\User\Enum\Role;
 use App\Domain\User\Repository\UserRepository;
 use App\Domain\User\User;
 use App\View\Access\Attribute\ActionAccess;
+use App\View\Form\Types\Admin\UserControl\ChangeAdminRequestType;
 use App\View\Form\Types\Admin\UserControl\ChangeUserRequestType;
+use App\View\Request\Admin\UserControl\ChangeAdminRequest;
 use App\View\Request\Admin\UserControl\ChangeUserRequest;
 use App\View\Request\Admin\UserControl\ToggleUserRequest;
 use App\View\RequestResolver\FormRequestResolver;
@@ -55,7 +58,7 @@ class UserControlController extends AbstractController
                     ->setEmail($userRequest->getEmail())
                     ->setFirstName($userRequest->getFirstName())
                     ->setLastName($userRequest->getLastName())
-                    ->setRoles([$userRequest->getRole()])
+                    ->setRoles([Role::RoleUser->value])
                     ->setAccessList($userRequest->getAccessList())
                     ->setLocationAccessList($userRequest->getLocationAccessList())
                     ->setEnabled(true)
@@ -80,6 +83,47 @@ class UserControlController extends AbstractController
         $form = $this->createForm(ChangeUserRequestType::class);
 
         return $this->render('admin/user/control/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[ActionAccess]
+    #[Route(path: '/user/control/admin/create', name: 'user_control_admin_create')]
+    public function changeAdmin(Request $request): Response
+    {
+        try {
+            /** @var ChangeAdminRequest $adminRequest */
+            $adminRequest = $this->formRequestResolver->resolve($request, ChangeAdminRequestType::class);
+            if (null !== $adminRequest) {
+                $user = (new User())
+                    ->setEmail($adminRequest->getEmail())
+                    ->setFirstName($adminRequest->getFirstName())
+                    ->setLastName($adminRequest->getLastName())
+                    ->setRoles([Role::RoleAdmin->value])
+                    ->setAccessList(['empty'])
+                    ->setLocationAccessList(['empty'])
+                    ->setEnabled(true)
+                    ->setIsVerified(true);
+                $user
+                    ->setPassword(
+                        $this->userPasswordHasher->hashPassword(
+                            $user,
+                            $adminRequest->getPassword(),
+                        )
+                    );
+
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+
+                $this->addFlash('success', 'Admin change successfully!');
+                return $this->redirectToRoute('user_control_user_list');
+            }
+        } catch (\Throwable $throwable) {//TODO change exception to form validation exception
+            //TODO handle exception ??
+        }
+        $form = $this->createForm(ChangeAdminRequestType::class);
+
+        return $this->render('admin/user/control/create_admin.html.twig', [
             'form' => $form->createView(),
         ]);
     }

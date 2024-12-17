@@ -12,11 +12,11 @@ use App\Domain\Barcode\Barcode;
 use App\Domain\Barcode\Repository\BarcodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class CreateHandler
+readonly class CreateHandler
 {
     public function __construct (
-        private readonly EntityManagerInterface $entityManager,
-        private readonly BarcodeRepository $barcodeRepository,
+        private EntityManagerInterface $entityManager,
+        private BarcodeRepository      $barcodeRepository,
     ) {
     }
 

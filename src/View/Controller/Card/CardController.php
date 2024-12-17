@@ -87,7 +87,7 @@ class CardController extends AbstractController
 
         return $this->render('card/print_view.html.twig', [
             'barcode' => [
-                'html' => $this->base1DBarcode->getBarcodeHTML($barcodeValue, 'EAN13', 2, 45),
+                'svg' => $this->base1DBarcode->getBarcodeSVGcode($barcodeValue, 'EAN13', 2, 45),
                 'value' => $barcodeValue,
             ],
             'card' => $card,

@@ -9,10 +9,10 @@ namespace App\Application\Barcode\Result;
 
 use App\Application\Barcode\Result\Enum\Status;
 
-class BarcodeInfoNotFound implements BarcodeInfoInterface
+readonly class BarcodeInfoNotFound implements BarcodeInfoInterface
 {
     public function __construct(
-        private readonly string $message,
+        private string $message,
     ) {
     }
 

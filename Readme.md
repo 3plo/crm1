@@ -29,7 +29,7 @@ Create first admin user manual or use sql request for create default admin with 
 - email: qweqwe@qweqwe.qwe (or change it in request)
 - password: qweqwe 
 ```sql
-INSERT INTO app.user (id, email, roles, password, is_verified, first_name, last_name, access_list, location_access_list, enabled) VALUES ('f39c29bb-5122-4435-8421-4debc91a1d3d', 'qweqwe@qweqwe.qwe', 'admin', '$2y$13$AEk1O0pfLBvZFUB3ljOv6OWq/4QMMadacu8WEZtMLLP0Zh/0yZWe.', 1, 'default', 'admin', '', '', 1);
+INSERT INTO user (id, email, roles, password, is_verified, first_name, last_name, access_list, location_access_list, enabled, created_at, updated_at) VALUES ('f39c29bb-5122-4435-8421-4debc91a1d3d', 'qweqwe@qweqwe.qwe', 'admin', '$2y$13$AEk1O0pfLBvZFUB3ljOv6OWq/4QMMadacu8WEZtMLLP0Zh/0yZWe.', 1, 'default', 'admin', '', '', 1, now(), now());
 ```
 
 Then run in separate terminals

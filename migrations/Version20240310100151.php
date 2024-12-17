@@ -31,7 +31,6 @@ final class Version20240310100151 extends AbstractMigration
                     FOREIGN KEY (barcode_id)
                     REFERENCES barcode (id)
         ');
-        $this->addSql('CREATE INDEX IDX_97AE02664ACC9A20 ON barcode (card_id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_97AE026697AE0266 ON barcode (barcode)');
         $this->addSql('
             ALTER TABLE card
