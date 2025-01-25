@@ -22,7 +22,7 @@ class Price
     private string $id;
 
     #[JMS\Exclude]
-    #[ORM\ManyToOne(targetEntity: Product::class)]
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'priceList')]
     private Product $product;
 
     #[ORM\Column(type: Types::STRING)]

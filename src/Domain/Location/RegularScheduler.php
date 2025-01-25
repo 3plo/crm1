@@ -22,7 +22,7 @@ class RegularScheduler
     private string $id;
 
     #[JMS\Exclude]
-    #[ORM\ManyToOne(targetEntity: Location::class)]
+    #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'regularSchedulerList')]
     private Location $location;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]

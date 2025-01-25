@@ -22,7 +22,7 @@ class VacationScheduler
     private string $id;
 
     #[JMS\Exclude]
-    #[ORM\ManyToOne(targetEntity: Location::class)]
+    #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'vacationSchedulerList')]
     private Location $location;
 
     #[ORM\Column(type: Types::SMALLINT, options: ['unsigned' => true])]
