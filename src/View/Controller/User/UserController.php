@@ -17,8 +17,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class UserController extends AbstractController
 {
-    #[ActionAccess]
-    #[Route(path: '/user/control/list', name: 'user_control_user_list', methods: 'GET')]
-    public function changeOwnData(Request $request): Response
-    {}
+//    #[ActionAccess]
+//    #[Route(path: '/user/control/list', name: 'user_control_user_list', methods: 'GET')]
+//    public function changeOwnData(Request $request): Response
+//    {}
 }

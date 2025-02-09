@@ -1,3 +1,5 @@
+import axios from "axios";
+
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('#add-regular-scheduler').forEach(function (addButton) {
         addButton.addEventListener('click', function () {
@@ -24,8 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-
-
     document.querySelectorAll('#add-vacation-scheduler').forEach(function (addButton) {
         addButton.addEventListener('click', function () {
             const removeButton = '<div><button type="button" class="remove-button vacation-scheduler-item-button vacation-scheduler-item-row-remove">Remove</button></div>';
@@ -51,8 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-
-
     document.querySelectorAll('#add-special-scheduler').forEach(function (addButton) {
         addButton.addEventListener('click', function () {
             const removeButton = '<div><button type="button" class="remove-button special-scheduler-item-button special-scheduler-item-row-remove">Remove</button></div>';
@@ -77,6 +75,36 @@ document.addEventListener('DOMContentLoaded', function () {
             button.closest('.special-scheduler-item-row').remove();
         });
     });
-});
 
+    document.querySelectorAll('.location-list').forEach(function (table) {
+        table.addEventListener('click', function (event) {
+            let button = event.target;
+            if (null === button || undefined === button || false === button.classList.contains('toggle-location')) {
+                return;
+            }
+            let locationId = button.getAttribute('data-location');
+            let enabled = button.getAttribute('data-enabled') === 'false';
+
+            axios.post(
+                `/location/toggle`,
+                {
+                    locationId: locationId,
+                    enabled: enabled,
+                }
+            )
+                .then(function (response) {
+                    console.log('Toggle location success');
+
+                    let newEnabled = response.data.enabled;
+                    button.setAttribute('data-enabled', newEnabled);
+                    button.innerHTML = true === newEnabled ? button.getAttribute('data-disable-title') : button.getAttribute('data-enable-title');
+                    button.classList.remove('disabled', 'enabled');
+                    button.classList.add(true === newEnabled ? 'disabled' : 'enabled');
+                })
+                .catch(function (error) {
+                    console.error('Toggle location failed');
+                });
+        });
+    });
+});
 

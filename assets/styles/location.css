@@ -113,3 +113,8 @@ div:has(> .special-scheduler-item-button) {
     width: 140px;
 }
 
+.toggle-location.disabled {
+    background-color: #e74c3c;
+    color: #fff;
+}
+

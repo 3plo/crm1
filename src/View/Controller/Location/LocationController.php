@@ -10,15 +10,18 @@ namespace App\View\Controller\Location;
 use App\Application\Location\Builder\UserLocationListBuilder;
 use App\Domain\Location\Location;
 use App\Domain\Location\RegularScheduler;
+use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\Location\SpecialScheduler;
 use App\Domain\Location\VacationScheduler;
 use App\Domain\User\Enum\Action;
 use App\View\Access\Attribute\ActionAccess;
 use App\View\Form\Types\Location\LocationFormType;
 use App\View\Request\Location\LocationCreateRequest;
+use App\View\Request\Location\ToggleLocationRequest;
 use App\View\RequestResolver\FormRequestResolver;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +34,9 @@ class LocationController extends AbstractController
         private readonly EntityManagerInterface  $entityManager,
         private readonly FormRequestResolver     $formRequestResolver,
         private readonly UserLocationListBuilder $userLocationListBuilder,
-    ) {
+        private readonly LocationRepository      $locationRepository,
+    )
+    {
     }
 
     #[ActionAccess([Action::LocationList->value])]
@@ -59,7 +64,7 @@ class LocationController extends AbstractController
 
                 foreach ($locationRequest->getRegularSchedulerList() as $regularSchedulerDTO) {
                     $regularScheduler = (new RegularScheduler())//TODO move to factory
-                        ->setEnabled(true)
+                    ->setEnabled(true)
                         ->setDayNumber($regularSchedulerDTO->getDayNumber())
                         ->setTimeFrom($regularSchedulerDTO->getTimeFrom())
                         ->setTimeTill($regularSchedulerDTO->getTimeTill())
@@ -72,7 +77,7 @@ class LocationController extends AbstractController
                 foreach ($locationRequest->getVacationSchedulerList() as $vacationSchedulerDTO) {
                     $vacationScheduler = (new VacationScheduler())//TODO move to factory
 //                        ->setEnabled(true)//TODO add to entity
-                        ->setDayNumber($vacationSchedulerDTO->getDayNumber())
+                    ->setDayNumber($vacationSchedulerDTO->getDayNumber())
                         ->setTitle($vacationSchedulerDTO->getTitle())
                         ->setDateFrom($vacationSchedulerDTO->getDateFrom())
                         ->setDateTill($vacationSchedulerDTO->getDateTill());
@@ -83,7 +88,7 @@ class LocationController extends AbstractController
                 foreach ($locationRequest->getSpecialSchedulerList() as $specialSchedulerDTO) {
                     $specialScheduler = (new SpecialScheduler())//TODO move to factory
 //                        ->setEnabled(true)//TODO add to entity
-                        ->setTimeFrom($specialSchedulerDTO->getTimeFrom())
+                    ->setTimeFrom($specialSchedulerDTO->getTimeFrom())
                         ->setTimeTill($specialSchedulerDTO->getTimeTill())
                         ->setDateFrom($specialSchedulerDTO->getDateFrom())
                         ->setDateTill($specialSchedulerDTO->getDateTill());
@@ -108,5 +113,20 @@ class LocationController extends AbstractController
         return $this->render('location/create.html.twig', [
             'form' => $form->createView(),
         ], $response);
+    }
+
+    #[ActionAccess]
+    #[Route(path: '/location/toggle', name: 'location_location_toggle', methods: 'POST')]
+    public function toggleUser(ToggleLocationRequest $request): JsonResponse
+    {
+        $user = $this->locationRepository->find($request->getLocationId());
+        $user->setEnabled($request->isEnabled());
+
+        $this->entityManager->flush();
+
+        return new JsonResponse([
+            'success' => true,
+            'enabled' => $user->isEnabled(),
+        ]);
     }
 }

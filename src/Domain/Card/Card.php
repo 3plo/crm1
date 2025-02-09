@@ -9,6 +9,7 @@ namespace App\Domain\Card;
 
 use App\Domain\Card\Enum\Type;
 use App\Domain\Product\Product;
+use App\Domain\User\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -24,6 +25,10 @@ class Card
 
     #[ORM\ManyToOne(targetEntity: Product::class)]
     private Product $product;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private null|User $createdBy = null;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $enabled = true;
@@ -67,6 +72,17 @@ class Card
     public function setProduct(Product $product): self
     {
         $this->product = $product;
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
         return $this;
     }
 

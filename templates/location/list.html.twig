@@ -4,8 +4,6 @@
 
 {% block stylesheets %}
     {{ parent() }}
-{#    <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">#}
-{#    <link rel="stylesheet" href="{{ asset('build/css/modal.css') }}">#}
     <link rel="stylesheet" href="{{ asset('build/css/location.css') }}">
 {% endblock %}
 
@@ -21,13 +19,26 @@
             {% endif %}
         </div>
 
-        <div class="location-grid">
+        <div class="location-grid location-list">
             {% if locationList is not empty %}
                 {% for location in locationList %}
                     <div class="location-item">
                         <div class="location-item-grid">
                             <div class="location-info">
-                                <h3 class="title">{{ location.title }}</h3>
+                                <h3 class="title">{{ location.title }} wqwqweq</h3>
+                                <p>
+                                    <button class="create-button toggle-location {{ true == location.enabled ? 'disabled' : 'enabled' }}"
+                                            data-location="{{ location.id }}"
+                                            data-disable-title="{% trans %}disable_button{% endtrans %}"
+                                            data-enable-title="{% trans %}enable_button{% endtrans %}"
+                                            data-enabled="{{ true == location.enabled ? 'true' : 'false' }}">
+                                        {% if true == location.enabled %}
+                                            {% trans %}disable_button{% endtrans %}
+                                        {% else %}
+                                            {% trans %}enable_button{% endtrans %}
+                                        {% endif %}
+                                    </button>
+                                </p>
                                 <p class="description">{{ location.description }}</p>
                                 <p class="status">{% if location.enabled %}{% trans %}enable_status_label{% endtrans %}{% else %}{% trans %}disable_status_label{% endtrans %}{% endif %}</p>
                                 <p>
