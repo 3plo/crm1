@@ -10,7 +10,7 @@ namespace App\View\Request\Report\VisitReport;
 use App\View\Request\FormRequestInterface;
 use JMS\Serializer\Annotation as JMS;
 
-class GeneralRequest implements FormRequestInterface
+class GeneralReportRequest implements FormRequestInterface
 {
     #[JMS\SerializedName('dateFrom')]
     #[JMS\Type('DateTimeImmutable<"Y-m-d 00:00:00", "+00:00", ["' . \DateTimeInterface::ATOM . '"]>')]

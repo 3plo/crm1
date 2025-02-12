@@ -12,7 +12,7 @@ use App\Application\Product\Builder\UserProductListBuilder;
 use App\View\Form\Constraint\Location\LocationExist;
 use App\View\Form\Constraint\Product\ProductExist;
 use App\View\Form\Types\AbstractRequestType;
-use App\View\Request\Report\VisitReport\GeneralRequest;
+use App\View\Request\Report\VisitReport\GeneralReportRequest;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,12 +20,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class GeneralRequestType extends AbstractRequestType
+class GeneralReportRequestType extends AbstractRequestType
 {
     public function __construct(
         private readonly UserLocationListBuilder $userLocationListBuilder,
         private readonly UserProductListBuilder  $userProductListBuilder,
-        private readonly TranslatorInterface $translator,
+        private readonly TranslatorInterface     $translator,
     ) {
     }
 
@@ -97,7 +97,7 @@ class GeneralRequestType extends AbstractRequestType
 
     #[\Override] public static function getRequestClass(): string
     {
-        return GeneralRequest::class;
+        return GeneralReportRequest::class;
     }
 
     private function prepareLocationList(): array

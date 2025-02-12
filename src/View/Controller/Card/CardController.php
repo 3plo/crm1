@@ -11,6 +11,7 @@ use App\Application\Card\Command\CreateCommand;
 use App\Domain\Barcode\Repository\BarcodeRepository;
 use App\Domain\Card\Handler\CreateHandler;
 use App\Domain\Card\Repository\CardRepository;
+use App\Domain\Product\Repository\PriceRepository;
 use App\Domain\Product\Repository\ProductRepository;
 use App\Domain\User\Enum\Action;
 use App\Infrastructure\Provider\CardProvider;
@@ -34,6 +35,7 @@ class CardController extends AbstractController
         private readonly CreateHandler       $createHandler,
         private readonly FormRequestResolver $formRequestResolver,
         private readonly ProductRepository   $productRepository,
+        private readonly PriceRepository     $priceRepository,
         private readonly CardRepository      $cardRepository,
         private readonly BarcodeRepository   $barcodeRepository,
         private readonly CardProvider        $cardProvider,
@@ -47,13 +49,12 @@ class CardController extends AbstractController
     {//TODO check access to product
         try {
             /** @var CreateRequest $cardRequest */
-
             $cardRequest = $this->formRequestResolver->resolve($request, CardFormType::class);
             if (null !== $cardRequest) {
                 $this->createHandler->handle(
                     new CreateCommand(
                         $this->productRepository->find($productId),
-                        $cardRequest->getPrice(),
+                        $this->priceRepository->find($cardRequest->getPrice()),
                     ),
                 );
 

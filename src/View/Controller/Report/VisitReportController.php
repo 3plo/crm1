@@ -15,10 +15,10 @@ use App\Domain\Location\Repository\LocationRepository;
 use App\Domain\User\Enum\Action;
 use App\View\Access\Attribute\ActionAccess;
 use App\View\Access\Checker\LocationChecker;
-use App\View\Form\Types\Report\VisitReport\GeneralRequestType;
-use App\View\Form\Types\Report\VisitReport\TrafficRequestType;
-use App\View\Request\Report\VisitReport\GeneralRequest;
-use App\View\Request\Report\VisitReport\TrafficRequest;
+use App\View\Form\Types\Report\VisitReport\GeneralReportRequestType;
+use App\View\Form\Types\Report\VisitReport\TrafficReportRequestType;
+use App\View\Request\Report\VisitReport\GeneralReportRequest;
+use App\View\Request\Report\VisitReport\TrafficReportRequest;
 use App\View\RequestResolver\FormRequestResolver;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,8 +45,8 @@ class VisitReportController extends AbstractController
         $reportData = [];
         $generalRequest = null;
         try {
-            /** @var GeneralRequest $generalRequest */
-            $generalRequest = $this->formRequestResolver->resolve($request, GeneralRequestType::class);
+            /** @var GeneralReportRequest $generalRequest */
+            $generalRequest = $this->formRequestResolver->resolve($request, GeneralReportRequestType::class);
             if (null !== $generalRequest) {
                 $reportData = $this->generalReportBuilder->build(
                     new GeneralReportFilterCommand(
@@ -61,7 +61,7 @@ class VisitReportController extends AbstractController
             //TODO handle exception ??
         }
 
-        $form = $this->createForm(GeneralRequestType::class);
+        $form = $this->createForm(GeneralReportRequestType::class);
 
         return $this->render('report/visit_report/general_report.html.twig', [
             'form' => $form->createView(),
@@ -80,15 +80,15 @@ class VisitReportController extends AbstractController
         $reportData = [];
         $trafficRequest = null;
         try {
-            /** @var TrafficRequest $trafficRequest */
-            $trafficRequest = $this->formRequestResolver->resolve($request, TrafficRequestType::class);
+            /** @var TrafficReportRequest $trafficRequest */
+            $trafficRequest = $this->formRequestResolver->resolve($request, TrafficReportRequestType::class);
             if ('' === $locationId) {
                 $locationId = $trafficRequest->getLocation();
             }
 
             if (null === $trafficRequest) {
                 $trafficRequest =
-                    (new TrafficRequest())
+                    (new TrafficReportRequest())
                         ->setLocation($locationId)
                         ->setDateFrom(new \DateTimeImmutable('midnight'))
                         ->setDateTill((new \DateTimeImmutable('midnight'))->add(new \DateInterval('P1D')));
@@ -107,7 +107,7 @@ class VisitReportController extends AbstractController
         }
 
         $form = $this->createForm(
-            TrafficRequestType::class,
+            TrafficReportRequestType::class,
             [
                 'locationId' => $locationId,
             ],

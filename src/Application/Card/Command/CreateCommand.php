@@ -7,13 +7,14 @@
 
 namespace App\Application\Card\Command;
 
+use App\Domain\Product\Price;
 use App\Domain\Product\Product;
 
-class CreateCommand
+readonly class CreateCommand
 {
     public function __construct(
-        private readonly Product $product,
-        private readonly string $priceId,
+        private Product $product,
+        private Price $price,
     ) {
     }
 
@@ -22,8 +23,8 @@ class CreateCommand
         return $this->product;
     }
 
-    public function getPriceId(): string
+    public function getPrice(): Price
     {
-        return $this->priceId;
+        return $this->price;
     }
 }

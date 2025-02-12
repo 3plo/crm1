@@ -5,26 +5,27 @@
  * Time: 10:15
  */
 
-namespace App\View\Form\Types\Report\VisitReport;
+namespace App\View\Form\Types\Report\SaleReport;
 
 use App\Application\Product\Builder\UserProductListBuilder;
-use App\View\Form\Constraint\Location\LocationExist;
+use App\Application\User\Builder\UserListBuilder;
 use App\View\Form\Constraint\Product\ProductExist;
+use App\View\Form\Constraint\User\UserExist;
 use App\View\Form\Types\AbstractRequestType;
-use App\View\Request\Report\VisitReport\TrafficRequest;
+use App\View\Request\Report\SaleReport\GeneralReportRequest;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class TrafficRequestType extends AbstractRequestType
+class GeneralReportRequestType extends AbstractRequestType
 {
     public function __construct(
-        private readonly UserProductListBuilder $userProductListBuilder,
-        private readonly TranslatorInterface $translator,
+        private readonly UserProductListBuilder  $userProductListBuilder,
+        private readonly UserListBuilder         $userListBuilder,
+        private readonly TranslatorInterface     $translator,
     ) {
     }
 
@@ -35,13 +36,12 @@ class TrafficRequestType extends AbstractRequestType
 
     #[\Override] public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $locationId = $options['data']['locationId'] ?? '';
         $builder
             ->add(
                 'dateFrom',
                 DateType::class,
                 [
-                    'label' => $this->translator->trans('location_traffic_report_date_from_label'),
+                    'label' => $this->translator->trans('general_traffic_report_date_from_label'),
                     'attr' => ['class' => 'input-field'],
                     'required' => true,
                     'widget' => 'single_text',
@@ -54,7 +54,7 @@ class TrafficRequestType extends AbstractRequestType
                 'dateTill',
                 DateType::class,
                 [
-                    'label' => $this->translator->trans('location_traffic_report_date_till_label'),
+                    'label' => $this->translator->trans('general_traffic_report_date_till_label'),
                     'attr' => ['class' => 'input-field'],
                     'required' => true,
                     'widget' => 'single_text',
@@ -64,22 +64,10 @@ class TrafficRequestType extends AbstractRequestType
                 ],
             )
             ->add(
-                'location',
-                HiddenType::class,
-                [
-                    'label' => false,
-                    'constraints' => [
-                        new Assert\NotBlank(),
-                        new LocationExist(),
-                    ],
-                    'attr' => ['value' => $locationId],
-                ],
-            )
-            ->add(
                 'product',
                 ChoiceType::class,
                 [
-                    'label' => $this->translator->trans('location_traffic_report_product_label'),
+                    'label' => $this->translator->trans('general_traffic_report_product_label'),
                     'attr' => ['class' => 'input-field'],
                     'choices' => $this->prepareProductList(),
                     'placeholder' => '---',
@@ -89,12 +77,27 @@ class TrafficRequestType extends AbstractRequestType
                         new ProductExist(),
                     ],
                 ],
+            )
+            ->add(
+                'user',
+                ChoiceType::class,
+                [
+                    'label' => $this->translator->trans('general_sale_report_user_label'),
+                    'attr' => ['class' => 'input-field'],
+                    'choices' => $this->prepareUserList(),
+                    'placeholder' => '---',
+                    'required' => false,
+                    'empty_data' => null,
+                    'constraints' => [
+                        new UserExist(),
+                    ],
+                ],
             );
     }
 
     #[\Override] public static function getRequestClass(): string
     {
-        return TrafficRequest::class;
+        return GeneralReportRequest::class;
     }
 
     private function prepareProductList(): array
@@ -106,6 +109,16 @@ class TrafficRequestType extends AbstractRequestType
             }
 
             $result[$product->getTitle()] = $product->getId();
+        }
+
+        return $result;
+    }
+
+    private function prepareUserList(): array
+    {
+        $result = [];
+        foreach ($this->userListBuilder->build() as $user) {
+            $result[sprintf('%s %s', $user->getFirstName(), $user->getLastName())] = $user->getId();
         }
 
         return $result;

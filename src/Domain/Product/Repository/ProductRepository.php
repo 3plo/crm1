@@ -19,7 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    private const ALIAS = 'p';
+    private const string ALIAS = 'p';
 
     public function __construct(ManagerRegistry $registry)
     {

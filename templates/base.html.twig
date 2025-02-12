@@ -1,39 +1,5 @@
 {% set Action = enum('\\App\\Domain\\User\\Enum\\Action') %}
 {% set Role = enum('\\App\\Domain\\User\\Enum\\Role') %}
-{#{% set Action = {#}
-{#    'ProductList': {#}
-{#        'value': 'product_list'#}
-{#    },#}
-{#    'ProductCreate': {#}
-{#        'value': 'product_create'#}
-{#    },#}
-{#    'ProductActivate': {#}
-{#        'value': 'product_activate'#}
-{#    },#}
-{#    'LocationList': {#}
-{#        'value': 'location_list'#}
-{#    },#}
-{#    'LocationCreate': {#}
-{#        'value': 'location_create'#}
-{#    },#}
-{#    'LocationActivate': {#}
-{#        'value': 'location_activate'#}
-{#    },#}
-{#    'EntranceControl': {#}
-{#        'value': 'entrance_control'#}
-{#    },#}
-{#    'Sell': {#}
-{#        'value': 'sell'#}
-{#    }#}
-{#} %}#}
-{#{% set Role = {#}
-{#    'RoleUser': {#}
-{#        'value': 'user'#}
-{#    },#}
-{#    'RoleAdmin': {#}
-{#        'value': 'admin'#}
-{#    }#}
-{#} %}#}
 
 <!DOCTYPE html>
 <html>
@@ -71,7 +37,10 @@
                         <li><a href="{{ path('product_list') }}">{% trans %}general_page_products_menu_item{% endtrans %}</a></li>
                     {% endif %}
                     {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.EntranceControl.value in app.user.accessList) %}
-                        <li><a href="{{ path('report_visit_general_report') }}">{% trans %}general_page_reports_menu_item{% endtrans %}</a></li>
+                        <li><a href="{{ path('report_visit_general_report') }}">{% trans %}general_page_report_visit_menu_item{% endtrans %}</a></li>
+                    {% endif %}
+                    {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.Sell.value in app.user.accessList) %}
+                        <li><a href="{{ path('report_sale_general_report') }}">{% trans %}general_page_report_sale_menu_item{% endtrans %}</a></li>
                     {% endif %}
                     {% if null != app.user and Role.RoleAdmin.value in app.user.roles %}
                         <li><a href="{{ path('user_control_user_list') }}">{% trans %}general_page_users_menu_item{% endtrans %}</a></li>

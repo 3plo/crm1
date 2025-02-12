@@ -8,6 +8,7 @@
 namespace App\Domain\Card;
 
 use App\Domain\Card\Enum\Type;
+use App\Domain\Product\Price;
 use App\Domain\Product\Product;
 use App\Domain\User\User;
 use Doctrine\DBAL\Types\Types;
@@ -25,6 +26,9 @@ class Card
 
     #[ORM\ManyToOne(targetEntity: Product::class)]
     private Product $product;
+
+    #[ORM\ManyToOne(targetEntity: Price::class)]
+    private Price $price;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: true)]
@@ -72,6 +76,17 @@ class Card
     public function setProduct(Product $product): self
     {
         $this->product = $product;
+        return $this;
+    }
+
+    public function getPrice(): Price
+    {
+        return $this->price;
+    }
+
+    public function setPrice(Price $price): self
+    {
+        $this->price = $price;
         return $this;
     }
 

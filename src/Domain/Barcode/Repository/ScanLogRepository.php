@@ -23,7 +23,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ScanLogRepository extends ServiceEntityRepository
 {
-    private const ALIAS = 'sl';
+    private const string ALIAS = 'sl';
 
     public function __construct(ManagerRegistry $registry)
     {

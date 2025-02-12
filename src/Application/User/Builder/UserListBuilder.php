@@ -5,24 +5,23 @@
  * Time: 1:20
  */
 
-namespace App\Application\Product\Builder;
+namespace App\Application\User\Builder;
 
-use App\Domain\Product\Product;
-use App\Domain\Product\Repository\ProductRepository;
 use App\Domain\User\Enum\Role;
+use App\Domain\User\Repository\UserRepository;
 use App\Domain\User\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-readonly class UserProductListBuilder
+readonly class UserListBuilder
 {
     public function __construct(
         private TokenStorageInterface  $tokenStorage,
-        private ProductRepository      $productRepository,
+        private UserRepository         $userRepository,
     ) {
     }
 
     /**
-     * @return Product[]
+     * @return User[]
      */
     public function build(): array
     {
@@ -31,7 +30,7 @@ readonly class UserProductListBuilder
 
         return
             true === in_array(Role::RoleAdmin->value, $user->getRoles() , true) ?
-                $this->productRepository->findAll() :
-                $this->productRepository->findByLocationList($user->getLocationAccessList());
+                $this->userRepository->findAll() :
+                [$user];
     }
 }

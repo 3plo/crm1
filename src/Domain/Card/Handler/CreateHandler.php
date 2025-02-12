@@ -23,8 +23,7 @@ readonly class CreateHandler
         private BarcodeCreateHandler   $barcodeCreateHandler,
         private CardProvider           $cardProvider,
         private Security               $security,
-    )
-    {
+    ) {
     }
 
     public function handle(CreateCommand $command): void
@@ -38,6 +37,7 @@ readonly class CreateHandler
         $product = $command->getProduct();
         $card = (new Card())
             ->setProduct($product)
+            ->setPrice($command->getPrice())
             ->setValidFrom(new \DateTimeImmutable())
             ->setValidTill(
                 (new \DateTimeImmutable(sprintf('+%s days', $product->getDurationDays())))
