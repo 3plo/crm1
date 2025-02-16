@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}info_about_us_page_title{% endtrans %}{% endblock %}
+
+
+{% block body %}
+    <div class="center-container">
+        <p><strong>Графік відвідування басейну ЛНТУ</strong></p>
+
+        <table style="width: 100%; border: #272727 1px; text-align: center">
+            <tbody>
+            <tr>
+                <td>&nbsp;</td>
+                <td><span>ПН</span></td>
+                <td><span>ВТ-СБ</span></td>
+            </tr>
+            <tr>
+                <td><span>Ранок</span></td>
+                <td>&nbsp;</td>
+                <td><strong>7:30-10:00</strong></td>
+            </tr>
+            <tr>
+                <td><span>Вечір</span></td>
+                <td><strong>16:00-21:00</strong></td>
+                <td><strong>16:00-21:00</strong></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

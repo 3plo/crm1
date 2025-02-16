@@ -57,12 +57,21 @@
 
         </header>
 
+        <main>
         {% block body %}{% endblock %}
+        </main>
 
         {% block modal %}{% endblock %}
+
+        <footer>
+            <nav class="navigation" style="margin-left: 40%">
+                <ul>
+                    <li><a href="{{ path('about_us') }}">{% trans %}info_about_us_page_title{% endtrans %}</a></li>
+                    <li><a href="{{ path('contacts') }}">{% trans %}info_contact_page_title{% endtrans %}</a></li>
+                </ul>
+            </nav>
+        </footer>
     </body>
-    <footer>
-    </footer>
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
         {% block importmap %}{{ importmap('app') }}{% endblock %}

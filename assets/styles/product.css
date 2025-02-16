@@ -87,3 +87,7 @@
 .create-product-button {
     margin-top: 20px;
 }
+
+.price-created-at {
+    font-size: 0.6rem;
+}

@@ -49,9 +49,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     .querySelector('.price-list')
                     .innerHTML += '' +
                         '<tr>' +
-                        '<td>' + responseData.price.title + '</td>' +
-                        '<td>' + responseData.price.amount_in_uah + ' ГРН </td>' +
-                        '<td>' +
+                        '<td width="30%">' + responseData.price.title + '</td>' +
+                        '<td width="20%"><span class="price-created-at">' + responseData.price.created_at.substr(0, 10) + '</td>' +
+                        '<td width="30%">' + responseData.price.amount_in_uah + ' ГРН </td>' +
+                        '<td width="20%">' +
                             '<button class="create-button toggle-price ' + (true === responseData.price.enabled ? 'disabled' : 'enabled') + '"' +
                                 ' data-product="' + productId + '"' +
                                 ' data-price="' + responseData.price.id + '"' +

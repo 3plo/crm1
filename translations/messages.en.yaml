@@ -196,3 +196,9 @@ card_print_description: 'This is entrance document for access to LNTU location'
 card_print_for_product_text: 'for product'
 card_print_valid_from_text: 'Valid from'
 card_print_valid_till_text: 'Valid till'
+
+info_about_us_page_title: 'About us'
+info_contact_page_title: 'Contacts'
+
+barcode_info_extra_label: 'Extra info by tel'
+barcode_info_extra_phone: '+38 (0332) 74-61-23'

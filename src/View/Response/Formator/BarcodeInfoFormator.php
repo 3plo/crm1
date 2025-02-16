@@ -11,11 +11,11 @@ use App\Application\Barcode\Result\BarcodeInfoInterface;
 use JMS\Serializer\ArrayTransformerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class BarcodeInfoFormator
+readonly class BarcodeInfoFormator
 {
     public function __construct(
-        private readonly ArrayTransformerInterface $arrayTransformer,
-        private readonly TranslatorInterface $translator,
+        private ArrayTransformerInterface $arrayTransformer,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -26,6 +26,10 @@ class BarcodeInfoFormator
     {
         $barcodeStatus = $barcodeInfo->getStatus()->value;
         $barcodeInfoData = $this->arrayTransformer->toArray($barcodeInfo);
+        $barcodeInfoData['extra'] = [
+            'label' => $this->translator->trans('barcode_info_extra_label'),
+            'phone' => $this->translator->trans('barcode_info_extra_phone'),
+        ];
         $barcodeInfoData['status'] = $barcodeStatus;
         $barcodeInfoData['status_title'] = $this->translator->trans(
             sprintf('barcode_info_status_%s_title', $barcodeStatus),

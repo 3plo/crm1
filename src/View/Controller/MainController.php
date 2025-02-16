@@ -15,4 +15,16 @@ class MainController extends AbstractController
             'controller_name' => 'MainController',
         ]);
     }
+
+    #[Route('/contacts', name: 'contacts')]
+    public function contacts(): Response
+    {
+        return $this->render('info/contacts.html.twig');
+    }
+
+    #[Route('/about-us', name: 'about_us')]
+    public function aboutUs(): Response
+    {
+        return $this->render('info/about_us.html.twig');
+    }
 }

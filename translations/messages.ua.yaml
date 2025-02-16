@@ -77,7 +77,7 @@ product_form_create_button: 'Створити продукт'
 
 product_create_page_title: 'Створити продукт'
 product_create_price_title: 'Створити ціну'
-product_dave_product_price_title: 'Зберегти продукт'
+product_dave_product_price_title: 'Зберегти ціну'
 product_list_price_title_form_label: 'Назва'
 product_list_price_amount_form_label: 'Сума'
 product_list_price_enabled_form_label: 'Ввімкнено'
@@ -196,3 +196,9 @@ card_print_description: 'Це вхідний документ, що дозвол
 card_print_for_product_text: 'для продукту'
 card_print_valid_from_text: 'Дійсний з'
 card_print_valid_till_text: 'Дійсний до'
+
+info_about_us_page_title: 'Про нас'
+info_contact_page_title: 'Контакти'
+
+barcode_info_extra_label: 'За додатковою інформацією звертайтесь за телефоном'
+barcode_info_extra_phone: '+38 (0332) 74-61-23'

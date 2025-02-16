@@ -43,7 +43,7 @@
                                     <th colspan="1" width="50%">
                                         <h4>{% trans %}product_list_prices_title{% endtrans %}</h4>
                                     </th>
-                                    <th colspan="2" width="50%">
+                                    <th colspan="3" width="50%">
                                         {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.ProductCreate.value in app.user.accessList) %}
                                             <button class="create-button create-price-button" data-product-id="{{ product.id }}">{% trans %}product_create_price_title{% endtrans %}</button>
                                         {% endif %}
@@ -53,7 +53,10 @@
                                 <tbody class="price-list hidden">
                                     {% for price in product.priceList %}
                                         <tr>
-                                            <td width="50%">{{ price.title }}</td>
+                                            <td width="30%">{{ price.title }}</td>
+                                            <td width="20%">
+                                                <span class="price-created-at">{{ price.createdAt|date("Y-m-d") }}</span>
+                                            </td>
                                             <td width="30%">{{ price.amountInUAH }} {% trans %}product_list_default_currency{% endtrans %}</td>
                                             <td width="20%">
                                                 <button class="create-button toggle-price {{ true == price.enabled ? 'disabled' : 'enabled' }}"

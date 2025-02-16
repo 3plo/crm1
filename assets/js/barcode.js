@@ -74,7 +74,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     if ('not_found' === response.data.status) {
                         Swal.fire({
                             title: response.data.status_title,
-                            text: response.data.message,
+                            html:
+                                '<span>' + response.data.message + '</span><br>' +
+                                '<span>' + response.data.extra.label + '</span><br>' +
+                                '<span>' + response.data.extra.phone + '</span>',
                             icon: 'error',
                             confirmButtonText: closeTitle,
                         });
@@ -87,7 +90,9 @@ document.addEventListener('DOMContentLoaded', function () {
                                 '<tr><td>' + validTillTitle + '</td><td>' + response.data.valid_till + '</td></tr>' +
                                 '<tr><td>' + countUsageTitle + '</td><td>' + response.data.count_usage + '</td></tr>' +
                                 '<tr><td>' + maxCountUsageTitle + '</td><td>' + response.data.max_count_usage + '</td></tr>' +
-                                '</tbody></table>',
+                                '</tbody></table><br>' +
+                                '<span>' + response.data.extra.label + '</span><br>' +
+                                '<span>' + response.data.extra.phone + '</span>',
                             icon: 'not_available' === response.data.status ? 'warning' : 'success',
                             confirmButtonText: closeTitle,
                         });
