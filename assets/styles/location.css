@@ -6,6 +6,14 @@ div:has(> .special-scheduler-item-input) {
     padding: 0 10px;
     width: 200px;
 }
+
+.scheduler-saved-item {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 0 10px;
+    width: 200px;
+}
+
 div:has(> .regular-scheduler-item-button),
 div:has(> .vacation-scheduler-item-button),
 div:has(> .special-scheduler-item-button) {
@@ -113,7 +121,23 @@ div:has(> .special-scheduler-item-button) {
     width: 140px;
 }
 
+.toggle-location {
+    width: 140px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .toggle-location.disabled {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.toggle-scheduler.enabled {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.toggle-scheduler.disabled {
     background-color: #e74c3c;
     color: #fff;
 }

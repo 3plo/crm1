@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', function () {
         addButton.addEventListener('click', function () {
             const removeButton = '<div><button type="button" class="remove-button regular-scheduler-item-button regular-scheduler-item-row-remove">Remove</button></div>';
 
-            let container = document.getElementById('location_form_regularSchedulerList');
+            let container = document.getElementById('location_' + type + '_form_regularSchedulerList');
             let index = container.querySelectorAll('.regular-scheduler-item-row').length;
             let wrapper = document.createElement('div');
             wrapper.innerHTML = container.getAttribute('data-prototype').replace(/__name__/g, index);
             container.appendChild(wrapper);
 
-            document.getElementById('location_form_regularSchedulerList_' + index).innerHTML += removeButton;
+            document.getElementById('location_' + type + '_form_regularSchedulerList_' + index).innerHTML += removeButton;
         });
     });
 
@@ -30,13 +30,13 @@ document.addEventListener('DOMContentLoaded', function () {
         addButton.addEventListener('click', function () {
             const removeButton = '<div><button type="button" class="remove-button vacation-scheduler-item-button vacation-scheduler-item-row-remove">Remove</button></div>';
 
-            let container = document.getElementById('location_form_vacationSchedulerList');
+            let container = document.getElementById('location_' + type + '_form_vacationSchedulerList');
             let index = container.querySelectorAll('.vacation-scheduler-item-row').length;
             let wrapper = document.createElement('div');
             wrapper.innerHTML = container.getAttribute('data-prototype').replace(/__name__/g, index);
             container.appendChild(wrapper);
 
-            document.getElementById('location_form_vacationSchedulerList_' + index).innerHTML += removeButton;
+            document.getElementById('location_' + type + '_form_vacationSchedulerList_' + index).innerHTML += removeButton;
         });
     });
 
@@ -55,13 +55,13 @@ document.addEventListener('DOMContentLoaded', function () {
         addButton.addEventListener('click', function () {
             const removeButton = '<div><button type="button" class="remove-button special-scheduler-item-button special-scheduler-item-row-remove">Remove</button></div>';
 
-            let container = document.getElementById('location_form_specialSchedulerList');
+            let container = document.getElementById('location_' + type + '_form_specialSchedulerList');
             let index = container.querySelectorAll('.special-scheduler-item-row').length;
             let wrapper = document.createElement('div');
             wrapper.innerHTML = container.getAttribute('data-prototype').replace(/__name__/g, index);
             container.appendChild(wrapper);
 
-            document.getElementById('location_form_specialSchedulerList_' + index).innerHTML += removeButton;
+            document.getElementById('location_' + type + '_form_specialSchedulerList_' + index).innerHTML += removeButton;
         });
     });
 
@@ -103,6 +103,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .catch(function (error) {
                     console.error('Toggle location failed');
+                });
+        });
+    });
+
+    document.querySelectorAll('.toggle-scheduler').forEach(function (container) {
+        container.addEventListener('click', function (event) {
+            let button = event.target;
+            if (null === button || undefined === button || false === button.classList.contains('toggle-scheduler')) {
+                return;
+            }
+            let schedulerId = button.getAttribute('data-id');
+            let type = button.getAttribute('data-type');
+            let enabled = button.getAttribute('data-enabled') === 'false';
+
+            axios.post(
+                `/location/schedule/toggle`,
+                {
+                    schedulerId: schedulerId,
+                    type: type,
+                    enabled: enabled,
+                }
+            )
+                .then(function (response) {
+                    console.log('Toggle scheduler success');
+
+                    let newEnabled = response.data.enabled;
+                    button.setAttribute('data-enabled', newEnabled);
+                    button.innerHTML = true === newEnabled ? button.getAttribute('data-disable-title') : button.getAttribute('data-enable-title');
+                    button.classList.remove('disabled', 'enabled');
+                    button.classList.add(true === newEnabled ? 'disabled' : 'enabled');
+                })
+                .catch(function (error) {
+                    console.error('Toggle scheduler failed');
                 });
         });
     });

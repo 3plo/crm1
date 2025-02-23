@@ -17,6 +17,7 @@ enum Action: string
 
     case LocationList = 'location_list';
     case LocationCreate = 'location_create';
+    case LocationEdit = 'location_edit';
     case LocationActivate = 'location_activate';
 
     case EntranceControl = 'entrance_control';

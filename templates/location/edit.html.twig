@@ -1,0 +1,210 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}create_location_title{% endtrans %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/location.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    <div class="full-container">
+        <h2>{% trans %}edit_location_title{% endtrans %}</h2>
+            <form method="post" action="{{ path('location_edit', {locationId: location.id}) }}" class="location-create">
+            {{ form_row(form._token) }}
+            <div class="location-create-main">
+                <div class="form-group">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'input-field'}, 'value': location.title}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'input-field'}, 'value': location.description}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.enabled) }}
+                    {% if location.enabled == true %}
+                        {{ form_widget(form.enabled, {'attr': {'class': 'checkbox-field', 'checked': 'checked'}}) }}
+                    {% else %}
+                        {{ form_widget(form.enabled, {'attr': {'class': 'checkbox-field'}}) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="location-create-main-separator">
+            </div>
+            <div class="location-create-button-wrapper">
+                <button type="button" class="button location-create-button location-add-button" id="add-regular-scheduler">{% trans %}add_regular_scheduler_button{% endtrans %}</button>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.regularSchedulerList) }}
+                <div id="regular-schedulers-container">
+                    <h3>{% trans %}regular_scheduler_block_title{% endtrans %}</h3><br>
+                    <div class="regular-scheduler-item regular-scheduler-item-head">
+                        <div>
+                            <label>{% trans %}day_number_column_label{% endtrans %}</label>
+                        </div>
+                        <div>
+                            <label>{% trans %}time_from_column_label{% endtrans %}</label>
+                        </div>
+                        <div>
+                            <label>{% trans %}time_till_column_label{% endtrans %}</label>
+                        </div>
+                        <div>
+                            <label>{% trans %}date_from_column_label{% endtrans %}</label>
+                        </div>
+                        <div>
+                            <label>{% trans %}date_till_column_label{% endtrans %}</label>
+                        </div>
+                    </div>
+
+                    {% for regularSchedulerItem in location.regularSchedulerList %}
+                    <div>
+                        <div class="regular-scheduler-saved-item-row">
+                            <div class="scheduler-saved-item">{{ regularSchedulerItem.dayNumber | day_name }}</div>
+                            <div class="scheduler-saved-item">{{ regularSchedulerItem.timeFrom|date("H:i") }}</div>
+                            <div class="scheduler-saved-item">{{ regularSchedulerItem.timeTill|date("H:i") }}</div>
+                            <div class="scheduler-saved-item">{{ regularSchedulerItem.dateFrom|date("Y-m-d") }}</div>
+                            <div class="scheduler-saved-item">{{ regularSchedulerItem.dateTill|date("Y-m-d") }}</div>
+                            <div class="scheduler-saved-item">
+                                <button type="button"
+                                        class="create-button toggle-scheduler {{ true == regularSchedulerItem.enabled ? 'disabled' : 'enabled' }}"
+                                        data-id="{{ regularSchedulerItem.id }}"
+                                        data-type="{{ ScheduleType.Regular.value }}"
+                                        data-disable-title="{% trans %}disable_button{% endtrans %}"
+                                        data-enable-title="{% trans %}enable_button{% endtrans %}"
+                                >
+                                    {% if true == regularSchedulerItem.enabled %}
+                                        {% trans %}disable_button{% endtrans %}
+                                    {% else %}
+                                        {% trans %}enable_button{% endtrans %}
+                                    {% endif %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {{ form_widget(form.regularSchedulerList, {'attr': {'class': 'regular-scheduler-item'}}) }}
+                </div>
+            </div>
+
+            <div class="location-create-button-wrapper">
+                <button type="button" class="button location-create-button location-add-button" id="add-vacation-scheduler">{% trans %}add_vacation_scheduler_button{% endtrans %}</button>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.vacationSchedulerList) }}
+                <div id="vacation-schedulers-container">
+                    <h3>{% trans %}vacation_scheduler_block_title{% endtrans %}</h3><br>
+                    <div class="vacation-scheduler-item vacation-scheduler-item-head">
+                        <div>
+                            <label>{% trans %}day_number_column_label{% endtrans %}</label>
+                        </div>
+                        <div>
+                            <label>{% trans %}title_column_label{% endtrans %}</label>
+                        </div>
+                        <div>
+                            <label>{% trans %}date_from_column_label{% endtrans %}</label>
+                        </div>
+                        <div>
+                            <label>{% trans %}date_till_column_label{% endtrans %}</label>
+                        </div>
+                    </div>
+
+                    {% for vacationSchedulerItem in location.vacationSchedulerList %}
+                        <div>
+                            <div class="vacation-scheduler-saved-item-row">
+                                <div class="scheduler-saved-item">{{ vacationSchedulerItem.dayNumber | day_name }}</div>
+                                <div class="scheduler-saved-item">{{ vacationSchedulerItem.title }}</div>
+                                <div class="scheduler-saved-item">{{ vacationSchedulerItem.dateFrom|date("Y-m-d") }}</div>
+                                <div class="scheduler-saved-item">{{ vacationSchedulerItem.dateTill|date("Y-m-d") }}</div>
+                                <div class="scheduler-saved-item">
+                                    <button type="button"
+                                            class="create-button toggle-scheduler {{ true == vacationSchedulerItem.enabled ? 'disabled' : 'enabled' }}"
+                                            data-id="{{ vacationSchedulerItem.id }}"
+                                            data-type="{{ ScheduleType.Vacation.value }}"
+                                            data-disable-title="{% trans %}disable_button{% endtrans %}"
+                                            data-enable-title="{% trans %}enable_button{% endtrans %}"
+                                    >
+                                        {% if true == vacationSchedulerItem.enabled %}
+                                            {% trans %}disable_button{% endtrans %}
+                                        {% else %}
+                                            {% trans %}enable_button{% endtrans %}
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {{ form_widget(form.vacationSchedulerList, {'attr': {'class': 'vacation-scheduler-item'}}) }}
+                </div>
+            </div>
+
+            <div class="location-create-button-wrapper">
+                <button type="button" class="button location-create-button location-add-button" id="add-special-scheduler">{% trans %}add_special_scheduler_button{% endtrans %}</button>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.specialSchedulerList) }}
+                <div id="special-schedulers-container">
+                    <h3>{% trans %}special_scheduler_block_title{% endtrans %}</h3><br>
+                    <div class="special-scheduler-item special-scheduler-item-head">
+                        <div>
+                            <label>{% trans %}time_from_column_label{% endtrans %}</label>
+                        </div>
+                        <div>
+                            <label>{% trans %}time_till_column_label{% endtrans %}</label>
+                        </div>
+                        <div>
+                            <label>{% trans %}date_from_column_label{% endtrans %}</label>
+                        </div>
+                        <div>
+                            <label>{% trans %}date_till_column_label{% endtrans %}</label>
+                        </div>
+                    </div>
+
+                    {% for specialSchedulerItem in location.specialSchedulerList %}
+                        <div>
+                            <div class="special-scheduler-saved-item-row">
+                                <div class="scheduler-saved-item">{{ specialSchedulerItem.timeFrom|date("H:i") }}</div>
+                                <div class="scheduler-saved-item">{{ specialSchedulerItem.timeFrom|date("H:i") }}</div>
+                                <div class="scheduler-saved-item">{{ specialSchedulerItem.dateFrom|date("Y-m-d") }}</div>
+                                <div class="scheduler-saved-item">{{ specialSchedulerItem.dateTill|date("Y-m-d") }}</div>
+                                <div class="scheduler-saved-item">
+                                    <button type="button"
+                                            class="create-button toggle-scheduler {{ true == specialSchedulerItem.enabled ? 'disabled' : 'enabled' }}"
+                                            data-id="{{ specialSchedulerItem.id }}"
+                                            data-type="{{ ScheduleType.Special.value }}"
+                                            data-disable-title="{% trans %}disable_button{% endtrans %}"
+                                            data-enable-title="{% trans %}enable_button{% endtrans %}"
+                                    >
+                                        {% if true == specialSchedulerItem.enabled %}
+                                            {% trans %}disable_button{% endtrans %}
+                                        {% else %}
+                                            {% trans %}enable_button{% endtrans %}
+                                        {% endif %}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {{ form_widget(form.specialSchedulerList, {'attr': {'class': 'special-scheduler-item'}}) }}
+                </div>
+            </div>
+
+            <div class="location-create-button-wrapper">
+                <button type="submit" class="button location-create-button">{% trans %}create_location_button{% endtrans %}</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script defer>
+        const type = 'edit';
+    </script>
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/location') }}
+{% endblock %}

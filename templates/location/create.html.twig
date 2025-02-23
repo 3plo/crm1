@@ -116,6 +116,9 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script defer>
+        const type = 'create';
+    </script>
     {{ parent() }}
     {{ encore_entry_script_tags('js/location') }}
 {% endblock %}

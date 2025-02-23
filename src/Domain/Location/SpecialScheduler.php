@@ -31,6 +31,9 @@ class SpecialScheduler
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true, options: ['default' => null])]
     private null|\DateTimeImmutable $dateTill = null;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $enabled = true;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private \DateTimeImmutable $timeFrom;
 
@@ -102,6 +105,17 @@ class SpecialScheduler
     public function setTimeTill(\DateTimeImmutable $timeTill): self
     {
         $this->timeTill = $timeTill;
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
         return $this;
     }
 

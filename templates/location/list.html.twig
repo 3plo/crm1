@@ -25,19 +25,28 @@
                     <div class="location-item">
                         <div class="location-item-grid">
                             <div class="location-info">
-                                <h3 class="title">{{ location.title }} wqwqweq</h3>
+                                <h3 class="title">{{ location.title }}</h3>
                                 <p>
-                                    <button class="create-button toggle-location {{ true == location.enabled ? 'disabled' : 'enabled' }}"
-                                            data-location="{{ location.id }}"
-                                            data-disable-title="{% trans %}disable_button{% endtrans %}"
-                                            data-enable-title="{% trans %}enable_button{% endtrans %}"
-                                            data-enabled="{{ true == location.enabled ? 'true' : 'false' }}">
-                                        {% if true == location.enabled %}
-                                            {% trans %}disable_button{% endtrans %}
-                                        {% else %}
-                                            {% trans %}enable_button{% endtrans %}
-                                        {% endif %}
-                                    </button>
+                                    {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.LocationActivate.value in app.user.accessList) %}
+                                        <button class="create-button toggle-location {{ true == location.enabled ? 'disabled' : 'enabled' }}"
+                                                data-location="{{ location.id }}"
+                                                data-disable-title="{% trans %}disable_button{% endtrans %}"
+                                                data-enable-title="{% trans %}enable_button{% endtrans %}"
+                                                data-enabled="{{ true == location.enabled ? 'true' : 'false' }}">
+                                            {% if true == location.enabled %}
+                                                {% trans %}disable_button{% endtrans %}
+                                            {% else %}
+                                                {% trans %}enable_button{% endtrans %}
+                                            {% endif %}
+                                        </button>
+                                    {% endif %}
+                                </p>
+                                <p>
+                                    {% if null != app.user and (Role.RoleAdmin.value in app.user.roles or Action.LocationEdit.value in app.user.accessList) %}
+                                        <a href="{{ path('location_edit', {locationId: location.id}) }}">
+                                            <button class="info-button">{% trans %}location_edit_button{% endtrans %}</button>
+                                        </a>
+                                    {% endif %}
                                 </p>
                                 <p class="description">{{ location.description }}</p>
                                 <p class="status">{% if location.enabled %}{% trans %}enable_status_label{% endtrans %}{% else %}{% trans %}disable_status_label{% endtrans %}{% endif %}</p>
@@ -61,12 +70,13 @@
                                 <table>
                                 <tbody>
                                 {% for regularSchedulerItem in location.regularSchedulerList %}
+                                    {% if regularSchedulerItem.enabled == true %}
                                     <tr>
                                         <td class="date-range">{{ regularSchedulerItem.dateFrom|date("Y-m-d") }} - {{ regularSchedulerItem.dateTill|date("Y-m-d") }}</td>
                                         <td class="day-range">{{ regularSchedulerItem.dayNumber | day_name }}</td>
                                         <td class="time-range">{{ regularSchedulerItem.timeFrom|date("H:i") }} - {{ regularSchedulerItem.timeTill|date("H:i") }}</td>
-{#                                        <td>{{ regularSchedulerItem.enabled }}</td>#}
                                     </tr>
+                                    {% endif %}
                                 {% endfor %}
                                 </tbody>
                                 </table>
@@ -75,11 +85,12 @@
                                 <table>
                                 <tbody>
                                 {% for specialSchedulerItem in location.specialSchedulerList %}
+                                    {% if specialSchedulerItem.enabled == true %}
                                     <tr>
                                         <td class="date-range">{{ specialSchedulerItem.dateFrom|date("Y-m-d") }} - {{ specialSchedulerItem.dateTill|date("Y-m-d") }}</td>
                                         <td class="time-range">{{ specialSchedulerItem.timeFrom|date("H:i") }} - {{ specialSchedulerItem.timeTill|date("H:i") }}</td>
-{#                                        <td>{{ specialSchedulerItem.enabled }}</td>#}
                                     </tr>
+                                    {% endif %}
                                 {% endfor %}
                                 </tbody>
                                 </table>
@@ -88,12 +99,13 @@
                                 <table>
                                 <tbody>
                                 {% for vacationSchedulerItem in location.vacationSchedulerList %}
+                                    {% if vacationSchedulerItem.enabled == true %}
                                     <tr>
                                         <td class="range-title">{{ vacationSchedulerItem.title }} - </td>
                                         <td class="date-range">{{ vacationSchedulerItem.dateFrom|date("Y-m-d") }} - {{ vacationSchedulerItem.dateTill|date("Y-m-d") }}</td>
                                         <td class="day-range">{{ vacationSchedulerItem.dayNumber | day_name }}</td>
-{#                                        <td>{{ regularSchedulerItem.enabled }}</td>#}
                                     </tr>
+                                    {% endif %}
                                 {% endfor %}
                                 </tbody>
                                 </table>

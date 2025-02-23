@@ -37,6 +37,9 @@ class VacationScheduler
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true, options: ['default' => null])]
     private null|\DateTimeImmutable $dateTill = null;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $enabled = true;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private \DateTimeImmutable $createdAt;
@@ -102,6 +105,17 @@ class VacationScheduler
     public function setDayNumber(int $dayNumber): self
     {
         $this->dayNumber = $dayNumber;
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
         return $this;
     }
 

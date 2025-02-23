@@ -13,11 +13,11 @@ use App\Domain\User\Enum\Role;
 use App\Domain\User\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class UserLocationListBuilder
+readonly class UserLocationListBuilder
 {
     public function __construct(
-        private readonly TokenStorageInterface  $tokenStorage,
-        private readonly LocationRepository     $locationRepository,
+        private TokenStorageInterface  $tokenStorage,
+        private LocationRepository     $locationRepository,
     ) {
     }
 

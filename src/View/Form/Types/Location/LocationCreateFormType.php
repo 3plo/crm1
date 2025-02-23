@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class LocationFormType extends AbstractRequestType
+class LocationCreateFormType extends AbstractRequestType
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
