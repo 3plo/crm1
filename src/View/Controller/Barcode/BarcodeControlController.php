@@ -46,7 +46,7 @@ class BarcodeControlController extends AbstractController
         );
     }
 
-    #[ActionAccess([Action::EntranceControl->value])]
+    #[ActionAccess([Action::EntranceControl->value, Action::Sell->value])]
     #[Route(path: '/barcode/find', name: 'barcode_find', methods: 'POST')]
     public function find(FindRequest $request): Response
     {

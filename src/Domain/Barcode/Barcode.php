@@ -35,6 +35,9 @@ class Barcode
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $enabled;
 
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => true])]
+    private bool $isGenerated = true;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private \DateTimeImmutable $createdAt;
@@ -89,6 +92,17 @@ class Barcode
     public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
+        return $this;
+    }
+
+    public function isGenerated(): bool
+    {
+        return $this->isGenerated;
+    }
+
+    public function setIsGenerated(bool $isGenerated): self
+    {
+        $this->isGenerated = $isGenerated;
         return $this;
     }
 

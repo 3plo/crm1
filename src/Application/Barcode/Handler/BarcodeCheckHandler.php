@@ -14,6 +14,7 @@ use App\Domain\Barcode\Repository\BarcodeRepository;
 use App\Domain\Location\Location;
 use App\Domain\Location\Repository\LocationRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function Webmozart\Assert\Tests\StaticAnalysis\null;
 
 readonly class BarcodeCheckHandler
 {
@@ -38,7 +39,7 @@ readonly class BarcodeCheckHandler
                 $this->translator->trans('barcode_scan_status_barcode_not_found_title'),
                 $barcode,
                 $location,
-                $barcodeData,
+                null,
             );
         }
 
@@ -64,7 +65,7 @@ readonly class BarcodeCheckHandler
         }
 
         $card = $barcodeData->getCard();
-        if ((new \DateTimeImmutable())->format('Y-m-d') > $card->getValidFrom()->format('Y-m-d')) {
+        if ((new \DateTimeImmutable())->format('Y-m-d') > $card->getValidTill()->format('Y-m-d')) {
             return $this->makeResult(
                 false,
                 $this->translator->trans('barcode_scan_status_card_expired_title'),
@@ -74,10 +75,12 @@ readonly class BarcodeCheckHandler
             );
         }
 
+        //TODO add to database configuration;
+        $isInDelta = (new \DateTimeImmutable())->format('Y-m-d') === $card->getLastUsage()?->format('Y-m-d');
         if (
             null !== $card->getLastUsage() &&
             $card->getCountUsage() >= $card->getMaxUsage() &&
-            (new \DateTimeImmutable())->format('Y-m-d') !== $card->getLastUsage()->format('Y-m-d') //TODO add to database configuration
+            false === $isInDelta
         ) {
             return $this->makeResult(
                 false,
@@ -94,6 +97,7 @@ readonly class BarcodeCheckHandler
             $barcode,
             $location,
             $barcodeData,
+            $isInDelta,
         );
     }
 
@@ -103,8 +107,9 @@ readonly class BarcodeCheckHandler
         string       $barcodeValue,
         Location     $location,
         null|Barcode $barcode,
+        null|bool    $isInDelta = null,
     ): BarcodeHandleResult {
-        $result = new BarcodeHandleResult($status, $message);
+        $result = new BarcodeHandleResult($status, $message, $isInDelta);
         $this->scanLogHandler->handle(
             new ScanLogCommand(
                 $result,

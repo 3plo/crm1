@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CardFormType extends AbstractRequestType
+class CreateType extends AbstractRequestType
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
@@ -65,6 +65,7 @@ class CardFormType extends AbstractRequestType
 
             return;
         }
+
         $builder
             ->add(
                 'price',

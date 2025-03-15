@@ -9,15 +9,21 @@ namespace App\Application\Barcode\Command;
 
 use App\Domain\Card\Card;
 
-readonly class CreateCommand
+readonly class CreateExternalCommand
 {
     public function __construct(
         private Card $card,
+        private string $barcode,
     ) {
     }
 
     public function getCard(): Card
     {
         return $this->card;
+    }
+
+    public function getBarcode(): string
+    {
+        return $this->barcode;
     }
 }

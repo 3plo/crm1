@@ -7,7 +7,8 @@
 
 namespace App\Application\Barcode\Handler;
 
-use App\Application\Barcode\Command\CreateCommand;
+use App\Application\Barcode\Command\CreateExternalCommand;
+use App\Application\Barcode\Command\CreateGeneratedCommand;
 use App\Domain\Barcode\Barcode;
 use App\Domain\Barcode\Repository\BarcodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,7 +21,7 @@ readonly class CreateHandler
     ) {
     }
 
-    public function handle(CreateCommand $command): void
+    public function handleGenerated(CreateGeneratedCommand $command): void
     {
         do {
             $barcode = $this->generateBarcodeEan13((string) rand(0, 10000));
@@ -29,6 +30,24 @@ readonly class CreateHandler
         $barcodeEntity = (new Barcode())
             ->setBarcode($barcode)
             ->setEnabled(true)
+            ->setIsGenerated(true)
+            ->setCard($command->getCard())
+            ->setProduct($command->getCard()->getProduct());
+
+        $this->entityManager->persist($barcodeEntity);
+        $this->entityManager->flush();
+    }
+
+    public function handleExternal(CreateExternalCommand $command): void
+    {
+        if ($this->barcodeRepository->findOneBy(['barcode' => $command->getBarcode()])) {
+            throw new \RuntimeException('Barcode already exist');
+        }
+
+        $barcodeEntity = (new Barcode())
+            ->setBarcode($command->getBarcode())
+            ->setEnabled(true)
+            ->setIsGenerated(false)
             ->setCard($command->getCard())
             ->setProduct($command->getCard()->getProduct());
 

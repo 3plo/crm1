@@ -12,12 +12,18 @@ readonly class BarcodeHandleResult
     public function __construct(
         private bool $status,
         private string $message,
+        private null|bool $isInDelta = null,
     ) {
     }
 
     public function getStatus(): bool
     {
         return $this->status;
+    }
+
+    public function isInDelta(): null|bool
+    {
+        return $this->isInDelta;
     }
 
     public function getMessage(): string

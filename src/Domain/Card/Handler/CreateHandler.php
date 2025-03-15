@@ -7,7 +7,8 @@
 
 namespace App\Domain\Card\Handler;
 
-use App\Application\Barcode\Command\CreateCommand as BarcodeCreateCommand;
+use App\Application\Barcode\Command\CreateExternalCommand;
+use App\Application\Barcode\Command\CreateGeneratedCommand as BarcodeCreateCommand;
 use App\Application\Barcode\Handler\CreateHandler as BarcodeCreateHandler;
 use App\Application\Card\Command\CreateCommand;
 use App\Domain\Card\Card;
@@ -53,9 +54,20 @@ readonly class CreateHandler
 
         $this->cardProvider->setCard($card);
 
-        $this->barcodeCreateHandler->handle(
-            new BarcodeCreateCommand(
+        if (null === $command->getBarcode()) {
+            $this->barcodeCreateHandler->handleGenerated(
+                new BarcodeCreateCommand(
+                    $card,
+                ),
+            );
+
+            return;
+        }
+
+        $this->barcodeCreateHandler->handleExternal(
+            new CreateExternalCommand(
                 $card,
+                $command->getBarcode(),
             ),
         );
     }

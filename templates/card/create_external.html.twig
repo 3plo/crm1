@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}card_create_title{% endtrans %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/card.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="center-container">
+        <h2>{% trans %}card_create_by_product_title{% endtrans %} {{ product.title }}</h2>
+
+        {{ form_start(form, {'attr': {'class': 'form', 'id': 'card_create_external'}}) }}
+
+        <div class="form-group">
+            {{ form_label(form.price) }}
+            {{ form_widget(form.price, {'attr': {'class': 'input-field'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.product) }}
+            {{ form_widget(form.product) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.barcode) }}
+            {{ form_widget(form.barcode, {'attr': {'class': 'input-field'}}) }}
+        </div>
+
+        {{ form_end(form, {'attr': {'class': 'button'}}) }}
+
+        <button type="button" id="create_external_clear" class="info-button clear">
+            {% trans %}card_create_clear_button_title{% endtrans %}
+        </button>
+    </div>
+    <div
+            style="display: none"
+            id="translate"
+            data-close_title="{% trans %}card_external_sale_close_title{% endtrans %}"
+            data-warning_title="{% trans %}card_external_sale_warning_title{% endtrans %}"
+            data-barcode_already_exist_title="{% trans %}card_external_sale_barcode_already_exist_title{% endtrans %}"
+            data-error_title="{% trans %}card_external_sale_error_title{% endtrans %}"
+            data-something_went_wrong_title="{% trans %}card_external_sale_something_went_wrong_title{% endtrans %}"
+    ></div>
+{% endblock %}
+
+{% block javascripts %}
+    <script defer>
+        const type = 'edit';
+    </script>
+    {{ parent() }}
+    {{ encore_entry_script_tags('js/card') }}
+{% endblock %}

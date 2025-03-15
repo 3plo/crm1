@@ -120,6 +120,7 @@ label {
     margin-bottom: 10px;
     margin-left: 70px;
     width: 150px;
+    height: 80px;
 }
 
 .description {
@@ -138,6 +139,13 @@ label {
 
 .button:hover {
     background-color: #45a049;
+}
+
+.button:disabled,
+.button[disabled] {
+    background-color: #bdbdbd;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 .page-title {
@@ -212,6 +220,7 @@ label {
     font-size: 0.9rem;
     top: 10px;
     left: 10px;
+    max-width: 73px;
     background-color: #4c91af;
     color: #fff;
     border: none;
@@ -222,4 +231,22 @@ label {
 
 .sell-button:hover {
     background-color: #455aa0;
+}
+
+.sell-external-button {
+    position: absolute;
+    font-size: 0.9rem;
+    top: 45px;
+    left: 10px;
+    max-width: 73px;
+    background-color: #c081c7;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.sell-external-button:hover {
+    background-color: #982ba2;
 }

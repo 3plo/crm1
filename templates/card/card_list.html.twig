@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}card_list_page_title{% endtrans %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/pagination.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/report.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="full-container">
+        <h2>{% trans %}card_list_page_title{% endtrans %}</h2>
+
+        <div class="report-content-container">
+            <table class="report-content report-table">
+                <thead>
+                <tr>
+                    <th style="width: 20%">{% trans %}card_list_id_column_title{% endtrans %}</th>
+                    <th style="width: 10%">{% trans %}card_list_active_barcode_column_title{% endtrans %}</th>
+                    <th style="width: 15%">{% trans %}card_list_product_column_title{% endtrans %}</th>
+                    <th style="width: 10%">{% trans %}card_list_price_column_title{% endtrans %}</th>
+                    <th style="width: 15%">{% trans %}card_list_valid_interval_column_title{% endtrans %}</th>
+                    <th style="width: 15%">{% trans %}card_list_created_at_column_title{% endtrans %}</th>
+                    <th style="width: 15%">{% trans %}card_list_created_by_column_title{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for card in cardList %}
+                    <tr>
+                        <td>{{ card.id }}</td>
+                        <td>{{ card.activeBarcode }}</td>
+                        <td>{{ card.productTitle }}</td>
+                        <td>{{ card.priceTitle }}</td>
+                        <td>
+                            {{ card.validFrom|date("Y-m-d") }} - {{ card.validTill|date("Y-m-d") }}
+                        </td>
+                        <td>{{ card.createdAt|date("Y-m-d H:i:s") }}</td>
+                        <td>{{ card.userName }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            {% if 1 < currentPage %}
+            <a href="{{ path('card_list', {'page': 1}) }}" class="pagination-button">1</a>
+            {% endif %}
+
+            {% if 2 < currentPage %}
+            <a href="{{ path('card_list', {'page': currentPage - 1}) }}" class="pagination-button">{% trans %}pagination_previous_button{% endtrans %}</a>
+            {% endif %}
+
+            <button class="pagination-button">{{ currentPage }}</button>
+
+            {% if cardList|length == maxPageSize %}
+            <a href="{{ path('card_list', {'page': currentPage + 1}) }}" class="pagination-button">{% trans %}pagination_next_button{% endtrans %}</a>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}

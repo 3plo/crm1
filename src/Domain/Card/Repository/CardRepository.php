@@ -7,11 +7,14 @@
 
 namespace App\Domain\Card\Repository;
 
+use App\Domain\Barcode\Barcode;
 use App\Domain\Card\Card;
 use App\Domain\Product\Price;
 use App\Domain\Product\Product;
 use App\Domain\User\User;
+use App\Infrastructure\Pagination\Service\PaginationService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -33,8 +36,8 @@ class CardRepository extends ServiceEntityRepository
     public function findByInterval(
         \DateTimeImmutable $dateFrom,
         \DateTimeImmutable $dateTill,
-        null|string $productId,
-        null|string $userId,
+        null|string        $productId,
+        null|string        $userId,
     ): array {
         $qb = $this->createQueryBuilder(self::ALIAS);
 
@@ -67,6 +70,42 @@ class CardRepository extends ServiceEntityRepository
         }
 
         if (null !== $userId && '' !== $userId) {
+            $qb
+                ->andWhere(sprintf('%s.id = :userId', 'u'))
+                ->setParameter('userId', $userId);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findCardList(
+        null|string $userId,
+        int $limit = PaginationService::DEFAULT_LIMIT,
+        int $offset = 0,
+    ): array {
+        $qb = $this->createQueryBuilder(self::ALIAS);
+
+        $qb
+            ->select(
+                sprintf('%s.id', self::ALIAS),
+                sprintf('%s.validFrom', self::ALIAS),
+                sprintf('%s.validTill', self::ALIAS),
+                sprintf('%s.createdAt', self::ALIAS),
+                sprintf('%s.barcode', 'b'),
+                sprintf('%s.title as productTitle', 'p'),
+                sprintf('%s.title as priceTitle', 'pr'),
+                sprintf('%s.firstName as userFirstName', 'u'),
+                sprintf('%s.lastName as userLastName', 'u'),
+            )
+            ->innerJoin(Product::class, 'p', Join::WITH, sprintf('%s.product = %s.id', self::ALIAS, 'p'))
+            ->innerJoin(Price::class, 'pr', Join::WITH, sprintf('%s.price = %s.id', self::ALIAS, 'pr'))
+            ->innerJoin(User::class, 'u', Join::WITH, sprintf('%s.createdBy = %s.id', self::ALIAS, 'u'))
+            ->leftJoin(Barcode::class, 'b', Join::WITH, sprintf('%s.id = %s.card', self::ALIAS, 'b'))
+            ->addOrderBy(sprintf('%s.createdAt', self::ALIAS), Order::Descending->value)
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
+
+        if (null !== $userId) {
             $qb
                 ->andWhere(sprintf('%s.id = :userId', 'u'))
                 ->setParameter('userId', $userId);

@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('#barcode_form').forEach(function (form) {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
+
+            const submitButton = document.getElementById('barcode_check');
+            submitButton.disabled = true;
+
             const barcodeInput = document.getElementById('barcode');
             const locationIdInput = document.getElementById('location_id');
             const translateObject = document.getElementById('translate');
@@ -28,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             title: allowTitle,
                             icon: 'success',
                             confirmButtonText: closeTitle,
+                        }).then(() => {
+                            submitButton.disabled = false;
                         });
                     } else {
                         Swal.fire({
@@ -35,6 +41,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             text: response.data.message,
                             icon: 'warning',
                             confirmButtonText: closeTitle,
+                        }).then(() => {
+                            submitButton.disabled = false;
                         });
                     }
                 })
@@ -45,6 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         text: 'Something went wrong',
                         icon: 'error',
                         confirmButtonText: closeTitle,
+                    }).then(() => {
+                        submitButton.disabled = false;
                     });
                 });
         });

@@ -15,6 +15,7 @@ readonly class CreateCommand
     public function __construct(
         private Product $product,
         private Price $price,
+        private null|string $barcode = null,
     ) {
     }
 
@@ -26,5 +27,10 @@ readonly class CreateCommand
     public function getPrice(): Price
     {
         return $this->price;
+    }
+
+    public function getBarcode(): null|string
+    {
+        return $this->barcode;
     }
 }
